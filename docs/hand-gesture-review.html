@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>石手 0—9 · 作者审阅</title><link rel="stylesheet" href="../pixel-desktop.css?v=20260909-stone-material"><style>body{margin:0;padding:32px;background:#141d18;color:#d8ccac;font-family:system-ui}h1{font:24px 'Songti SC',serif}p{color:#aba890}main{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px}figure{margin:0;padding:18px;background:#253127;border:1px solid #475344;text-align:center}figcaption{font-size:22px;margin-bottom:12px}figure p{font-size:13px;min-height:36px}.ghost-hand{filter:none}</style></head><body><h1>中式单手数字 · 石手审阅</h1><p>作者参考页面，不作为游戏内提示。采用圈形 0、三指捏拢的 7、食指勾曲的 9；3 的另一种常见手形也可通过机关判定。</p><main></main><script src="../ghost-hands.js?v=20260909-stone-material"></script><script>
+const review=[
+ [0,[2,2,0,0,0],'拇指、食指围成圆圈'],[1,[0,1,0,0,0],'食指伸直'],[2,[0,1,1,0,0],'食指、中指伸直'],
+ [3,[0,0,1,1,1],'中指、无名指、小指伸直'],[4,[0,1,1,1,1],'拇指收起，其余四指展开'],[5,[1,1,1,1,1],'五指展开'],
+ [6,[1,0,0,0,1],'拇指、小指伸出'],[7,[2,2,2,0,0],'拇指、食指、中指指尖捏拢'],[8,[1,1,0,0,0],'拇指、食指伸出'],[9,[0,3,0,0,0],'食指弯成钩，其余手指收起']
+];
+document.querySelector('main').innerHTML=review.map(([digit,pose,text])=>`<figure><figcaption>${digit}</figcaption>${GhostHands.renderHand(pose,'review-'+digit)}<p>${text}</p></figure>`).join('');
+</script></body></html>

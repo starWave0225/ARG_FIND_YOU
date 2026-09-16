@@ -1,0 +1,12 @@
+{
+  "name": "arg-find-you",
+  "version": "0.1.0",
+  "private": true,
+  "description": "我要找到你 — static browser ARG prototype",
+  "scripts": {
+    "test": "node --test tests/*.test.cjs"
+  },
+  "devDependencies": {
+    "jsdom": "30.0.1"
+  }
+}

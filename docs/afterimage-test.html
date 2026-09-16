@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>盛家村宗祠｜我要找到你</title>
+  <style>
+    :root { color-scheme: dark; --ink:#d9d1be; --line:rgba(224,214,194,.2); --panel:rgba(12,13,12,.92); }
+    * { box-sizing:border-box; }
+    html,body { width:100%; height:100%; margin:0; overflow:hidden; }
+    body { background:#070908; color:var(--ink); font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif; }
+    button { font:inherit; }
+    .game { position:relative; width:100%; height:100%; display:grid; place-items:center; background:#070908; isolation:isolate; }
+    .scene-wrap { position:relative; width:min(100vw,calc(100vh * 1.7779)); aspect-ratio:1672/941; overflow:hidden; background:#0a0a09; box-shadow:0 0 90px #000; }
+    .scene { display:block; width:100%; height:100%; object-fit:cover; user-select:none; -webkit-user-drag:none; }
+    .signal { position:absolute; left:50%; top:49.6%; width:56%; aspect-ratio:1; transform:translate(-50%,-50%); object-fit:cover; opacity:0; filter:blur(clamp(6px,.72vw,13px)) contrast(.82); mix-blend-mode:soft-light; mask-image:radial-gradient(ellipse 37% 45% at 50% 52%,#000 0 36%,rgba(0,0,0,.9) 54%,rgba(0,0,0,.28) 70%,transparent 88%); -webkit-mask-image:radial-gradient(ellipse 37% 45% at 50% 52%,#000 0 36%,rgba(0,0,0,.9) 54%,rgba(0,0,0,.28) 70%,transparent 88%); transition:opacity 7s linear; pointer-events:none; }
+    .ritual-running .signal { opacity:.13; }
+    .assist .signal { opacity:.22; }
+    .ember { position:absolute; left:50.05%; top:49.15%; width:clamp(4px,.42vw,8px); aspect-ratio:1; transform:translate(-50%,-50%); border-radius:50%; background:#efc27c; box-shadow:0 0 5px 2px rgba(235,164,83,.42),0 0 14px 4px rgba(198,102,44,.17); animation:breathe 4.6s ease-in-out infinite; pointer-events:none; }
+    @keyframes breathe { 0%,100%{opacity:.72;transform:translate(-50%,-50%) scale(.82)} 50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)} }
+    .vignette { position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse at center,transparent 38%,rgba(0,0,0,.18) 72%,rgba(0,0,0,.68) 100%); }
+    .hud { position:fixed; inset:0; z-index:3; pointer-events:none; }
+    .location { position:absolute; left:22px; top:20px; padding:9px 12px; border-left:2px solid rgba(224,214,194,.5); background:rgba(7,8,7,.64); backdrop-filter:blur(6px); font:11px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.12em; color:#bcb5a7; }
+    .objective { position:absolute; right:22px; top:20px; width:min(330px,calc(100vw - 44px)); padding:11px 14px; border:1px solid var(--line); background:rgba(7,8,7,.7); color:#b4aea2; font-size:12px; line-height:1.6; opacity:0; transform:translateY(-8px); transition:.35s ease; }
+    .ritual-running .objective { opacity:1; transform:none; }
+    .burn-meter { position:absolute; left:22px; bottom:20px; width:min(240px,calc(100vw - 44px)); opacity:0; transition:opacity .3s ease; }
+    .ritual-running .burn-meter { opacity:1; }
+    .burn-label { display:flex; justify-content:space-between; margin-bottom:7px; color:rgba(220,211,194,.62); font:10px/1 ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.1em; }
+    .burn-track { height:2px; background:rgba(255,255,255,.14); overflow:hidden; }
+    .burn-fill { width:0; height:100%; background:#b98458; }
+    .ritual-running .burn-fill { animation:burn 32s linear forwards; }
+    @keyframes burn { to{width:100%} }
+    .dialogue { position:fixed; z-index:5; left:50%; bottom:clamp(18px,5vh,54px); transform:translateX(-50%); width:min(690px,calc(100vw - 32px)); padding:21px 22px 20px; border:1px solid var(--line); background:var(--panel); box-shadow:0 18px 55px rgba(0,0,0,.55); }
+    .speaker { margin:0 0 8px; color:#817c72; font:10px/1 ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.16em; }
+    .dialogue p { margin:0; color:#cbc4b6; font-family:"Songti SC","STSong",serif; font-size:clamp(15px,2vw,18px); line-height:1.85; }
+    .dialogue-actions { display:flex; flex-wrap:wrap; gap:9px; margin-top:16px; }
+    .btn { min-height:39px; padding:0 16px; border:1px solid #514d45; background:transparent; color:#d8d0c1; cursor:pointer; }
+    .btn:hover { border-color:#918879; }
+    .btn.primary { background:#d3cbbb; border-color:#d3cbbb; color:#151613; }
+    .blank { position:fixed; inset:0; z-index:8; display:none; place-items:center; background:#bdbeb9; color:#292a27; }
+    .blank.visible { display:grid; }
+    .blank-mark { position:relative; z-index:2; width:3px; height:3px; border-radius:50%; background:rgba(35,36,33,.08); }
+    .echo { position:absolute; left:50%; top:50%; width:min(72vmin,720px); aspect-ratio:1; transform:translate(-50%,-50%); object-fit:cover; opacity:0; filter:grayscale(1) blur(2.4px) contrast(.88); mix-blend-mode:multiply; mask-image:radial-gradient(ellipse 38% 46% at 50% 52%,#000 0 44%,rgba(0,0,0,.88) 58%,rgba(0,0,0,.2) 74%,transparent 89%); -webkit-mask-image:radial-gradient(ellipse 38% 46% at 50% 52%,#000 0 44%,rgba(0,0,0,.88) 58%,rgba(0,0,0,.2) 74%,transparent 89%); pointer-events:none; }
+    .blank.visible .echo { animation:echo 8s ease-in-out .35s both; }
+    @keyframes echo { 0%{opacity:0} 18%{opacity:.062} 42%{opacity:.048} 72%{opacity:.022} 100%{opacity:0} }
+    .blank-copy { position:fixed; bottom:6vh; left:50%; transform:translateX(-50%); width:min(560px,88vw); margin:0; color:rgba(35,36,33,.42); text-align:center; font-size:12px; line-height:1.7; letter-spacing:.06em; }
+    .answer-panel,.reveal-panel { position:fixed; inset:0; z-index:10; display:none; place-items:center; padding:20px; background:rgba(6,7,6,.86); backdrop-filter:blur(10px); }
+    .answer-panel.visible,.reveal-panel.visible { display:grid; }
+    .card { width:min(560px,100%); padding:30px; border:1px solid var(--line); background:#10110f; box-shadow:0 24px 70px rgba(0,0,0,.55); }
+    .card h2 { margin:0 0 10px; font:500 25px/1.5 "Songti SC","STSong",serif; letter-spacing:.06em; }
+    .card p { margin:0; color:#989389; font-size:13px; line-height:1.8; }
+    .choices { display:grid; gap:9px; margin-top:22px; }
+    .choices .btn { width:100%; min-height:44px; text-align:left; }
+    .reveal-card { width:min(820px,100%); }
+    .reveal-grid { display:grid; grid-template-columns:minmax(200px,330px) 1fr; gap:28px; align-items:center; }
+    .reveal-grid img { display:block; width:100%; }
+    .exit { position:fixed; z-index:6; right:18px; bottom:18px; display:none; border:0; padding:8px 10px; background:rgba(0,0,0,.5); color:rgba(255,255,255,.55); cursor:pointer; }
+    .ritual-running .exit { display:block; pointer-events:auto; }
+    @media(max-width:640px){.location{left:12px;top:12px}.objective{right:12px;top:12px}.burn-meter{left:12px;bottom:12px}.reveal-grid{grid-template-columns:1fr}.reveal-grid img{max-height:44vh;object-fit:contain}}
+    @media(prefers-reduced-motion:reduce){.ember{animation:none}.blank.visible .echo{animation:none;opacity:.045}*,*::before,*::after{transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="game" id="game">
+    <div class="scene-wrap">
+      <img class="scene" src="../assets/pixel/environments/ancestral-hall-interior-v1.png" alt="盛家村宗祠内部" />
+      <img class="signal" src="../assets/effects/afterimage-child-negative-v1.png" alt="" aria-hidden="true" />
+      <span class="ember" aria-hidden="true"></span><span class="vignette" aria-hidden="true"></span>
+    </div>
+    <div class="hud" aria-hidden="true">
+      <div class="location">盛家村 · 宗祠<br />21:47 / 雨</div>
+      <div class="objective">守住供桌上的香火。看着香头，直到门外的钟响。</div>
+      <div class="burn-meter"><div class="burn-label"><span>香火</span><span>正在燃烧</span></div><div class="burn-track"><div class="burn-fill"></div></div></div>
+    </div>
+    <section class="dialogue" id="dialogue">
+      <p class="speaker">供桌下压着的纸条</p>
+      <p>“香已经断过两次。重新点上以后，看着火头，别回头。等门外那声钟。”</p>
+      <div class="dialogue-actions"><button class="btn primary" id="approachButton" type="button">重新点香</button></div>
+    </section>
+    <button class="exit" id="exitButton" type="button">停止</button>
+  </main>
+  <section class="blank" id="blank" aria-hidden="true"><img class="echo" src="../assets/effects/afterimage-child-positive-v1.png" alt="" aria-hidden="true" /><span class="blank-mark" aria-hidden="true"></span><p class="blank-copy">门外传来一声钟响。灯灭了。<br />先别动，等眼睛适应黑暗。</p></section>
+  <section class="answer-panel" id="answerPanel" aria-hidden="true">
+    <div class="card"><p class="speaker">记忆记录 / 21:48</p><h2>灯灭以后，你看见了什么？</h2><p>不用猜谜，选你确实看见的东西。</p><div class="choices"><button class="btn" data-answer="child" type="button">一个孩子的脸</button><button class="btn" data-answer="adult" type="button">一个成年人的脸</button><button class="btn" data-answer="none" type="button">什么也没看清</button></div></div>
+  </section>
+  <section class="reveal-panel" id="revealPanel" aria-hidden="true">
+    <div class="card reveal-card"><div class="reveal-grid"><img src="../assets/effects/afterimage-child-positive-v1.png" alt="被隐藏的孩子肖像" /><div><p class="speaker">档案比对</p><h2 id="resultTitle">你看见的是这个孩子。</h2><p id="resultCopy">他的轮廓没有直接画在宗祠里，而是以很弱的反相明暗藏进了香烟和墙面的纹理。</p><div class="dialogue-actions"><button class="btn primary" id="retryButton" type="button">再试一次</button><button class="btn" id="assistButton" type="button">提高一点强度</button></div></div></div></div>
+  </section>
+  <script>
+    const game=document.querySelector('#game'),dialogue=document.querySelector('#dialogue'),blank=document.querySelector('#blank'),answerPanel=document.querySelector('#answerPanel'),revealPanel=document.querySelector('#revealPanel');
+    const approachButton=document.querySelector('#approachButton'),exitButton=document.querySelector('#exitButton'),retryButton=document.querySelector('#retryButton'),assistButton=document.querySelector('#assistButton'),resultTitle=document.querySelector('#resultTitle'),resultCopy=document.querySelector('#resultCopy');
+    let ritualTimer=null,blankTimer=null;
+    function clearTimers(){window.clearTimeout(ritualTimer);window.clearTimeout(blankTimer);ritualTimer=null;blankTimer=null}
+    function resetScene(){clearTimers();game.classList.remove('ritual-running');dialogue.hidden=false;blank.classList.remove('visible');blank.setAttribute('aria-hidden','true');answerPanel.classList.remove('visible');answerPanel.setAttribute('aria-hidden','true');revealPanel.classList.remove('visible');revealPanel.setAttribute('aria-hidden','true')}
+    function startRitual(){clearTimers();dialogue.hidden=true;answerPanel.classList.remove('visible');revealPanel.classList.remove('visible');game.classList.add('ritual-running');ritualTimer=window.setTimeout(()=>{game.classList.remove('ritual-running');blank.classList.add('visible');blank.setAttribute('aria-hidden','false');blankTimer=window.setTimeout(()=>{blank.classList.remove('visible');blank.setAttribute('aria-hidden','true');answerPanel.classList.add('visible');answerPanel.setAttribute('aria-hidden','false')},8500)},32000)}
+    function showResult(answer){answerPanel.classList.remove('visible');answerPanel.setAttribute('aria-hidden','true');revealPanel.classList.add('visible');revealPanel.setAttribute('aria-hidden','false');if(answer==='child'){resultTitle.textContent='你看见的是这个孩子。';resultCopy.textContent='这说明强度已经够了。正式游戏里不需要展示这张核对图，只记录玩家选中了“孩子”。'}else if(answer==='adult'){resultTitle.textContent='轮廓出现了，但年龄还不够清楚。';resultCopy.textContent='可以再试一次；继续只看香头，不要主动寻找五官。'}else{resultTitle.textContent='隐藏得够深，但效果还可以再加强。';resultCopy.textContent='点“提高一点强度”会把信号从 13% 调到 22%，场景仍然不会直接出现完整人脸。'}}
+    approachButton.addEventListener('click',startRitual);exitButton.addEventListener('click',resetScene);retryButton.addEventListener('click',()=>{resetScene();startRitual()});assistButton.addEventListener('click',()=>{game.classList.add('assist');resetScene();startRitual()});document.querySelectorAll('[data-answer]').forEach(button=>button.addEventListener('click',()=>showResult(button.dataset.answer)));document.addEventListener('keydown',event=>{if(event.key==='Escape')resetScene()});
+    if(new URLSearchParams(location.search).get('preview')==='echo'){dialogue.hidden=true;blank.classList.add('visible');blank.setAttribute('aria-hidden','false')}
+  </script>
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#243c38" />
+    <title>寻迹工作站</title>
+    <link rel="stylesheet" href="./styles.css?v=20260910-well-lanterns" />
+    <link rel="stylesheet" href="./pixel-desktop.css?v=20260910-lantern-flicker" />
+    <link rel="stylesheet" href="./story-flow.css?v=20260910-well-lanterns" />
+  </head>
+  <body>
+    <div class="boot-screen" id="bootScreen" aria-hidden="true">
+      <div class="boot-mark" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <p>寻迹工作站</p>
+      <small>正在载入节目资料…</small>
+    </div>
+
+    <main class="desktop" id="desktop">
+      <div class="wallpaper-copy" aria-hidden="true">
+        <span>FINDING DESK / 03</span>
+        <strong>让每一次失散<br />都有回音</strong>
+      </div>
+
+      <section class="identity-setup" id="identitySetup" role="dialog" aria-modal="true" aria-labelledby="identityTitle">
+        <article>
+          <span class="identity-kicker">在开始之前</span>
+          <h1 id="identityTitle">建立你的主角档案</h1>
+          <p>你是《我要找到你》栏目的策划，30 岁。今天，一份新的寻人投稿来到了你的桌面。</p>
+          <form id="identityForm" novalidate>
+          <label class="identity-name" for="playerName">主角姓名
+            <input id="playerName" name="playerName" type="text" maxlength="12" autocomplete="off" placeholder="输入你的主角姓名" aria-describedby="identityNameHint identityFeedback" required />
+          </label>
+          <small id="identityNameHint">1—12 个字，将用于称呼、工作台和档案署名。</small>
+          <p class="identity-gender-label" id="identityGenderLabel">主角性别</p>
+          <div class="identity-options" role="group" aria-labelledby="identityGenderLabel">
+            <button type="button" aria-pressed="false" data-player-gender="male">
+              <span class="identity-portrait"><img src="./assets/characters/pixel/twins-adult-male-v3.png" alt="男性主角形象参考" /></span>
+              <span class="identity-option-copy"><strong>男性</strong><small>以男性身份进入故事</small></span>
+              <i>选择</i>
+            </button>
+            <button type="button" aria-pressed="false" data-player-gender="female">
+              <span class="identity-portrait"><img src="./assets/characters/pixel/twins-adult-female-v3.png" alt="女性主角形象参考" /></span>
+              <span class="identity-option-copy"><strong>女性</strong><small>以女性身份进入故事</small></span>
+              <i>选择</i>
+            </button>
+          </div>
+          <p id="identityFeedback" class="identity-feedback" role="status" aria-live="polite"></p>
+          <button class="identity-confirm" type="submit">确认档案，开始游戏 →</button>
+          </form>
+          <small class="identity-note">性别会影响人物形象与称呼。谜题与结局不受影响。</small>
+        </article>
+      </section>
+
+      <section class="desktop-icons" aria-label="桌面快捷方式">
+        <button class="desktop-icon is-selected" data-open="workbench">
+          <span class="icon-tile icon-tile--brand">寻</span>
+          <span>节目工作台</span>
+        </button>
+        <button class="desktop-icon" data-open="files">
+          <span class="icon-folder"><i></i></span>
+          <span>选题资料</span>
+        </button>
+        <button class="desktop-icon" data-open="mail">
+          <span class="icon-mail"><i></i></span>
+          <span>内部邮件</span>
+        </button>
+        <button class="desktop-icon" data-open="archive">
+          <span class="icon-tile icon-tile--archive">档</span>
+          <span>岭川搜寻</span>
+        </button>
+        <button class="desktop-icon village-desktop-icon" id="villageDesktopIcon" data-open="village" aria-label="盛家村走访" hidden>
+          <span class="icon-tile icon-tile--village">村</span>
+          <span>盛家村走访</span>
+          <i></i>
+        </button>
+        <button class="desktop-icon" data-open="trash">
+          <span class="icon-trash"><i></i></span>
+          <span>回收站</span>
+        </button>
+      </section>
+
+      <section class="window window--main is-open is-active" id="window-workbench" data-window="workbench" aria-label="节目工作台">
+        <header class="window-titlebar">
+          <div class="window-brand">
+            <span class="mini-logo">寻</span>
+            <span>《我要找到你》节目工作台</span>
+          </div>
+          <div class="window-actions">
+            <button data-action="minimize" aria-label="最小化">—</button>
+            <button data-action="maximize" aria-label="最大化">□</button>
+            <button data-action="close" aria-label="关闭">×</button>
+          </div>
+        </header>
+
+        <div class="app-shell">
+          <aside class="app-sidebar">
+            <div class="show-lockup">
+              <div class="show-symbol"><span></span><i></i></div>
+              <div>
+                <small>大型公益寻人栏目</small>
+                <strong>我要找到你</strong>
+              </div>
+            </div>
+
+            <nav class="app-nav" aria-label="工作台导航">
+              <button class="nav-item is-active" data-page="home">
+                <span class="nav-glyph">⌂</span>工作首页
+              </button>
+              <button class="nav-item" data-page="inbox">
+                <span class="nav-glyph">▱</span>投稿箱
+                <b class="nav-badge" id="inboxBadge">1</b>
+              </button>
+              <button class="nav-item" data-page="cases">
+                <span class="nav-glyph">□</span>我的选题
+              </button>
+              <button class="nav-item" data-page="people">
+                <span class="nav-glyph">◎</span>人物库
+              </button>
+              <button class="nav-item" data-page="evidence">
+                <span class="nav-glyph">⌁</span>证据墙
+                <span class="nav-lock">未开放</span>
+              </button>
+            </nav>
+
+            <button class="nav-item" data-page="story"><span class="nav-glyph">▤</span>调查流程</button>
+            <button class="nav-item" data-story-letters><span class="nav-glyph">信</span>选题通信 <b data-letter-count></b></button>
+            <div class="sidebar-foot">
+              <div class="user-avatar" data-player-initial>你</div>
+              <div>
+                <strong data-player-name>未登记</strong>
+                <span>栏目策划 · 03组</span>
+              </div>
+              <button aria-label="更多">•••</button>
+            </div>
+          </aside>
+
+          <div class="app-content">
+            <header class="app-header">
+              <div>
+                <h1 id="pageTitle">工作首页</h1>
+                <p id="pageSubtitle">下午好。今天有 1 份新投稿等待处理。</p>
+              </div>
+              <div class="header-tools">
+                <button class="icon-button" id="noticeButton" aria-label="通知">
+                  <span>◌</span><i></i>
+                </button>
+                <button class="primary-small" data-open-submission>查看新投稿</button>
+              </div>
+            </header>
+
+            <section class="page page--story" id="page-story" data-page-panel="story" aria-label="调查流程"></section>
+            <div class="page is-visible" id="page-home" data-page-panel="home">
+              <div class="home-grid">
+                <section class="hero-card">
+                  <div class="hero-copy">
+                    <span class="eyebrow">NEW SUBMISSION · 14:32</span>
+                    <h2>有些人，走散以后<br />就再也没见过。</h2>
+                    <p>投稿人希望寻找一位三十多年没有联系的故人，只记得对方曾在东岚的一家工厂工作。</p>
+                    <button class="light-button" data-open-submission>打开投稿</button>
+                  </div>
+                  <div class="hero-file" aria-hidden="true">
+                    <div class="paper-clip"></div>
+                    <div class="file-line file-line--short"></div>
+                    <div class="file-line"></div>
+                    <div class="file-line"></div>
+                    <div class="file-photo">
+                      <span class="photo-head"></span>
+                      <span class="photo-body"></span>
+                    </div>
+                    <div class="file-stamp">待核</div>
+                  </div>
+                </section>
+
+                <section class="today-panel panel">
+                  <div class="panel-heading">
+                    <div>
+                      <span class="eyebrow eyebrow--dark">TODAY</span>
+                      <h3>今日工作</h3>
+                    </div>
+                    <span class="date-chip" id="fullDate">8月24日</span>
+                  </div>
+                  <ul class="task-list">
+                    <li>
+                      <button class="check-box" aria-label="完成任务"></button>
+                      <div><strong>核对新投稿信息</strong><span>1 份 · 截止 18:00</span></div>
+                      <em class="task-priority">优先</em>
+                    </li>
+                    <li>
+                      <button class="check-box" aria-label="完成任务"></button>
+                      <div><strong>联系《晚风》选题家属</strong><span>已约今日 16:30</span></div>
+                    </li>
+                    <li class="is-muted">
+                      <button class="check-box is-checked" aria-label="已完成"></button>
+                      <div><strong>提交周选题进度</strong><span>已完成 · 10:06</span></div>
+                    </li>
+                  </ul>
+                </section>
+
+                <section class="case-panel panel">
+                  <div class="panel-heading panel-heading--line">
+                    <div>
+                      <span class="eyebrow eyebrow--dark">RECENT CASES</span>
+                      <h3>最近选题</h3>
+                    </div>
+                    <button class="text-button" data-page-link="cases">查看全部</button>
+                  </div>
+                  <div class="case-table">
+                    <div class="case-row case-row--head">
+                      <span>编号 / 选题</span><span>类型</span><span>进度</span><span>最后更新</span>
+                    </div>
+                    <div class="case-row">
+                      <div><b>QT-071</b><strong>写在旧车票背面的人</strong></div>
+                      <span>寻找故友</span><span class="status status--contact">联系中</span><time>今天 11:24</time>
+                    </div>
+                    <div class="case-row">
+                      <div><b>QT-068</b><strong>晚风</strong></div>
+                      <span>寻找亲人</span><span class="status status--verify">待确认</span><time>昨天 17:40</time>
+                    </div>
+                    <div class="case-row">
+                      <div><b>QT-063</b><strong>那年洪水以后</strong></div>
+                      <span>寻找恩人</span><span class="status status--done">已找到</span><time>8月20日</time>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="stats-panel panel">
+                  <span class="eyebrow eyebrow--dark">THIS MONTH</span>
+                  <h3>本月进度</h3>
+                  <div class="ring" style="--progress: 74">
+                    <div><strong>14</strong><span>条线索</span></div>
+                  </div>
+                  <div class="stats-legend">
+                    <p><i class="dot dot--green"></i><span>确认找到</span><b>6</b></p>
+                    <p><i class="dot dot--gold"></i><span>正在联系</span><b>3</b></p>
+                    <p><i class="dot dot--gray"></i><span>暂无结果</span><b>5</b></p>
+                  </div>
+                </section>
+              </div>
+            </div>
+
+            <div class="page" id="page-inbox" data-page-panel="inbox">
+              <div class="split-layout">
+                <section class="message-list panel">
+                  <div class="list-tools">
+                    <strong>全部投稿</strong><button>筛选⌄</button>
+                  </div>
+                  <button class="message-card is-active" data-open-submission>
+                    <span class="sender-avatar">稿</span>
+                    <div><strong>匿名投稿人</strong><p>想找几位很多年没见的故人</p><small>今天 14:32</small></div>
+                    <i class="unread-dot"></i>
+                  </button>
+                  <button class="message-card">
+                    <span class="sender-avatar sender-avatar--muted">赵</span>
+                    <div><strong>赵女士</strong><p>回复：关于旧车票上的名字</p><small>昨天 09:17</small></div>
+                  </button>
+                </section>
+                <section class="empty-reader panel">
+                  <div class="empty-envelope">◇</div>
+                  <h3>选择一封投稿</h3>
+                  <p>投稿正文与附件将在这里显示</p>
+                </section>
+              </div>
+            </div>
+
+            <div class="page" id="page-cases" data-page-panel="cases">
+              <section class="wide-panel panel">
+                <div class="panel-heading panel-heading--line">
+                  <div><span class="eyebrow eyebrow--dark">MY CASES</span><h3>我的选题</h3></div>
+                  <div class="inline-search"><span>⌕</span><input placeholder="搜索编号或人物" /></div>
+                </div>
+                <div class="case-table case-table--wide" id="fullCaseTable"></div>
+              </section>
+            </div>
+
+            <div class="page" id="page-case-detail" data-page-panel="case-detail">
+              <div class="case-detail-shell">
+                <button class="case-back" id="caseBack">← 返回我的选题</button>
+                <header class="case-detail-head">
+                  <div>
+                    <span class="eyebrow eyebrow--dark">QT-073 · 寻找故友</span>
+                    <h2>盛家村的旧日故人</h2>
+                    <p>投稿人：匿名投稿人　·　建立于今天 14:36</p>
+                  </div>
+                  <span class="case-state" id="caseStateLabel">资料核查</span>
+                </header>
+
+                <div class="case-progress" id="caseProgress">
+                  <div class="is-current"><i>1</i><span>核对投稿</span></div>
+                  <b></b><div><i>2</i><span>定位人物</span></div>
+                  <b></b><div><i>3</i><span>确认身份</span></div>
+                  <b></b><div><i>4</i><span>发送结果</span></div>
+                </div>
+
+                <div class="case-detail-grid">
+                  <section class="case-objective panel">
+                    <span class="eyebrow eyebrow--dark">CURRENT OBJECTIVE</span>
+                    <h3 id="objectiveTitle">先看看投稿人留下的旧信封</h3>
+                    <p id="objectiveCopy">信封背面的地址已经受潮，但它是目前唯一能确定盛德昌去向的东西。</p>
+                    <div class="objective-actions" id="objectiveActions">
+                      <button class="case-primary" data-open-envelope>查看旧信封</button>
+                    </div>
+                  </section>
+
+                  <section class="clue-summary panel">
+                    <div class="panel-heading panel-heading--line"><div><span class="eyebrow eyebrow--dark">CLUES</span><h3>已记录线索</h3></div><strong id="clueCount">0 / 5</strong></div>
+                    <div class="clue-list" id="clueList"><p class="clue-empty">还没有记录可用线索。</p></div>
+                  </section>
+
+                  <section class="investigation-log panel">
+                    <div class="panel-heading panel-heading--line"><div><span class="eyebrow eyebrow--dark">CASE LOG</span><h3>调查记录</h3></div></div>
+                    <div class="log-list" id="caseLog"></div>
+                  </section>
+
+                  <section class="case-tools panel">
+                    <div class="panel-heading panel-heading--line"><div><span class="eyebrow eyebrow--dark">TOOLS</span><h3>可用工具</h3></div></div>
+                    <div class="case-tool-grid">
+                      <button data-open-envelope><span>旧</span><div><strong>旧信封</strong><small>投稿附件</small></div></button>
+                      <button data-case-tool="archive"><span>档</span><div><strong>岭川搜寻</strong><small>档案、网页与来源</small></div></button>
+                      <button data-case-tool="people"><span>人</span><div><strong>人物库</strong><small>身份确认</small></div></button>
+                      <button data-case-tool="files"><span>夹</span><div><strong>选题文件</strong><small>本案下载资料</small></div></button>
+                    </div>
+                  </section>
+
+                  <section class="target-card panel" id="targetCard">
+                    <div class="target-placeholder">
+                      <span>?</span><div><strong>目标人物尚未确认</strong><p>找到足够信息后，在人物库建立候选人。</p></div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+
+            <div class="page" id="page-people" data-page-panel="people">
+              <section class="people-search panel">
+                <span class="eyebrow eyebrow--dark">PEOPLE DATABASE</span>
+                <h2>人物资料检索</h2>
+                <p>输入姓名与至少一项辅助信息。所有查询将记入选题操作日志。</p>
+                <form id="peopleSearchForm">
+                  <label><span>姓名</span><input id="personName" autocomplete="off" placeholder="例如：张建国" /></label>
+                  <label><span>地区 / 单位 / 年龄</span><input id="personExtra" autocomplete="off" placeholder="可选" /></label>
+                  <button type="submit">开始检索</button>
+                </form>
+                <div class="search-result" id="searchResult"></div>
+              </section>
+            </div>
+
+            <div class="page" id="page-evidence" data-page-panel="evidence">
+              <section class="locked-page" id="evidenceLocked">
+                <span>⌁</span><h2>证据墙尚未开放</h2><p>当一个选题中出现相互矛盾的资料时，系统会自动开启。</p>
+              </section>
+              <section class="evidence-board panel" id="evidenceBoard">
+                <header><div><span class="eyebrow eyebrow--dark">QT-073</span><h2>线索板</h2></div><span id="boardCount">0 条记录</span></header>
+                <div class="board-canvas" id="boardCanvas"></div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="window window--small" id="window-files" data-window="files" aria-label="选题资料">
+        <header class="window-titlebar"><div class="window-brand"><span class="tiny-folder"></span><span>选题资料</span></div><div class="window-actions"><button type="button" data-action="minimize" aria-label="最小化">—</button><button type="button" data-action="maximize" aria-label="最大化">□</button><button type="button" data-action="close" aria-label="关闭">×</button></div></header>
+        <div class="file-manager">
+          <aside><button class="is-active">快速访问</button><button>桌面</button><button>下载</button><button>节目资料</button><button>归档选题</button></aside>
+          <div class="files-view" id="filesView"></div>
+        </div>
+      </section>
+
+      <section class="window window--small window--mail" id="window-mail" data-window="mail" aria-label="内部邮件">
+        <header class="window-titlebar"><div class="window-brand"><span class="mail-mark">M</span><span>寻迹邮局</span></div><div class="window-actions"><button type="button" data-action="minimize" aria-label="最小化">—</button><button type="button" data-action="maximize" aria-label="最大化">□</button><button type="button" data-action="close" aria-label="关闭">×</button></div></header>
+        <div class="mail-app"><aside><button class="compose">＋ 写邮件</button><button class="is-active">收件箱 <b>2</b></button><button>星标邮件</button><button>已发送</button><button>草稿箱</button></aside><div class="mail-list"><h3>收件箱</h3><article class="is-unread"><span>制片部</span><strong>本周三组选题会调整至周二</strong><p>请各位策划在明天下午六点前更新选题进度……</p><time>13:05</time></article><article class="is-unread"><span>资料室</span><strong>关于历史户籍类材料的调阅说明</strong><p>近期地方档案接口维护，部分扫描件可能暂时无法……</p><time>09:42</time></article><article><span>王制片</span><strong>回复：QT-071 初审意见</strong><p>这个方向可以继续跟，先确认投稿人是否愿意出镜。</p><time>昨天</time></article></div></div>
+      </section>
+
+      <section class="window window--small window--archive" id="window-archive" data-window="archive" aria-label="资料检索">
+        <header class="browser-chrome"><div class="browser-tab">岭川搜寻</div><div class="window-actions"><button type="button" data-action="minimize" aria-label="最小化">—</button><button type="button" data-action="maximize" aria-label="最大化">□</button><button type="button" data-action="close" aria-label="关闭">×</button></div></header>
+        <div class="browser-toolbar"><button id="archiveBack" aria-label="后退" disabled>‹</button><button id="archiveForward" aria-label="前进" disabled>›</button><button id="archiveRefresh" aria-label="刷新当前资料">↻</button><div class="url-bar"><span>▣</span><span id="archiveAddress">lingchuan.example/search</span></div></div>
+        <div class="archive-page">
+          <section id="archiveSearchView">
+            <div class="archive-logo">岭川<span>搜寻</span></div><p class="search-intro">从一个名字、一处旧址，找到资料与它的来源</p>
+            <form id="archiveSearch" role="search"><label class="search-input-label" for="archiveQuery">搜索档案与来源</label><input id="archiveQuery" placeholder="输入线索中的关键词，查看关联文章或链接" autocomplete="off" maxlength="120" /><button type="submit">搜索</button></form>
+            <p class="search-scope">地方文章、网页快照与档案副本 · 游戏内资料索引</p>
+            <div id="archiveHistory" class="search-history" aria-label="最近搜索"></div>
+            <div id="archiveFilters" class="search-filters" aria-label="筛选搜索结果"></div>
+            <div id="archiveResult"></div>
+            <details id="archiveSaved" class="search-saved"></details>
+          </section>
+          <section id="archiveReaderView" hidden aria-label="资料原文与来源"></section>
+        </div>
+      </section>
+
+      <section class="window window--artifact" id="window-artifact" data-window="artifact" aria-label="证物查看器">
+        <header class="window-titlebar"><div class="window-brand"><span class="artifact-mark">证</span><span id="artifactWindowTitle">证物查看器</span></div><div class="window-actions"><button type="button" data-action="minimize" aria-label="最小化">—</button><button type="button" data-action="maximize" aria-label="最大化">□</button><button type="button" data-action="close" aria-label="关闭">×</button></div></header>
+        <div class="artifact-toolbar">
+          <span id="artifactFilename">旧信封背面.jpg</span>
+          <div><button id="zoomOut" aria-label="缩小">−</button><b id="zoomLevel">100%</b><button id="zoomIn" aria-label="放大">＋</button></div>
+        </div>
+        <div class="artifact-layout">
+          <div class="artifact-viewport" id="artifactViewport">
+            <div class="artifact-canvas" id="artifactCanvas">
+              <div class="envelope-artifact" id="envelopeArtifact">
+                <img src="./assets/evidence/old-envelope.png" alt="一只保存多年的旧信封背面" />
+                <span class="envelope-writing envelope-writing--address">岭川东岚……<br />农机厂　盛德昌 收</span>
+                <span class="envelope-writing envelope-writing--postcode">43<span>5</span>1<span>6</span>0</span>
+                <span class="envelope-writing envelope-writing--note">德昌：<br />到荣川后记得来信。</span>
+              </div>
+              <div class="factory-photo-artifact" id="factoryPhotoArtifact">
+                <img src="./assets/evidence/factory-team-1998.png" alt="1998年东岚机电二厂维修二组职工合影" />
+              </div>
+            </div>
+          </div>
+          <aside class="artifact-side" id="artifactSide"></aside>
+        </div>
+      </section>
+
+      <section class="window window--village" id="window-village" data-window="village" aria-label="盛家村现场档案">
+        <header class="window-titlebar"><div class="window-brand"><span class="village-mark">村</span><span>盛家村现场档案 · 1995—2026</span></div><div class="window-actions"><button type="button" data-action="minimize" aria-label="最小化">—</button><button type="button" data-action="maximize" aria-label="最大化">□</button><button type="button" data-action="close" aria-label="关闭">×</button></div></header>
+        <div class="village-explorer" id="villageExplorer"></div>
+      </section>
+
+      <section class="window window--tiny" id="window-trash" data-window="trash" aria-label="回收站">
+        <header class="window-titlebar"><div class="window-brand"><span>回收站</span></div><div class="window-actions"><button type="button" data-action="minimize" aria-label="最小化">—</button><button type="button" data-action="maximize" aria-label="最大化">□</button><button type="button" data-action="close" aria-label="关闭">×</button></div></header>
+        <div class="trash-empty"><span class="trash-large"></span><h3>回收站为空</h3><p>这里没有可显示的文件。</p></div>
+      </section>
+
+      <div class="modal-layer" id="submissionModal" aria-hidden="true">
+        <article class="submission-modal">
+          <header>
+            <div><span class="eyebrow eyebrow--dark">投稿编号 TG-240824-019</span><h2>想找几位很多年没见的故人</h2></div>
+            <button data-close-modal aria-label="关闭">×</button>
+          </header>
+          <div class="submission-meta">
+            <span class="sender-avatar sender-avatar--large">稿</span>
+            <div><strong>匿名投稿人</strong><span>投稿账号 · TG-240824-019</span></div>
+            <time>今天 14:32</time>
+          </div>
+          <div class="submission-body">
+            <p>节目组的老师，你们好。</p>
+            <p>我年轻时在岭川县生活过一段时间。后来去了外地，和那边的人慢慢断了联系。这几年身体不如以前，总想起过去的一些事。</p>
+            <p>我想找几位当年的故人。第一个叫<strong>盛德昌</strong>，比我年长一些。最后一次听说他的消息时，他好像在东岚的农机厂工作。</p>
+            <p>时间太久，我手上只剩一个旧信封，不知道还能不能派上用场。</p>
+            <p class="signature">匿名投稿人</p>
+          </div>
+          <div class="attachment-row">
+            <button id="openEnvelopeFromSubmission"><span class="attachment-thumb">JPG</span><div><strong>旧信封背面.jpg</strong><small>1.8 MB</small></div><i>查看</i></button>
+          </div>
+          <footer>
+            <button class="secondary-button" data-close-modal>暂不处理</button>
+            <button class="accept-button" id="acceptSubmission">接受选题</button>
+          </footer>
+        </article>
+      </div>
+
+      <div class="toast" id="toast"><span>✓</span><div><strong>选题已建立</strong><p>编号 QT-073，已加入“我的选题”。</p></div></div>
+
+      <footer class="taskbar">
+        <button class="start-button" id="startButton" aria-label="开始"><span></span><span></span><span></span><span></span></button>
+        <div class="taskbar-divider"></div>
+        <button class="task-app is-running is-active" data-task="workbench"><span class="mini-logo">寻</span><em>节目工作台</em></button>
+        <button class="task-app" data-task="files"><span class="task-folder"></span><em>选题资料</em></button>
+        <button class="task-app" data-task="mail"><span class="task-mail">M</span><em>内部邮件</em></button>
+        <button class="task-app" data-task="archive"><span class="task-browser">◎</span><em>岭川搜寻</em></button>
+        <div class="taskbar-spacer"></div>
+        <button class="tray-button">⌃</button><span class="tray-text">中</span><span class="network">⌁</span><span class="volume">◖</span>
+        <button class="clock" id="clock"><strong>16:04</strong><span>2026/08/24</span></button>
+        <button class="show-desktop" id="showDesktop" aria-label="显示桌面"></button>
+      </footer>
+
+      <section class="start-menu" id="startMenu">
+        <div class="start-search">⌕ <input placeholder="在此输入以搜索" /></div>
+        <div class="start-pinned"><h3>已固定</h3><div><button data-open="workbench"><span class="icon-tile icon-tile--brand">寻</span>节目工作台</button><button data-open="files"><span class="icon-folder icon-folder--small"><i></i></span>选题资料</button><button data-open="mail"><span class="task-mail task-mail--large">M</span>内部邮件</button><button data-open="archive"><span class="task-browser task-browser--large">◎</span>岭川搜寻</button></div></div>
+        <footer><div class="user-avatar" data-player-initial>你</div><strong data-player-name>未登记</strong><button aria-label="关机">◯</button></footer>
+      </section>
+    </main>
+
+    <dialog id="sceneInspection" class="scene-inspection" aria-labelledby="sceneInspectionTitle"><header><h2 id="sceneInspectionTitle"></h2><button data-close-scene-inspection aria-label="关闭检视">×</button></header><div class="scene-inspection-body"></div></dialog>
+    <dialog id="npcDialogue" class="npc-dialogue" aria-labelledby="npcDialogueName"></dialog>
+
+    <script src="./app.js?v=20260910-well-lanterns"></script>
+    <script src="./village-npcs.js?v=20260910-direct-copy"></script>
+    <script src="./village-scenes.js?v=20260910-well-lanterns"></script>
+    <script src="./village-effects.js?v=20260910-lantern-flicker"></script>
+    <script src="./ghost-hands.js?v=20260910-well-lanterns"></script>
+    <script src="./search-keywords.js?v=20260910-well-lanterns"></script>
+    <script src="./story-documents.js?v=20260910-direct-copy"></script>
+    <script src="./story-config.js?v=20260910-direct-copy"></script>
+    <script src="./story-flow.js?v=20260910-direct-copy"></script>
+    <script src="./archive-search.js?v=20260910-direct-copy"></script>
+    <script src="./game.js?v=20260910-direct-copy"></script>
+  </body>
+</html>

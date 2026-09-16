@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>盛家村像素探索素材 · v1</title>
+  <style>
+    :root { color-scheme: dark; --bg:#0b1112; --panel:#111a1b; --line:#263435; --text:#d8dfda; --muted:#879591; --red:#8f3633; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:radial-gradient(circle at 50% 0,#172324 0,#0b1112 48%); color:var(--text); font:15px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; }
+    header { max-width:1400px; margin:auto; padding:56px 28px 30px; }
+    header span { color:#a85b55; font:12px/1 monospace; letter-spacing:.18em; }
+    h1 { margin:12px 0 8px; font-size:34px; font-weight:650; }
+    header p { max-width:760px; color:var(--muted); margin:0; }
+    main { max-width:1400px; margin:auto; padding:0 28px 70px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+    article { overflow:hidden; border:1px solid var(--line); border-radius:5px; background:var(--panel); box-shadow:0 18px 50px #0007; }
+    article.wide { grid-column:1/-1; }
+    img { display:block; width:100%; height:auto; image-rendering:pixelated; background:#090d0e; }
+    .copy { padding:18px 20px 20px; border-top:1px solid var(--line); }
+    h2 { margin:0 0 4px; font-size:18px; }
+    .copy p { margin:0; color:var(--muted); }
+    .tag { float:right; color:#b8c2bd; border:1px solid #3d4c4b; padding:2px 8px; border-radius:99px; font:11px/1.5 monospace; }
+    @media (max-width:820px) { main { grid-template-columns:1fr; } article.wide { grid-column:auto; } h1 { font-size:27px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <span>ARG_FIND_YOU / PIXEL EXPLORATION PACK 01</span>
+    <h1>盛家村实地调查</h1>
+    <p>主角不再只坐在电脑前查资料，而是亲自进入盛家村。画面保持中国山区的现实质感，超现实变化只藏在物件、时间和缺失的人里。</p>
+  </header>
+  <main>
+    <article class="wide"><img src="../assets/pixel/maps/shengjia-village-exploration-map-v1.png" alt="盛家村探索地图" /><div class="copy"><span class="tag">MAP</span><h2>盛家村探索地图</h2><p>七个节点构成完整进村路线，红线封路用于控制章节推进。</p></div></article>
+    <article class="wide"><img src="../assets/pixel/characters/protagonist-sprites-concept-v1.png" alt="男女主角动作表" /><div class="copy"><span class="tag">PLAYER</span><h2>男女主角动作概念</h2><p>四向移动、手电、调查、受惊和蹲下；共用帆布肩包与调查动作。</p></div></article>
+    <article><img src="../assets/pixel/environments/village-entrance-dusk-v1.png" alt="盛家村村口" /><div class="copy"><span class="tag">NODE 01</span><h2>村口 · 抵达</h2><p>空置公交站、观察玩家的鸟，以及废屋中唯一亮着的窗。</p></div></article>
+    <article><img src="../assets/pixel/environments/village-central-lane-night-v1.png" alt="盛家村中心巷" /><div class="copy"><span class="tag">NODE 02</span><h2>中心巷 · 第一次异常</h2><p>脚印突然停止，鸡始终面对墙壁，水井与旧邮箱组成第一组探索谜题。</p></div></article>
+    <article><img src="../assets/pixel/environments/abandoned-clinic-interior-v1.png" alt="废弃卫生室" /><div class="copy"><span class="tag">STATE A</span><h2>旧卫生室 · 正常状态</h2><p>蓝白针织毯、02:17 的钟、锁住的药柜与两只搪瓷杯。</p></div></article>
+    <article><img src="../assets/pixel/environments/abandoned-clinic-anomaly-v1.png" alt="废弃卫生室异常状态" /><div class="copy"><span class="tag">STATE B</span><h2>旧卫生室 · 异常状态</h2><p>同一房间悄悄变化：倒流的雨、重叠钟针、打开的药柜和幼童脚印。</p></div></article>
+    <article><img src="../assets/pixel/environments/ancestral-hall-interior-v1.png" alt="盛家宗祠" /><div class="copy"><span class="tag">NODE 04</span><h2>盛家宗祠</h2><p>反放牌位、族谱缺页、被剪掉的孩子、四把椅子与地板暗格。</p></div></article>
+    <article><img src="../assets/pixel/environments/burned-forest-watch-hut-v1.png" alt="东岚林场火场遗址" /><div class="copy"><span class="tag">NODE 06</span><h2>林场火灾遗址</h2><p>相机、磁带机、017 树号、不落雨的地面和没有人的人形空隙。</p></div></article>
+  </main>
+</body>
+</html>
