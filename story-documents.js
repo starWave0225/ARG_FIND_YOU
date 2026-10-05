@@ -91,7 +91,7 @@ window.StoryDocuments = {
   "P06": {
     "id": "P06",
     "title": "维修车间退休、调离人员通讯册",
-    "body": "<p>维修车间通讯资料 · 二〇〇八年整理</p>\n<div class=\"story-table-scroll\"><table><thead><tr><th>原工号</th><th>姓名</th><th>原班组</th><th>调动及退休去向</th></tr></thead><tbody><tr><td>0717</td><td>盛德昌</td><td>维修二组</td><td>2003 年调往荣川，后办理退休</td></tr></tbody></table></div>\n<p>本册供离退休联络核对使用。单位名称依调动发生时的名称填写，后续联系信息应再核实。</p>\n<p>原表联系方式栏已褪色，现存页不能辨认。</p>",
+    "body": "<p>原厂职工联络电话：盛德昌，0717002003。</p>\n<p>维修车间通讯资料 · 二〇〇八年整理</p>\n<div class=\"story-table-scroll\"><table><thead><tr><th>原工号</th><th>姓名</th><th>原班组</th><th>调动及退休去向</th></tr></thead><tbody><tr><td>0717</td><td>盛德昌</td><td>维修二组</td><td>2003 年调往荣川，后办理退休</td></tr></tbody></table></div>\n<p>本册供离退休联络核对使用。单位名称依调动发生时的名称填写，后续联系信息应再核实。</p>\n<p>原表联系方式栏已褪色，现存页不能辨认。</p>",
     "scene": "SC00",
     "draft": "02-prologue.md",
     "source": "`退休人员通讯录.zip`，输入原工号打开；现有 `roster`。"

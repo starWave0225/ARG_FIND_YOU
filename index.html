@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./story-flow.css?v=20261005-font-plus2" />
     <link rel="stylesheet" href="./cloud-save.css?v=20261005-font-plus2" />
     <link rel="stylesheet" href="./xp-desktop.css?v=20261005-font-plus2-final" />
+  <link rel="stylesheet" href="phone-app.css?v=20261005">
   </head>
   <body>
     <div class="boot-screen" id="bootScreen" aria-hidden="true">
@@ -78,6 +79,7 @@
           <span>盛家村走访</span>
           <i></i>
         </button>
+        <button class="desktop-icon" data-open="phone"><span class="icon-tile">☎</span><span>电话</span></button>
         <button class="desktop-icon" data-open="news"><span class="icon-tile icon-tile--news">报</span><span>本市新闻<i id="newsDesktopBadge" hidden> · 新版</i></span></button>
         <button class="desktop-icon" data-open="trash">
           <span class="icon-trash"><i></i></span>
@@ -427,6 +429,11 @@
         <div class="village-explorer" id="villageExplorer"></div>
       </section>
 
+      <section class="window window--small" id="window-phone" data-window="phone" aria-label="电话">
+        <header class="window-titlebar"><div class="window-brand"><span>☎ 电话</span></div><div class="window-actions"><button data-action="minimize" aria-label="最小化">—</button><button data-action="maximize" aria-label="最大化">□</button><button data-action="close" aria-label="关闭">×</button></div></header>
+        <div class="phone-app"><form id="phoneDialForm"><label for="phoneNumber">电话号码</label><input id="phoneNumber" type="tel" maxlength="32" autocomplete="off"><div class="phone-keypad"><button type="button" data-phone-key="1">1</button><button type="button" data-phone-key="2">2</button><button type="button" data-phone-key="3">3</button><button type="button" data-phone-key="4">4</button><button type="button" data-phone-key="5">5</button><button type="button" data-phone-key="6">6</button><button type="button" data-phone-key="7">7</button><button type="button" data-phone-key="8">8</button><button type="button" data-phone-key="9">9</button><button type="button" data-phone-key="*">*</button><button type="button" data-phone-key="0">0</button><button type="button" data-phone-key="#">#</button></div><div class="phone-controls"><button type="button" id="phoneErase">退格</button><button type="submit" id="phoneDial">拨打</button><button type="button" id="phoneHangup" disabled>挂断</button></div></form><p id="phoneStatus" role="status" aria-live="polite">待机</p><section id="phoneConversation" hidden><h3 id="phoneSpeaker"></h3><p id="phoneLine"></p><button id="phoneContinue" type="button">回应</button></section><section><h3>通话记录</h3><div id="phoneHistory"></div></section></div>
+      </section>
+
       <section class="window window--tiny" id="window-trash" data-window="trash" aria-label="回收站">
         <header class="window-titlebar"><div class="window-brand"><span>回收站</span></div><div class="window-actions"><button type="button" data-action="minimize" aria-label="最小化">—</button><button type="button" data-action="maximize" aria-label="最大化">□</button><button type="button" data-action="close" aria-label="关闭">×</button></div></header>
         <div class="trash-empty"><span class="trash-large"></span><h3>回收站为空</h3><p>这里没有可显示的文件。</p></div>
@@ -469,6 +476,7 @@
         <button class="task-app" data-task="files" aria-label="选题资料"><span class="task-folder"></span><em>选题资料</em></button>
         <button class="task-app" data-task="mail" aria-label="内部邮件"><span class="task-mail">M</span><em>内部邮件</em></button>
         <button class="task-app" data-task="archive" aria-label="岭川搜寻"><span class="task-browser">◎</span><em>岭川搜寻</em></button>
+        <button class="task-app" data-task="phone" aria-label="电话"><span>☎</span><em>电话</em></button>
         <button class="task-app" data-task="news" aria-label="本市新闻"><span class="task-news">▤</span><em>本市新闻</em></button>
         <button id="cloudSaveOpen" class="cloud-save-open" aria-haspopup="dialog">存档</button><div class="taskbar-spacer"></div>
         <button class="tray-button">⌃</button><span class="tray-text">中</span><span class="network">⌁</span><span class="volume">◖</span>
@@ -478,7 +486,7 @@
 
       <section class="start-menu" id="startMenu">
         <div class="start-search">⌕ <input placeholder="在此输入以搜索" /></div>
-        <div class="start-pinned"><h3>已固定</h3><div><button data-open="workbench"><span class="icon-tile icon-tile--brand">寻</span>节目工作台</button><button data-open="files"><span class="icon-folder icon-folder--small"><i></i></span>选题资料</button><button data-open="mail"><span class="task-mail task-mail--large">M</span>内部邮件</button><button data-open="archive"><span class="task-browser task-browser--large">◎</span>岭川搜寻</button><button data-open="news"><span class="task-news">▤</span>本市新闻</button></div></div>
+        <div class="start-pinned"><h3>已固定</h3><div><button data-open="workbench"><span class="icon-tile icon-tile--brand">寻</span>节目工作台</button><button data-open="files"><span class="icon-folder icon-folder--small"><i></i></span>选题资料</button><button data-open="mail"><span class="task-mail task-mail--large">M</span>内部邮件</button><button data-open="archive"><span class="task-browser task-browser--large">◎</span>岭川搜寻</button><button data-open="phone"><span>☎</span>电话</button><button data-open="news"><span class="task-news">▤</span>本市新闻</button></div></div>
         <footer><div class="user-avatar" data-player-initial>你</div><strong data-player-name>未登记</strong><button aria-label="关机">◯</button></footer>
       </section>
     </main>
@@ -509,11 +517,13 @@
     <script src="./village-effects.js?v=20260910-lantern-flicker"></script>
     <script src="./ghost-hands.js?v=20260910-well-lanterns"></script>
     <script src="./search-keywords.js?v=20261005-factory-article"></script>
-    <script src="./story-documents.js?v=20260910-direct-copy"></script>
+    <script src="./story-documents.js?v=20261005-phone"></script>
     <script src="./story-config.js?v=20260910-direct-copy"></script>
     <script src="./story-flow.js?v=20261005-auto-collect"></script>
     <script src="./archive-search.js?v=20261005-all-article-drafts"></script>
-    <script src="./game.js?v=20261005-factory-reform"></script>
+    <script src="./phone-config.js?v=20261005"></script>
+    <script src="./phone-app.js?v=20261005"></script>
+    <script src="./game.js?v=20261005-phone"></script>
     <script src="./city-news.js?v=20261005"></script>
   </body>
 </html>

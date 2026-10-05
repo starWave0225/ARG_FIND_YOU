@@ -14,6 +14,8 @@
     clues: [],
     legacyOpened: false,
     rosterUnlocked: false,
+    phoneHistory: [],
+    contactedPeople: [],
     personFound: false,
     conclusionBuilt: false,
     confirmed: false,
@@ -91,7 +93,9 @@
       saved.npcTopics = Object.fromEntries(villageCast.map(npc => [npc.id,
         Array.isArray(oldTopics[npc.id]) ? [...new Set(oldTopics[npc.id].filter(id => npc.topics.some(topic => topic.id === id)))] : []
       ]));
-      saved.conclusionBuilt = Boolean(saved.conclusionBuilt || saved.confirmed || saved.sent);
+      saved.phoneHistory = Array.isArray(saved.phoneHistory) ? saved.phoneHistory : [];
+      saved.contactedPeople = Array.isArray(saved.contactedPeople) ? saved.contactedPeople : [];
+      saved.conclusionBuilt = Boolean(saved.conclusionBuilt || (!saved.contactedPeople.some(person => person.name === '盛德昌') && (saved.confirmed || saved.sent)));
       return saved;
     }
     catch { return { ...defaults }; }
@@ -299,7 +303,7 @@
       ...(state.legacyOpened ? [['14:53', '单位沿革', '东岚农机厂后更名为东岚机电二厂。']] : []),
       ...(state.rosterUnlocked ? [['15:02', '去向确认', '盛德昌于 2003 年调往荣川。']] : []),
       ...(state.personFound ? [['15:11', '建立候选', '人物库中找到一名信息吻合的盛德昌。']] : []),
-      ...(state.confirmed ? [['15:14', '确认找到', '三项身份信息相互吻合。']] : []),
+      ...(state.confirmed ? [['15:14', '确认找到', state.contactedPeople.some(person=>person.name==='盛德昌')?'已通过电话联系并确认身份。':'三项身份信息相互吻合。']] : []),
       ...(state.sent ? [['15:16', '资料已发送', '联系方式已发送给投稿人匿名投稿人。']] : [])
     ];
     document.querySelector('#caseLog').innerHTML = logs.map(item => `<div class="log-item"><time>${item[0]}</time><i></i><div><strong>${item[1]}</strong><p>${item[2]}</p></div></div>`).join('');
@@ -318,12 +322,16 @@
         ${state.confirmed
           ? '<button class="target-confirmed" disabled>✓ 已确认找到</button>'
           : state.conclusionBuilt
-            ? '<button class="case-primary case-primary--full" data-confirm-target>确认是同一个人</button>'
+            ? '<button class="case-primary case-primary--full" data-confirm-target>联系人物</button>'
             : '<button class="case-secondary case-primary--full" data-open-evidence>先在证据墙提交身份结论</button>'}`;
     }
+    target.insertAdjacentHTML('beforeend','<button class="case-secondary case-primary--full" data-open="phone">电话联系</button>');
   }
 
   function getObjective() {
+    if (state.contactedPeople.some(person => person.name === '盛德昌') && !state.sent) return { title:'已联系并确认身份', copy:'通话记录已留存。', action:'<button class="case-primary" data-send-result>发送联系资料</button>' };
+    if (state.contactedPeople.some(person => person.name === '盛德昌') && state.sent && !state.clinicSolved) return { title:'继续寻人调查', copy:'选题资料已更新。', action:state.chapterOneStarted?'<button class="case-primary" data-open-remote>打开远程资料桌</button>':'<button class="case-primary" data-open-next-message>查看匿名投稿人的回复</button>' };
+
     if (state.chapterOneStarted && state.clinicSolved && window.StoryFlow) return {
       title: '继续跨文档调查', copy: '调阅当前阶段的材料、核对来源，并提交调查结论。',
       action: '<button class="case-primary" data-story-open>打开调查流程</button>'
@@ -632,7 +640,7 @@
   }
 
   function rosterContent() {
-    return `<div class="roster-paper"><span>内部通讯资料 · 2008 年整理</span><h3>维修车间退休、调离人员</h3><div class="roster-row"><b>0717</b><strong>盛德昌</strong><span>维修二组</span><em>2003 年调往荣川，后办理退休</em></div><p>注：联系方式仅供原厂职工联络使用。</p></div>`;
+    return `<div class="roster-paper"><span>内部通讯资料 · 2008 年整理</span><h3>维修车间退休、调离人员</h3><div class="roster-row"><b>0717</b><strong>盛德昌</strong><span>维修二组</span><em>2003 年调往荣川，后办理退休</em></div><p>联系电话：0717002003。联系方式仅供原厂职工联络使用。</p></div>`;
   }
 
   function showPasswordForm() {
@@ -654,7 +662,7 @@
         <div><span>人物库编号 RW-330184</span><h3>盛德昌</h3><p>男 · 67 岁 · 现居荣川市青源区</p></div>
         <b>高匹配</b>
         <dl><div><dt>曾用单位</dt><dd>东岚机电二厂</dd></div><div><dt>入厂记录</dt><dd>原东岚农机厂维修二组</dd></div><div><dt>调动记录</dt><dd>2003 年转入荣川农机配件公司</dd></div></dl>
-        <button data-add-candidate>${state.personFound ? '已加入本案' : '加入候选人'}</button>
+        <p>联系电话：0717002003</p><button data-add-candidate>${state.personFound ? '已加入本案' : '加入候选人'}</button>
       </article>`;
     return true;
   }
@@ -907,7 +915,7 @@
     if (event.target.closest('[data-open-factory-photo]')) openFactoryPhoto();
     if (event.target.closest('[data-open-password]')) showPasswordForm();
     if (event.target.closest('[data-add-candidate]')) { saveState({ personFound: true }); desktopAPI.showToast('候选人已建立', '返回选题页核对身份依据。'); peopleSearch('盛德昌', '荣川'); }
-    if (event.target.closest('[data-confirm-target]')) { saveState({ confirmed: true }); desktopAPI.showToast('确认找到', '盛德昌的身份信息已闭合。'); }
+    if (event.target.closest('[data-confirm-target]')) desktopAPI.openWindow('phone');
     if (event.target.closest('[data-focus-target]')) document.querySelector('#targetCard')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     if (event.target.closest('[data-send-result]')) showSendDialog();
     if (event.target.closest('[data-cancel-send], [data-close-decision]')) event.target.closest('.decision-layer')?.remove();
@@ -997,6 +1005,10 @@
     document.dispatchEvent(new Event('arg-state-changed'));
   });
   if (villagePage) enterVillageScene(villageView);
+  window.PhoneApp?.init({getState:()=>state, save:saveState, confirm:contact=>{
+    saveState({ contactedPeople:[...state.contactedPeople.filter(person=>person.id!==contact.id),{id:contact.id,name:contact.name,number:contact.number}], ...(contact.name==='盛德昌'?{personFound:true,confirmed:true}:{}) });
+    desktopAPI.showToast('已找到', '已联系并确认身份。');
+  }});
   renderGame();
   if (villagePage) {
     document.querySelectorAll('.window').forEach(win => desktopAPI.closeWindow(win));

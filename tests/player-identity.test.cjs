@@ -16,7 +16,7 @@ function boot(t, saved = {}, url = 'https://find-you.test/') {
   const w = dom.window, d = w.document;
   w.localStorage.setItem(key, JSON.stringify(saved));
   if (url.startsWith('http://127.0.0.1')) w.eval(fs.readFileSync(path.join(root, 'cloud-save.js'), 'utf8'));
-  for (const file of ['app.js', 'village-npcs.js', 'village-scenes.js', 'village-effects.js', 'ghost-hands.js', 'search-keywords.js', 'story-documents.js', 'story-config.js', 'story-flow.js', 'archive-search.js', 'game.js', 'city-news.js']) {
+  for (const file of ['app.js', 'village-npcs.js', 'village-scenes.js', 'village-effects.js', 'ghost-hands.js', 'search-keywords.js', 'story-documents.js', 'story-config.js', 'story-flow.js', 'archive-search.js', 'phone-config.js', 'phone-app.js', 'game.js', 'city-news.js']) {
     w.eval(fs.readFileSync(path.join(root, file), 'utf8'));
   }
   t.after(() => { w.close(); assert.deepEqual(errors, []); });
@@ -171,4 +171,33 @@ test('fresh localhost reset releases save protection and closes identity setup a
   assert.equal(g.d.querySelector('#identitySetup').hidden, true);
   assert.ok(g.d.querySelector('#editorBriefing'));
   assert.equal(JSON.parse(g.w.localStorage.getItem(key)).playerName, '林晚');
+});
+
+function dial(g, number) {
+  g.d.querySelector('#phoneNumber').value=number;
+  g.d.querySelector('#phoneDialForm').dispatchEvent(new g.w.Event('submit',{bubbles:true,cancelable:true}));
+}
+test('phone marks found only after completing contact and never sends automatically', t => {
+  const g=boot(t,{playerName:'林予安',playerGender:'female',accepted:true});
+  assert.equal(g.d.querySelector('#personSubmitForm'),null);
+  dial(g,'0717002003');
+  assert.equal(g.state().confirmed,false);
+  assert.equal(g.d.querySelector('#phoneStatus').textContent,'通话中');
+  for(let i=0;i<4;i++)g.d.querySelector('#phoneContinue').click();
+  assert.equal(g.state().confirmed,true);
+  assert.equal(g.state().sent,false);
+  assert.equal(g.state().conclusionBuilt,false);
+  assert.equal(g.state().contactedPeople[0].name,'盛德昌');
+  const restored=boot(t,g.state());
+  assert.equal(restored.state().confirmed,true);
+  assert.equal(restored.state().conclusionBuilt,false);
+});
+test('unknown numbers and early hangup do not find a person', t => {
+  const g=boot(t,{playerName:'林予安',playerGender:'female',accepted:true});
+  dial(g,'0000000000');
+  assert.equal(g.d.querySelector('#phoneStatus').textContent,'无法接通');
+  assert.equal(g.state().confirmed,false);
+  dial(g,'0717002003');g.d.querySelector('#phoneHangup').click();
+  assert.equal(g.state().confirmed,false);
+  assert.equal(g.state().phoneHistory.at(-1).result,'已挂断');
 });
