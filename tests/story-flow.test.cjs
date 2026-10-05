@@ -33,8 +33,8 @@ function boot(t,saved=ready) {
    w.StoryFlow.openDoc(id);assert.equal(d.querySelector('#storyReader').open,true,id);
    const lock=d.querySelector('#storyUnlock');
    if(lock){lock.querySelector('input').value=codes[id];submit(lock);assert.equal(d.querySelector('#storyUnlock'),null,id);}
-   const claim=d.querySelector(`[data-story-collect="${id}"]`);assert.ok(claim,id);
-   if(!claim.disabled)claim.click();
+   assert.equal(d.querySelector(`[data-story-collect="${id}"]`),null);
+   assert.ok(w.ARGGame.getState().storyProgress.collected.includes(id));
    click('#storyReader [data-story-close]');
  }
  function solve(id){
@@ -155,7 +155,7 @@ test('source documents open independently of chapters, passwords remain puzzles 
  g.click('#storyReader [data-story-close]');
  g.w.LingchuanSearch.search('C1-04');assert.ok(g.d.querySelector('[data-result-id="story-C1-04"]'));
  g.click('[data-search-document="story-C1-04"]');assert.match(g.d.querySelector('.search-document-body').textContent,/罗桂枝/);
- g.click('[data-search-bookmark="story-C1-04"]');assert.equal(g.saved().storyProgress.collected.includes('C1-04'),true);
+ assert.equal(g.saved().storyProgress.collected.includes('C1-04'),true);
  g.w.StoryFlow.openDoc('C1-05');assert.match(g.d.querySelector('#storyReader').textContent,/校友附件/);assert.doesNotMatch(g.d.querySelector('#storyReader').textContent,/出生年：1968/);
  const lock=g.d.querySelector('#storyUnlock');lock.querySelector('input').value='0000';g.submit(lock);assert.ok(g.d.querySelector('#storyUnlock'));
 });

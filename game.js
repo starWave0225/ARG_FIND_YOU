@@ -7,6 +7,9 @@
     playerGender: null,
     playerName: '',
     accepted: false,
+    artifactNotes: {},
+    editorBriefingStep: 0,
+    editorBriefingDone: false,
     envelopeOpened: false,
     clues: [],
     legacyOpened: false,
@@ -177,10 +180,6 @@
         <span class="eyebrow eyebrow--dark">TG-240824-019 / 附件 1</span>
         <h3>旧信封背面</h3>
         <p>匿名投稿人说，这是他手上唯一留下来的东西。纸张受潮严重，有些字只能勉强辨认。</p>
-        <div class="artifact-observations">
-          <button data-record-clue="envelopeFactory" class="${state.clues.includes('envelopeFactory') ? 'is-recorded' : ''}"><i>${state.clues.includes('envelopeFactory') ? '✓' : '+'}</i><span><strong>记录收件单位</strong><small>“东岚……农机厂”</small></span></button>
-          <button data-record-clue="envelopePostcode" class="${state.clues.includes('envelopePostcode') ? 'is-recorded' : ''}"><i>${state.clues.includes('envelopePostcode') ? '✓' : '+'}</i><span><strong>记录残缺邮编</strong><small>“43?1?0”</small></span></button>
-        </div>
         `;
     } else {
       title.textContent = '网页图片 · 图像查看器';
@@ -189,16 +188,23 @@
         <span class="eyebrow eyebrow--dark">东岚机电退休职工之家</span>
         <h3>维修二组职工合影</h3>
         <p>网页说明：摄于 1998 年厂庆前夕。照片里没有写姓名，但有人还戴着原工号牌。</p>
-        <form class="artifact-answer" id="workerNumberForm">
-          <label>照片中能够辨认的工号</label>
-          <div><input id="workerNumberInput" inputmode="numeric" maxlength="4" placeholder="输入四位数字" value="${state.clues.includes('workerNumber') ? '0717' : ''}" ${state.clues.includes('workerNumber') ? 'disabled' : ''}/><button ${state.clues.includes('workerNumber') ? 'disabled' : ''}>${state.clues.includes('workerNumber') ? '已记录' : '确认'}</button></div>
-          <small id="workerNumberFeedback">${state.clues.includes('workerNumber') ? '工号已加入本案线索。' : ''}</small>
-        </form>`;
+`;
     }
+    const note = document.createElement('label');
+    note.className = 'artifact-personal-note';
+    note.textContent = '个人笔记';
+    const input = document.createElement('textarea');
+    input.dataset.artifactNote = artifactMode;
+    input.placeholder = '写下你自己的观察（自动保存）';
+    input.maxLength = 4000;
+    input.value = typeof state.artifactNotes?.[artifactMode] === 'string' ? state.artifactNotes[artifactMode] : '';
+    note.appendChild(input);
+    side.appendChild(note);
   }
 
   function renderGame() {
     renderIdentitySetup();
+    if (!villagePage && state.playerName && state.playerGender && !state.accepted && !state.editorBriefingDone) showEditorBriefing();
     renderCaseDetail();
     renderEvidence();
     renderFiles();
@@ -231,6 +237,7 @@
     if (!layer) return;
     const hasIdentity = Boolean(state.playerName) && ['male', 'female'].includes(state.playerGender);
     const wasOpen = !layer.classList.contains('is-hidden');
+    layer.hidden = hasIdentity;
     layer.classList.toggle('is-hidden', hasIdentity);
     layer.setAttribute('aria-hidden', String(hasIdentity));
     layer.inert = hasIdentity;
@@ -321,10 +328,9 @@
       title: '继续跨文档调查', copy: '调阅当前阶段的材料、核对来源，并提交调查结论。',
       action: '<button class="case-primary" data-story-open>打开调查流程</button>'
     };
-    const hasEnvelopeClues = state.clues.includes('envelopeFactory') && state.clues.includes('envelopePostcode');
-    if (!state.envelopeOpened || !hasEnvelopeClues) return {
+    if (!state.envelopeOpened) return {
       title: '先看看投稿人留下的旧信封',
-      copy: '地址已经受潮。把仍能辨认的收件单位和邮编记录下来。',
+      copy: '投稿人随信附了一张旧信封照片。',
       action: '<button class="case-primary" data-open-envelope>查看旧信封</button>'
     };
     if (!state.clues.includes('postalArea') || !state.legacyOpened) return {
@@ -332,15 +338,10 @@
       copy: '用残缺邮编和“东岚农机厂”检索地方资料。旧单位可能已经改过名字。',
       action: '<button class="case-primary" data-objective="archive">打开资料检索</button>'
     };
-    if (!state.clues.includes('workerNumber')) return {
-      title: '在旧厂网页里找盛德昌留下的编号',
-      copy: '退休职工网页只有一张维修二组合影。通讯录提示密码为“原工号”。',
-      action: '<button class="case-primary" data-objective="legacy">打开旧厂网页</button>'
-    };
     if (!state.rosterUnlocked) return {
-      title: '打开退休人员通讯录',
-      copy: '你已经从合影中找到一枚四位工号。用它试试压缩包。',
-      action: '<button class="case-primary" data-objective="legacy">返回旧厂网页</button>'
+      title: '调查仍在进行',
+      copy: '已阅资料与个人笔记可以随时回看。',
+      action: '<button class="case-primary" data-objective="archive">打开资料检索</button>'
     };
     if (!state.personFound) return {
       title: '用新线索核对人物库',
@@ -425,7 +426,7 @@
       intake: `<span class="document-kicker">投稿登记 / TG-240824-019</span><h2>想找几位很多年没见的故人</h2><dl><div><dt>投稿人</dt><dd>匿名投稿人 · TG-240824-019</dd></div><div><dt>首位目标</dt><dd>盛德昌，曾在东岚农机厂工作</dd></div><div><dt>唯一附件</dt><dd>旧信封背面.jpg</dd></div></dl><blockquote>“这几年身体不如以前，总想起过去的一些事。”</blockquote><p class="document-note">登记员备注：投稿人一次提到“几位故人”，但首轮只提供了一个姓名。</p>`,
       envelope: `<span class="document-kicker">附件检视记录 / 14:38</span><h2>旧信封背面</h2><figure><img src="./assets/evidence/old-envelope.png" alt="旧信封" /></figure><dl><div><dt>可辨单位</dt><dd>东岚农机厂</dd></div><div><dt>残缺数字</dt><dd>43?1?0</dd></div><div><dt>纸面便笺</dt><dd>“到荣川后记得来信”</dd></div></dl><p class="document-note">这句话不能证明盛德昌已经去了荣川，只能作为后续核验方向。</p>`,
       postal: `<span class="document-kicker">岭川县地方志馆 / 扫描页 06</span><h2>一九九三年邮政投递区划调整表</h2><table><thead><tr><th>支局</th><th>服务区域</th><th>邮政编码</th></tr></thead><tbody><tr><td>东岚邮电支局</td><td>东岚镇、盛家村及周边厂矿</td><td><b>435160</b></td></tr><tr><td>青源邮电支局</td><td>青源街道</td><td>435171</td></tr></tbody></table><p class="document-note">检索结论：信封残码与东岚镇区划一致。</p>`,
-      factory: `<span class="document-kicker">企业沿革档案 / DL-2000-17</span><h2>东岚农机厂改制登记摘录</h2><p>二〇〇〇年六月，东岚农机厂改制并更名为<strong>东岚机电二厂</strong>。原厂址、维修车间人事档案与退休关系由新单位承接。</p><div class="document-stamp">岭川县<br />企业档案</div><p class="document-note">因此旧信封与退休职工网页属于同一条单位沿革链。</p>`,
+      factory: `<span class="document-kicker">企业沿革档案 / DL-2000-17</span><h2>东岚农机厂改制登记摘录</h2><p>二〇〇〇年六月，东岚农机厂改制并更名为<strong>东岚机电二厂</strong>。原厂址、维修车间人事档案与退休关系由新单位承接。</p><p>原企业为县属国有企业。改制期间开展资产清查、车间调整和职工分流安置；待岗、转岗、退休及解除劳动关系分别登记。</p><p>附件目录：职工分流安置通知、原车间人员交接清册。</p><div class="document-stamp">岭川县<br />企业档案</div>`,
       roster: `<span class="document-kicker">内部通讯资料 / 2008</span><h2>维修车间退休、调离人员</h2><table><thead><tr><th>原工号</th><th>姓名</th><th>原班组</th><th>去向</th></tr></thead><tbody><tr><td>0717</td><td><b>盛德昌</b></td><td>维修二组</td><td>2003 年调往荣川，后办理退休</td></tr></tbody></table><p class="document-note">文件密码与 1998 年合影胸牌一致，形成跨材料主键。</p>`,
       conclusion: `<span class="document-kicker">QT-073 / 调查结论</span><h2>人物库候选人与旧信封收件人为同一人</h2><ol><li>东岚农机厂后来更名为东岚机电二厂；</li><li>1998 年维修二组合影中的原工号为 0717；</li><li>同一工号的通讯录记录了盛德昌于 2003 年调往荣川。</li></ol><p class="document-note">经办：${escapedPlayerName()}（${terms.label}） · 结论由玩家提交，不由系统自动生成。</p>`,
       receipt: `<span class="document-kicker document-kicker--danger">外发回执 / 不可撤回</span><h2>联系资料已发送</h2><dl><div><dt>接收账号</dt><dd>TG-240824-019</dd></div><div><dt>目标人物</dt><dd>盛德昌</dd></div><div><dt>发送内容</dt><dd>联系电话、荣川市青源区常住地区</dd></div><div><dt>操作人</dt><dd>${escapedPlayerName()}</dd></div></dl><p class="document-warning">系统未记录投稿人与目标人物的关系证明。本回执将在后续事件时间线中保留。</p>`,
@@ -665,6 +666,40 @@
     document.querySelector('#desktop').appendChild(layer);
   }
 
+  function showEditorBriefing(replay = false, replayStep = 0) {
+    document.querySelector('#editorBriefing')?.remove();
+    document.querySelectorAll('.editor-demo-target').forEach(el => el.classList.remove('editor-demo-target'));
+    const step = replay ? replayStep : Math.min(2, Number(state.editorBriefingStep) || 0);
+    const pages = [
+      ['先熟悉一下你的工作台', `<p>${escapedPlayerName()}，欢迎来栏目组。这台电脑以后就是你的调查桌。桌面的图标可以打开应用，窗口右上角可以最小化或关闭；最小化后，点底部任务栏就能回来。</p><p>“节目工作台”里有投稿箱和你的选题。观众寄来的原话、附件都留在投稿里，接下的工作也在这里跟进。</p>`, '资料怎么查？'],
+      ['查到的东西，要留得住', '<p>“岭川搜寻”用来检索文章和原始档案。输入你想查的词，打开结果后可以查看正文与出处，也可以收藏，方便回头再读。</p><p>打开的游戏内材料会自动留进案卷，之后到“选题资料”里重读。“证据墙”用来整理材料，“人物库”可以查询人物记录。</p><p>系统只留存你打开的资料，不判断你掌握了哪些线索。核验和外发都要由你亲自确认，系统不会替你提交。</p>', '今天有什么任务？'],
+      ['第一份投稿，交给你了', '<p>今天收到一份匿名投稿，联系账号是 TG-240824-019。对方想找几位多年没见的故人，第一位叫盛德昌，曾在东岚农机厂工作。</p><p>投稿人附了一张旧信封的照片。原信和附件我都放在投稿箱里了，你先看看，再决定接下这个选题。</p><p>找到资料后先核验，确认再发给对方。别急着下结论，我们做的是寻人，也是在替别人保管一段过去。</p>', '打开这份投稿']
+    ];
+    const [title, body, action] = pages[step];
+    const demoWindow = step === 1 ? 'archive' : 'workbench';
+    desktopAPI.closeModal();
+    desktopAPI.openWindow(demoWindow);
+    if (step !== 1) desktopAPI.showPage(step === 2 ? 'inbox' : 'home');
+    const target = document.querySelector(`[data-window="${demoWindow}"]`);
+    target.classList.add('editor-demo-target');
+    const demos = [
+      ['窗口操作', '点击下面的演示按钮，看看窗口如何最小化，再从任务栏恢复。', '演示最小化与恢复'],
+      ['资料检索', '搜索框就在这里。输入调查中发现的关键词，点击搜索；阅读页面可以查看出处，打开的资料会自动留存。', '演示打开选题资料'],
+      ['投稿交接', '工作台左侧进入投稿箱，点击投稿即可阅读来信与附件。接受选题后，工作台会保留本案进度。', '演示打开投稿']
+    ];
+    const [demoTitle, demoCopy, demoAction] = demos[step];
+    const layer = document.createElement('div');
+    layer.id = 'editorBriefing';
+    layer.className = 'decision-layer editor-briefing';
+    layer.dataset.replay = String(replay);
+    layer.setAttribute('role', 'dialog');
+    layer.setAttribute('aria-modal', 'true');
+    layer.setAttribute('aria-labelledby', 'editorBriefingTitle');
+    layer.innerHTML = `<div class="editor-demo-caption"><span>操作演示 · ${step + 1}/3</span><h3>${demoTitle}</h3><p>${demoCopy}</p><button data-editor-demo data-step="${step}">${demoAction}</button><small role="status" id="editorDemoStatus"></small></div><figure class="editor-standing"><img src="./assets/characters/pixel/editor-v1.png" alt="栏目主编拿着文件夹，抬手向你介绍工作台" /><figcaption>栏目主编</figcaption></figure><article class="message-dialog"><span class="eyebrow eyebrow--dark">栏目主编 · 入职交谈 ${step + 1}/3</span><h2 id="editorBriefingTitle">${title}</h2><div class="editor-briefing-copy">${body}</div><footer><button class="case-primary" data-editor-next data-step="${step}">${action}</button></footer></article>`;
+    document.querySelector('#desktop').appendChild(layer);
+    layer.querySelector('button').focus();
+  }
+
   function showNextMessage() {
     const layer = document.createElement('div');
     layer.className = 'decision-layer';
@@ -694,6 +729,57 @@
   });
 
   document.addEventListener('click', event => {
+    const demo = event.target.closest('[data-editor-demo]');
+    if (demo) {
+      const step = Number(demo.dataset.step);
+      document.querySelectorAll('.editor-demo-target').forEach(el => el.classList.remove('editor-demo-target'));
+      if (step === 0) {
+        const win = document.querySelector('[data-window="workbench"]');
+        if (win.hidden) {
+          desktopAPI.openWindow('workbench');
+          win.classList.add('editor-demo-target');
+          demo.textContent = '演示最小化与恢复';
+          document.querySelector('#editorDemoStatus').textContent = '窗口已从任务栏恢复。';
+        } else {
+          win.querySelector('[data-action="minimize"]').click();
+          document.querySelector('[data-task="workbench"]').classList.add('editor-demo-target');
+          demo.textContent = '从任务栏恢复窗口';
+          document.querySelector('#editorDemoStatus').textContent = '窗口已最小化，底部任务栏仍保留应用。';
+        }
+      } else if (step === 1) {
+        desktopAPI.openWindow('files');
+        document.querySelector('[data-window="files"]').classList.add('editor-demo-target');
+        document.querySelector('#editorDemoStatus').textContent = '这里保留已取得的材料，可随时重读。';
+      } else {
+        desktopAPI.openSubmission();
+        document.querySelector('#submissionModal').classList.add('editor-demo-target');
+        document.querySelector('#editorDemoStatus').textContent = '这是投稿原信；下一步交给你处理。';
+      }
+      return;
+    }
+    const editorNext = event.target.closest('[data-editor-next]');
+    if (editorNext) {
+      const step = Number(editorNext.dataset.step);
+      const replay = editorNext.closest('#editorBriefing').dataset.replay === 'true';
+      if (step < 2 && replay) {
+        showEditorBriefing(true, step + 1);
+      } else if (step < 2) {
+        saveState({editorBriefingStep: step + 1, editorBriefingDone: false});
+        showEditorBriefing();
+      } else {
+        document.querySelector('#editorBriefing')?.remove();
+        document.querySelectorAll('.editor-demo-target').forEach(el => el.classList.remove('editor-demo-target'));
+        if (!replay) saveState({editorBriefingStep: 2, editorBriefingDone: true});
+        desktopAPI.openWindow('workbench');
+        desktopAPI.showPage('inbox');
+        desktopAPI.openSubmission();
+      }
+      return;
+    }
+    if (event.target.closest('[data-editor-replay]')) {
+      showEditorBriefing(true);
+      return;
+    }
     const identityButton = event.target.closest('button[data-player-gender]');
     if (identityButton) {
       const playerGender = identityButton.dataset.playerGender;
@@ -738,8 +824,6 @@
 
     if (event.target.closest('#caseBack')) { desktopAPI.showPage('cases'); return; }
 
-    const clueButton = event.target.closest('[data-record-clue]');
-    if (clueButton) { addClue(clueButton.dataset.recordClue); renderArtifact(); return; }
 
     const tool = event.target.closest('[data-case-tool]')?.dataset.caseTool;
     if (tool === 'archive') openArchive();
@@ -833,18 +917,20 @@
 
   });
 
+  document.addEventListener('input', event => {
+    const key = event.target.dataset?.artifactNote;
+    if (!['envelope', 'factory'].includes(key)) return;
+    state = {...state, artifactNotes: {...state.artifactNotes, [key]: event.target.value.slice(0, 4000)}};
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    document.dispatchEvent(new Event('arg-state-changed'));
+  });
+
   document.addEventListener('submit', event => {
-    if (event.target.id === 'workerNumberForm') {
-      event.preventDefault();
-      const input = document.querySelector('#workerNumberInput');
-      if (input.value.trim() === '0717') { addClue('workerNumber'); renderArtifact(); }
-      else document.querySelector('#workerNumberFeedback').textContent = '核验未通过。';
-    }
     if (event.target.id === 'zipPasswordForm') {
       event.preventDefault();
       const input = document.querySelector('#zipPassword');
       if (input.value.trim() === '0717') {
-        saveState({ rosterUnlocked: true });
+        saveState({ rosterUnlocked: true, clues: [...new Set([...state.clues, 'workerNumber'])] });
         if (!state.clues.includes('movedRongchuan')) addClue('movedRongchuan');
         showLegacySite();
       } else {

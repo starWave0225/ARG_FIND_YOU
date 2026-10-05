@@ -2,12 +2,21 @@ const villagePage = new URLSearchParams(location.search).get('view') === 'villag
 document.documentElement.classList.toggle('village-page', villagePage);
 if (villagePage) document.title = '盛家村 · 现场调查';
 const desktop = document.querySelector('#desktop');
+if (villagePage) desktop.appendChild(document.querySelector('#cloudSaveOpen'));
 const windows = [...document.querySelectorAll('.window')];
 const modal = document.querySelector('#submissionModal');
 const toast = document.querySelector('#toast');
 const startMenu = document.querySelector('#startMenu');
 const taskbarApps = [...document.querySelectorAll('.task-app')];
 let zIndex = 20;
+// Local playtests start fresh; the separate village tab belongs to the same run.
+const freshLocalTest = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)
+  && !villagePage && !new URLSearchParams(location.search).has('preview');
+if (freshLocalTest) {
+  window.ARGCloudSave?.beforeReset();
+  localStorage.removeItem('find-you-state-v1');
+  window.ARGCloudSave?.finishLocalReset();
+}
 if (new URLSearchParams(location.search).has('reset')) {
   localStorage.removeItem('find-you-state-v1');
   history.replaceState(null, '', location.pathname);

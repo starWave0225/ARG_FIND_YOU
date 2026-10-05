@@ -8,3 +8,11 @@ __pycache__/
 .dev.vars.*
 .env
 .env.*
+
+# Rebuildable video editing intermediates
+assets/video/donglan-workers/scene-*.mp4
+assets/video/donglan-workers/scenes.txt
+assets/video/donglan-workers/title-*.txt
+assets/video/donglan-workers/subtitle-*.txt
+assets/video/donglan-workers/label.txt
+assets/video/donglan-workers/credit.txt

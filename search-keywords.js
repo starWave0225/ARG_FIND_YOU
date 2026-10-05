@@ -284,3 +284,14 @@ window.SearchKeywordLinks = [
     ]
   }
 ];
+
+window.SearchKeywordLinks.push(
+  { keywords: ['国企改革', '机械厂改制', '东岚农机厂', '东兰机械厂', '下岗', '职工安置', '东岚农机厂职工分流安置通知'], articles: ['factory-resettlement', 'factory-register'] },
+  { keywords: ['下岗工人', '东岚老工人', '东兰机械厂', '厂门关了以后：东岚老工人口述摘录'], articles: ['factory-workers-memory'] },
+  { keywords: ['东兰机械厂下岗工人', '工友群', '东兰机械厂下岗工人：工友联络帖'], articles: ['factory-workers-group'] }
+);
+
+window.SearchKeywordLinks.push(
+  { keywords: ['东岚农机厂', '东兰机械厂', '东岚机械厂', '农机厂', '机械厂', '厂史', '厂子介绍', '国企改革', '改制', '机械厂改制', '下岗工人', '下岗', '职工安置', '下岗工人安置', '分流安置', '养老保险', '东岚农机厂：老厂沿革与改制职工安置'], articles: ['factory-overview'] },
+  { keywords: ['下岗工人安置', '分流安置', '待岗', '转岗', '职工分流', '东岚农机厂职工分流安置通知'], articles: ['factory-resettlement'] }
+);

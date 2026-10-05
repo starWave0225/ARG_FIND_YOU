@@ -126,9 +126,10 @@
   function openDoc(id) {
     if (!available(id)) return;
     capture(); reading = id;
+    if (unlocked(id) && !flow().collected.includes(id)) save({collected:[...new Set([...flow().collected,id])]});
     if(id.startsWith('J')&&!flow().lettersRead.includes(id))save({lettersRead:[...flow().lettersRead,id]});
     const reader = document.querySelector('#storyReader');
-    reader.innerHTML = `<header><div><small>${esc(id)} · ${esc(source(id))}</small><h2>${esc(title(id))}</h2></div><button data-story-close aria-label="关闭文档">×</button></header><article class="story-document">${unlocked(id) ? body(id) : `<p>${esc(config.locks[id].cover)}</p><form id="storyUnlock" data-doc="${id}"><label>附件查验码<input name="code" autocomplete="off" required></label><button>查验并打开</button><p id="storyUnlockFeedback" role="status"></p></form>`}</article><footer>${unlocked(id) ? `<button data-story-collect="${id}" ${collected(id)?'disabled':''}>${id.startsWith('RW')?'留存番外':collected(id)?'已收入案卷':'连同来源收入案卷'}</button>` : ''}</footer>`;
+    reader.innerHTML = `<header><div><small>${esc(id)} · ${esc(source(id))}</small><h2>${esc(title(id))}</h2></div><button data-story-close aria-label="关闭文档">×</button></header><article class="story-document">${unlocked(id) ? body(id) : `<p>${esc(config.locks[id].cover)}</p><form id="storyUnlock" data-doc="${id}"><label>附件查验码<input name="code" autocomplete="off" required></label><button>查验并打开</button><p id="storyUnlockFeedback" role="status"></p></form>`}</article><footer>${unlocked(id) ? '<span>已自动留存原文与来源</span>' : ''}</footer>`;
     if (!reader.open) reader.showModal();
     reader.querySelector('[data-story-close]').focus();
   }
@@ -171,7 +172,7 @@
     if(section==='letters')content=lettersMarkup();
     else if(section==='main'&&done('PUBLISH')&&active==='PUBLISH')content=endingMarkup();
     else if (section==='main' && !enabled(now) && !main.some(s=>done(s.id))) content = `<section class="story-welcome"><span>QT-073 / 调查流程</span><h2>${!state().sent?'当前选题':!state().chapterOneStarted?'投稿回复':'远程资料交接'}</h2>${state().sent?(state().chapterOneStarted?'<button data-open-remote>打开远程资料桌</button>':'<button data-open-next-message>查看投稿回复</button>'):''}<button data-story-prologue>回到当前选题</button><div class="story-doc-grid">${Object.keys(legacy).filter(baseDocument).map(docButton).join('')}</div></section>`;
-    else if (section==='files') content = `<section class="story-library"><h2>已取得的案卷材料</h2><p>材料按分卷保留，可随时回看出处。番外文章单独留存。</p><div class="story-doc-grid">${Object.keys(documents).filter(id=>collected(id)&&!id.startsWith('RW')).map(docButton).join('') || '<p>打开场景中的材料，再点击“连同来源收入案卷”。</p>'}</div></section>`;
+    else if (section==='files') content = `<section class="story-library"><h2>已取得的案卷材料</h2><p>材料按分卷保留，可随时回看出处。番外文章单独留存。</p><div class="story-doc-grid">${Object.keys(documents).filter(id=>collected(id)&&!id.startsWith('RW')).map(docButton).join('') || '<p>打开过的游戏内材料会自动留存在这里。</p>'}</div></section>`;
     else if (section==='side') content = `<section class="story-library"><h2>盛家村 · 可选走访与档案</h2><p>这些调查不影响主线终审。可返回主线，也可在报道完成后继续。</p><div class="story-step-grid">${side.filter(enabled).map(s=>`<button data-story-step="${s.id}"><small>${s.id} · ${config.scenes[s.scene][0]}</small><strong>${esc(s.title)}</strong><span>${done(s.id)?'✓ 已核验':'进入调查 →'}</span></button>`).join('')}</div></section>`;
     else if (section==='bonus') content = `<section class="story-library"><h2>番外阅读</h2><p>前作人物的后续片段，作为番外独立留存。</p>${['RW01','RW02'].map(id=>available(id)?docButton(id):`<div class="story-reward-lock"><h3>${esc(title(id))}</h3><p>${id==='RW01'?'完成版本来源、专项对账与授权接续调查后留存。':'完成原声比对、观察核验与任务停止回执后留存。'}</p></div>`).join('')}</section>`;
     else content = `${sceneMarkup(item.id==='DEPART'&&!done('DEPART')?'SC10':item.scene,item)}<div class="story-investigation"><header><small>${item.chapter===8?'终审':'第'+item.chapter+'章'} · ${item.id}</small><h2>${esc(item.title)}</h2></header><div class="story-doc-grid">${item.docs.map(docButton).join('')}</div>${puzzle(item)}</div>`;
@@ -202,8 +203,6 @@
     if (!enabled(item)||done(item.id)) return;
     capture();
     const values=drafts[item.id]||{};
-    const missing=item.docs.filter(id=>!collected(id));
-    if (missing.length) {feedback='材料尚未收齐。';render();return;}
     const bad=item.fields.findIndex((f,i)=>norm(values['a'+i])!==norm(f.answer==='$player'?state().playerName:f.answer));
     if (bad>=0) {feedback='核验未通过。';render();return;}
     if (item.order?.some((card,i)=>values['order'+i]!==card)) {feedback='核验未通过。';render();return;}

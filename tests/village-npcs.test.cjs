@@ -496,7 +496,7 @@ test('evidence return conversations accept openly collected copies without requi
     g.visit(scene);
     if(!(g.state().storyProgress?.collected || []).includes(id)) {
       assert.equal(g.document.querySelector(`[data-npc-topic="${topic}"]`),null,'No premature topic hint');
-      g.window.StoryFlow.openDoc(id);g.click(`[data-story-collect="${id}"]`);g.click('[data-story-close]');
+      g.window.StoryFlow.openDoc(id);g.click('[data-story-close]');
     }
     g.click(`[data-npc-topic="${topic}"]`);
     assert.equal(g.document.querySelector(`[data-npc-topic="${topic}"]`).getAttribute('aria-pressed'),'true');

@@ -8,7 +8,7 @@ async function hash(value) {
 function record(row) {
   return { state: JSON.parse(row.data), version: row.version, updatedAt: row.updated_at };
 }
-async function readBody(request) {
+async function readJSON(request) {
   if (!request.headers.get('Content-Type')?.startsWith('application/json')) throw new Error('invalid_body');
   const reader = request.body?.getReader();
   if (!reader) throw new Error('invalid_body');
@@ -26,6 +26,10 @@ async function readBody(request) {
   for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.length; }
   let body;
   try { body = JSON.parse(new TextDecoder().decode(bytes)); } catch { throw new Error('invalid_body'); }
+  return body;
+}
+async function readBody(request) {
+  const body = await readJSON(request);
   const state = body?.state;
   if (!state || typeof state !== 'object' || Array.isArray(state) ||
       typeof state.playerName !== 'string' || state.playerName.length > 12 ||
@@ -47,6 +51,18 @@ export default {
     }
     const path = new URL(request.url).pathname;
     try {
+      if (path === '/v1/group-gate') {
+        if (!['GET', 'POST'].includes(request.method)) return reply({ error: 'method_not_allowed' }, 405);
+        const ready = Boolean(env.GROUP_GATE_QUESTION && env.GROUP_GATE_ANSWER && /^https:\/\//.test(env.GROUP_GATE_QR_URL || ''));
+        if (request.method === 'GET') return reply({ ready, question: ready ? env.GROUP_GATE_QUESTION : '' });
+        if (!ready) return reply({ error: 'unavailable' }, 503);
+        const body = await readJSON(request);
+        if (typeof body?.answer !== 'string' || body.answer.length > 300) return reply({ error: 'invalid_body' }, 400);
+        const normalize = value => value.normalize('NFKC').trim();
+        const accepted = await hash(normalize(body.answer)) === await hash(normalize(env.GROUP_GATE_ANSWER));
+        if (!accepted) return reply({ error: 'verification_failed' }, 403);
+        return reply({ ok: true, qrUrl: env.GROUP_GATE_QR_URL });
+      }
       if (path === '/health' && request.method === 'GET') {
         await env.DB.prepare('SELECT token_hash FROM saves LIMIT 0').all();
         return reply({ ok: true, service: 'find-you-saves' });

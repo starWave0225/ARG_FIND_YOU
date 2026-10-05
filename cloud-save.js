@@ -164,6 +164,7 @@
   // Reset callers detach before clearing progress; an empty game must not overwrite the cloud.
   window.ARGCloudSave = {
     isReplacing: () => replacing,
+    finishLocalReset() { observed = raw(); dirtyAt = 0; replacing = false; message = ''; },
     beforeReset() { backup(); replacing = true; localStorage.removeItem(META); conflict = null; }
   };
   function observe() {

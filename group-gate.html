@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>联系核验 — 我要找到你</title>
+<link rel="stylesheet" href="group-gate.css">
+<script src="cloud-config.js" defer></script><script src="group-gate.js" defer></script>
+</head>
+<body>
+<main class="window"><header>联系核验</header><section>
+<p id="status" role="status" aria-live="polite">正在连接……</p>
+<form id="gate" hidden><label for="answer" id="question"></label><input id="answer" name="answer" maxlength="300" autocomplete="off" required><button type="submit">提交核验</button></form>
+<div id="access" hidden><p>核验通过</p><img id="qr" alt="微信群二维码"><p>请使用微信扫描二维码加入群聊。</p></div>
+</section></main>
+</body></html>

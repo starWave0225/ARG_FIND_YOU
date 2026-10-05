@@ -45,7 +45,7 @@ test('explicit keyword mappings return fixed articles, reject body-only/partial 
   g.filter('archiveKind', '原档扫描'); g.filter('archiveSource', 'business'); assert.deepEqual(g.ids(), ['factory-register']);
   g.click('[data-search-clear]');
   for (const query of ['原厂址', '查一下 原厂址', '东岚农', '东岚 不存在的关键词', '']) { g.search(query); assert.deepEqual(g.ids(), []); }
-  g.search('东岚农机厂'); assert.deepEqual(g.ids(), ['factory-register', 'factory-home', 'factory-reprint']);
+  g.search('东岚农机厂'); assert.deepEqual(g.ids(), ['factory-overview', 'factory-register', 'factory-resettlement', 'factory-home', 'factory-reprint']);
   g.search(' ｄｌ－２０００－１７ '); assert.deepEqual(g.ids(), ['factory-register']);
   g.search('1993 东岚'); assert.deepEqual(g.ids(), ['postal-1993']);
   assert.equal(g.state().clues.length, 0, 'Searching must not solve a clue');
@@ -73,13 +73,13 @@ test('legacy page and password remain usable, and returning to search does not l
   assert.match(g.d.querySelector('#archiveReaderView').textContent, /2003 年调往荣川/);
   g.click('[data-search-results]'); g.search('43?1?0'); assert.ok(g.ids().includes('postal-1993'));
   g.click('#archiveResult [data-search-document="postal-1993"]');
-  g.click('[data-search-record="postal"]'); assert.ok(g.state().clues.includes('postalArea'));
+  assert.ok(g.state().clues.includes('postalArea'));
   g.click('[data-search-results]'); g.search('DL-2000-17'); assert.ok(g.ids().includes('factory-register'));
 });
 
 test('collecting preserves provenance in case files, is idempotent, survives reload, and grants no identity conclusion', t => {
   const g = boot(t); g.search('厂史'); g.click('#archiveResult [data-search-document="factory-reprint"]');
-  g.click('[data-search-bookmark="factory-reprint"]'); g.click('[data-search-bookmark="factory-reprint"]');
+  g.w.LingchuanSearch.openDocument('factory-reprint');
   assert.deepEqual(Array.from(g.state().searchBookmarks), ['factory-reprint']); assert.equal(g.state().conclusionBuilt, false);
   g.click('[data-file-folder="case"]'); g.click('[data-open-document="search:factory-reprint"]');
   assert.match(g.d.querySelector('.case-document').textContent, /东岚退休职工之家/);
@@ -113,7 +113,7 @@ test('historical and HM sources are readable from a new game and do not advance 
     g.search(query); assert.ok(g.ids().includes(id),query);
     g.click(`#archiveResult [data-search-document="${id}"]`);
     assert.doesNotMatch(g.d.querySelector('.search-document-body').textContent,/尚未取得查阅条件|本阶段可调阅/);
-    g.click(`[data-search-bookmark="${id}"]`);
+    assert.equal(g.d.querySelector(`[data-search-bookmark="${id}"]`),null);
     assert.ok(g.state().searchBookmarks.includes(id));
   }
   g.search('母亲旧物');g.click('[data-search-document="story-C7-02"]');
@@ -142,4 +142,46 @@ test('query and restored search state cannot inject markup or introduce unknown 
   assert.deepEqual(Array.from(g.w.LingchuanSearch.documents(),doc=>doc.id), ['search:tourism-notice']);
   assert.match(g.d.querySelector('#archiveResult').textContent, /当前没有匹配结果/);
   assert.match(g.d.querySelector('#archiveHistory').textContent, /<img/);
+});
+
+test('factory reform materials lead to worker group without granting verification', t => {
+  const g = boot(t);
+  g.search('国企改革');
+  assert.ok(g.ids().includes('factory-resettlement'));
+  g.click('#archiveResult [data-search-document="factory-resettlement"]');
+  g.click('#archiveReaderView [data-search-document="factory-workers-memory"]');
+  g.click('#archiveReaderView [data-search-document="factory-workers-group"]');
+  const link = g.d.querySelector('#archiveReaderView a[href="./group-gate.html"]');
+  assert.ok(link);
+  assert.equal(link.target, '_blank');
+  assert.ok(g.state().searchBookmarks.includes('factory-workers-group'));
+  assert.equal(g.state().confirmed, false);
+  assert.equal(g.state().sent, false);
+});
+
+test('factory overview is searchable by factory and resettlement topics from a fresh save', t => {
+  const g = boot(t, { playerGender: 'male' });
+  for (const term of ['东兰机械厂', '厂史', '下岗工人安置', '职工安置']) {
+    g.search(term); assert.ok(g.ids().includes('factory-overview'));
+  }
+  g.click('#archiveResult [data-search-document="factory-overview"]');
+  const text = g.d.querySelector('#archiveReaderView').textContent;
+  assert.match(text, /农机零部件加工和设备维修/);
+  assert.match(text, /生活费领取、养老保险接续和劳动关系办理/);
+  assert.ok(g.d.querySelector('[data-search-document="factory-workers-group"]'));
+  assert.equal(g.state().sent, false);
+});
+
+test('every independent draft is searchable by full title and archive number', t => {
+  const g = boot(t);
+  const code = fs.readFileSync(path.join(root, 'archive-search.js'), 'utf8');
+  const entries = g.w.eval(code.match(/  const catalog = (\[[\s\S]*?\n  \]);/)[1]);
+  for (const entry of entries) {
+    for (const term of [entry.title, entry.number]) {
+      g.search(term); assert.ok(g.ids().includes(entry.id), entry.id + ': ' + term);
+    }
+    assert.ok(entry.body || entry.action === 'legacy');
+    assert.ok(entry.keywords.length);
+    assert.doesNotMatch(entry.body, /制作备注|正文初稿/);
+  }
 });
