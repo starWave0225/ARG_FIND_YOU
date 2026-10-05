@@ -1,0 +1,13 @@
+.cloud-save-open { position: fixed; z-index: 150; right: 16px; top: 12px; padding: 6px 12px; color: #e9f0e6; background: #263d38; border: 1px solid #799087; border-radius: 4px; cursor: pointer; font: inherit; font-size: 12px; }
+.cloud-save-dialog { width: min(480px, calc(100vw - 32px)); max-height: 85vh; overflow: auto; padding: 24px; box-sizing: border-box; color: #27382e; background: #f3f0e5; border: 2px solid #536957; border-radius: 6px; font: 14px/1.6 system-ui, sans-serif; }
+.cloud-save-dialog::backdrop { background: #0d1916aa; }
+.cloud-save-dialog header { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.cloud-save-dialog h2 { margin: 0; font-size: 20px; }
+.cloud-save-dialog button { cursor: pointer; margin: 6px 6px 6px 0; padding: 7px 12px; border: 1px solid #77907f; border-radius: 3px; background: #e4e9dc; color: #243a2d; font: inherit; }
+.cloud-save-dialog button:disabled { opacity: .5; cursor: wait; }
+.cloud-save-dialog input, .cloud-save-dialog textarea { display: block; box-sizing: border-box; width: 100%; padding: 8px; margin-top: 6px; color: #243a2d; border: 1px solid #77907f; background: #fffdf7; font: 13px/1.5 monospace; }
+.cloud-save-dialog small { display: block; color: #5b6c60; }
+.cloud-save-dialog select { display: block; width: 100%; margin: 8px 0; padding: 8px; color: #243a2d; background: #fffdf7; border: 1px solid #77907f; font: inherit; }
+.cloud-save-dialog section { padding-top: 14px; margin-top: 16px; border-top: 1px solid #b4c1b2; }
+.cloud-save-dialog [hidden] { display: none !important; }
+.cloud-save-conflict { padding: 12px; background: #ece0c9; }

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./styles.css?v=20260910-well-lanterns" />
     <link rel="stylesheet" href="./pixel-desktop.css?v=20260910-lantern-flicker" />
     <link rel="stylesheet" href="./story-flow.css?v=20260910-well-lanterns" />
+    <link rel="stylesheet" href="./cloud-save.css?v=20261005" />
   </head>
   <body>
     <div class="boot-screen" id="bootScreen" aria-hidden="true">
@@ -477,7 +478,25 @@
     <dialog id="sceneInspection" class="scene-inspection" aria-labelledby="sceneInspectionTitle"><header><h2 id="sceneInspectionTitle"></h2><button data-close-scene-inspection aria-label="关闭检视">×</button></header><div class="scene-inspection-body"></div></dialog>
     <dialog id="npcDialogue" class="npc-dialogue" aria-labelledby="npcDialogueName"></dialog>
 
-    <script src="./app.js?v=20260910-well-lanterns"></script>
+    <button id="cloudSaveOpen" class="cloud-save-open" aria-haspopup="dialog">存档</button>
+    <dialog id="cloudSaveDialog" class="cloud-save-dialog" aria-labelledby="cloudSaveTitle">
+      <header><h2 id="cloudSaveTitle">游戏存档</h2><button id="cloudSaveClose" aria-label="关闭存档设置">×</button></header>
+      <p id="cloudSaveStatus" role="status" aria-live="polite"></p>
+      <small id="cloudSaveLastTime"></small>
+      <p>云存档会把游戏进度保存到服务器。换设备时，输入恢复码即可继续；离线时仍保存在本机。</p>
+      <button id="cloudCreate" data-cloud-action>启用云存档</button>
+      <div id="cloudConnected" hidden>
+        <label for="cloudCode">我的恢复码</label><textarea id="cloudCode" readonly rows="3" spellcheck="false"></textarea>
+        <small>持码可访问并修改存档，请自行保管。恢复码丢失后无法找回。</small>
+        <button id="cloudCopyCode">复制恢复码</button><button id="cloudSyncNow" data-cloud-action>立即同步</button><button id="cloudDisconnect" data-cloud-action>断开同步</button>
+      </div>
+      <section><label for="cloudRecoverCode">从恢复码读取存档</label><input id="cloudRecoverCode" autocomplete="off" spellcheck="false" placeholder="FY1_…" /><button id="cloudRecover" data-cloud-action>读取云端存档</button></section>
+      <section id="cloudSaveConflict" class="cloud-save-conflict" hidden><p id="cloudSaveRemoteTime"></p><p>切换前会保留备份，最多保留最近 5 份。使用本机进度将替换当前云端版本。</p><button id="cloudUseRemote" data-cloud-action>使用云端进度</button><button id="cloudKeepLocal" data-cloud-action>使用本机进度</button></section>
+      <section id="cloudBackups" hidden><label for="cloudBackupSelect">切换前的备份</label><select id="cloudBackupSelect"></select><small>恢复备份后只在本机继续，云端版本保留。</small><button id="cloudBackupRestore" data-cloud-action>恢复所选本机备份</button><button id="cloudBackupDownload">导出备份</button></section>
+    </dialog>
+    <script src="./cloud-config.js?v=20261005"></script>
+    <script src="./cloud-save.js?v=20261005"></script>
+    <script src="./app.js?v=20261005-cloud-save"></script>
     <script src="./village-npcs.js?v=20260910-direct-copy"></script>
     <script src="./village-scenes.js?v=20260910-well-lanterns"></script>
     <script src="./village-effects.js?v=20260910-lantern-flicker"></script>
@@ -487,6 +506,6 @@
     <script src="./story-config.js?v=20260910-direct-copy"></script>
     <script src="./story-flow.js?v=20260910-direct-copy"></script>
     <script src="./archive-search.js?v=20260910-direct-copy"></script>
-    <script src="./game.js?v=20260910-direct-copy"></script>
+    <script src="./game.js?v=20261005-cloud-save"></script>
   </body>
 </html>

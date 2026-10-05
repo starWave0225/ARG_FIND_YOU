@@ -121,6 +121,8 @@
   function hasClinicFile(id) { return state.remoteFinds.includes(id) || state.villageFinds.includes(id); }
 
   function saveState(patch = {}) {
+    // Page-exit draft saving must not overwrite a restored or deliberately reset save.
+    if (window.ARGCloudSave?.isReplacing()) return;
     state = { ...state, ...patch };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     renderGame();
@@ -878,7 +880,7 @@
   window.ARGGame = {
     handleArchiveSearch: archiveSearch,
     handlePeopleSearch: peopleSearch,
-    reset() { localStorage.removeItem(STORAGE_KEY); location.reload(); },
+    reset() { window.ARGCloudSave?.beforeReset(); localStorage.removeItem(STORAGE_KEY); location.reload(); },
     getState() { return { ...state }; },
     getPlayerTerms() { return { ...playerTerms() }; }
   };

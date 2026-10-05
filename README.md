@@ -12,6 +12,31 @@ python3 -m http.server 4173
 
 人物形象册：`http://127.0.0.1:4173/docs/character-album.html`
 
+## 云存档（Cloudflare）
+
+前端与后端源码均保留在本仓库。`cloud/worker.mjs` 部署到 Cloudflare Workers，D1 数据库 `find-you-saves` 通过 `DB` 绑定；前端入口配置在 `cloud-config.js`。接口健康检查：<https://find-you-api.junjiequ98.workers.dev/health>。这次配置后端服务，不自动开启 GitHub Pages；游戏仍可按上面的地址本地运行。
+
+玩家在页面右上角点“存档”，完成主角档案后选择“启用云存档”。保存恢复码，在另一台设备输入并选择“使用云端进度”即可继续。持码者可读写对应存档；没有邮箱找回机制。
+
+- 默认只保存本机；玩家主动启用后才上传。修改后的进度批量同步，离线继续保存在本机，联网重试。
+- 两端版本不一致时暂停自动同步，玩家选择保留本机或云端版本。切换前最多保留 5 份本机备份，可恢复或导出；清除浏览器数据也会清除这些本机备份。
+- `?reset` 和 `ARGGame.reset()` 会先备份并断开云同步，再重开本机游戏，旧云存档仍可凭旧恢复码找回。作者场景预览也会断开同步。
+- 恢复码为 256 位随机凭据，通过 Authorization 请求头传送，D1 只存 SHA-256 哈希。接口使用版本条件更新、64 KiB 请求上限、每 IP 每 UTC 日最多新建 5 份存档。此版本是存档服务，不提供账号、排行榜或游戏反作弊。
+- 当前允许来源为 `https://starwave0225.github.io`、`http://127.0.0.1:4173` 和 `http://localhost:4173`。更换域名时更新 Worker 的 `ALLOWED_ORIGINS`；CORS 之外仍由恢复码鉴权。
+
+本地后端开发（Node.js 版本要求同下文测试环境）：
+
+```bash
+npm ci
+npm run cloud:migrate:local
+npm run cloud:dev
+npm run cloud:smoke
+```
+
+要联调本地后端，临时将 `cloud-config.js` 的接口地址改为 `http://127.0.0.1:8787`，测试结束改回正式地址。线上 smoke 命令为 `npm run cloud:smoke -- https://find-you-api.junjiequ98.workers.dev`，每次会新建一份独立测试存档，不读取玩家恢复码。
+
+后续部署可在 Cloudflare 控制台编辑 `find-you-api`，或完成 Wrangler 登录后执行 `npm run cloud:migrate`、`npm run cloud:deploy`。首次建表 SQL 在 `cloud/migrations/0001_saves.sql`，幂等执行不会清空已有存档。账号密钥不得放入仓库或前端；`.wrangler`、`.dev.vars` 与 `.env` 已忽略。目前使用免费套餐，额度以 Cloudflare 控制台及[官方定价](https://developers.cloudflare.com/workers/platform/pricing/)为准。
+
 ## 主角档案
 
 开场随机预填一个主角姓名，玩家可修改（1—12 个字），选择男性或女性，再确认进入游戏。切换性别不会覆盖已填姓名。姓名和性别随本地存档保存，姓名用于工作台、开始菜单、首页问候、调查结论和外发回执。旧存档保留已选性别和游戏进度，尚未确认姓名的存档补一次随机姓名确认；已经确认的姓名不会重新随机。策划初稿中尚未改写的“陈默”按主角占位名理解。

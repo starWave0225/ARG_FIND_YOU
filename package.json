@@ -4,9 +4,15 @@
   "private": true,
   "description": "我要找到你 — static browser ARG prototype",
   "scripts": {
-    "test": "node --test tests/*.test.cjs"
+    "test": "node --test tests/*.test.cjs",
+    "cloud:dev": "wrangler dev --config cloud/wrangler.jsonc --port 8787",
+    "cloud:migrate:local": "wrangler d1 migrations apply find-you-saves --local --config cloud/wrangler.jsonc",
+    "cloud:migrate": "wrangler d1 migrations apply find-you-saves --remote --config cloud/wrangler.jsonc",
+    "cloud:deploy": "wrangler deploy --config cloud/wrangler.jsonc",
+    "cloud:smoke": "node scripts/smoke-cloud.mjs"
   },
   "devDependencies": {
-    "jsdom": "30.0.1"
+    "jsdom": "30.0.1",
+    "wrangler": "4.147.0"
   }
 }

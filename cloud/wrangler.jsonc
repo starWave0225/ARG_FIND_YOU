@@ -1,0 +1,18 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "find-you-api",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-05",
+  "account_id": "7e7e5608c829395368af245791de7749",
+  "workers_dev": true,
+  "vars": {
+    "ALLOWED_ORIGINS": "https://starwave0225.github.io,http://127.0.0.1:4173,http://localhost:4173"
+  },
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "find-you-saves",
+    "database_id": "46af34a8-2526-4998-99d4-f4b9f72e82db",
+    "migrations_dir": "migrations"
+  }],
+  "observability": { "enabled": true }
+}
