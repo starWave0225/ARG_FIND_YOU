@@ -59,6 +59,9 @@ test('continuing games and field visits do not load the film; replay is availabl
 test('failed playback remains skippable and preview removes only its own URL parameter', async t => {
   const saved = { playerName: '林晚', playerGender: 'female' };
   const g = boot(t, saved, '?intro=1&test=keep');
+  // Local playtests normally reset on load; a film preview must preserve the save.
+  g.w.eval(fs.readFileSync(path.join(root, 'app.js'), 'utf8'));
+  assert.deepEqual(JSON.parse(g.w.localStorage.getItem('find-you-state-v1')), saved);
   g.video.play = async () => { throw new Error('unavailable'); };
   g.d.querySelector('#openingFilmPlay').click();
   await new Promise(resolve => setImmediate(resolve));

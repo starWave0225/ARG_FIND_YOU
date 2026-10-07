@@ -11,7 +11,8 @@ const taskbarApps = [...document.querySelectorAll('.task-app')];
 let zIndex = 20;
 // Local playtests start fresh; the separate village tab belongs to the same run.
 const freshLocalTest = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)
-  && !villagePage && !new URLSearchParams(location.search).has('preview');
+  && !villagePage && !new URLSearchParams(location.search).has('preview')
+  && new URLSearchParams(location.search).get('intro') !== '1';
 if (freshLocalTest) {
   window.ARGCloudSave?.beforeReset();
   localStorage.removeItem('find-you-state-v1');
