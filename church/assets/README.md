@@ -20,3 +20,10 @@ Use case: photorealistic-natural. Asset type: archival documentary photograph fo
 
 Use case: photorealistic-natural. Asset type: in-universe documentary photograph of an old-object handover at a fictional Chinese fellowship, for an ARG website. Three fictional middle-aged East Asian adults in ordinary muted daily clothes pose behind a worn wooden table during an uneventful donation handover. A small closed aged wooden keepsake box with a brass clasp is centered on the table, a plain unreadable tag and a cream envelope beside it. Rural timber office room, faded curtain and everyday cupboard. The adults stand a little too evenly spaced, hands precisely at their sides, shoulders rigid. Their small courteous smiles are almost identical and they all stare at the lens with an uncomfortable lack of warmth. Their faces are distinct; realistically human anatomy, normal eyes, not obvious monsters. Photograph is a mundane local-news snapshot, slightly harsh flash, subtle film grain, imperfect exposure, muted warm brown and grey-green tones. Landscape 3:2 composition, environment and table visible, no slogans or text, no watermark, no UI, no children, no violence or gore. Fictional staged scene, quiet uncanny atmosphere.
 
+
+
+## 2026-10-07 双状态照片 v3
+
+使用内置 image_gen 编辑原 v2 图片生成背面版本，再以背面版本生成翻白眼版本。四组分别为 assembly、registration、archive、handover；`*-back-v3.png` 与 `*-possessed-v3.png` 为原图，对应 JPEG 为网站素材。旧图保留。所有最终提示词、输入与输出文件记录于 [photo-prompts-v3.json](./photo-prompts-v3.json)。
+
+初始图不露正脸；查看有效祈愿正文后，所有活动照片切换为面朝镜头、双眼翻白。堂徽不受影响，页面不展示状态说明。

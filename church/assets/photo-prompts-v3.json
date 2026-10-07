@@ -1,0 +1,61 @@
+{
+  "mode": "built-in image_gen",
+  "assets": [
+    {
+      "id": "assembly",
+      "state": "back",
+      "prompt": "Use case: precise-object-edit. Edit target: the attached photograph. Create the BEFORE image of a paired horror game photograph. A wood church hall with rows of seated adult worshippers and a distant leader at the altar. EVERY person, including every distant person and the altar leader, must face directly away from camera. Non-negotiable: ZERO visible faces, ZERO profiles, ZERO eyes anywhere, everyone shows the back of their head to the player. Rotate bodies naturally, never twist a neck backwards. Preserve original camera position, 3:2 landscape framing, people count, room, furniture, objects, clothing, muted colors, soft lighting and old documentary film grain. Ordinary realistic archival photograph, quiet uncanny staging. No added symbols, words, UI, vignette, blood or monsters. Make one full-frame photograph, not a collage.",
+      "reference": "assembly-v2.png",
+      "output": "assembly-back-v3.png"
+    },
+    {
+      "id": "assembly",
+      "state": "possessed",
+      "prompt": "Use case: precise-object-edit. Edit target: the attached BEFORE photograph. Make its AFTER state for a supernatural horror game. Turn EVERY person in this exact photo around to face the camera directly, including all foreground people and all distant background people. Rotate entire bodies naturally, keeping each person at the same position; no backward twisted necks. Every person has both eyes wide open and visibly rolled fully upward: ONLY opaque off-white sclera visible, NO dark pupils, NO irises, NO glow. Unnaturally still possessed blank faces, subtly parted lips, lifeless rigid posture. Photorealistic, unsettling documentary realism. Preserve the exact room, architecture, furniture, objects, muted clothes, hairstyle, people count, original camera/framing, 3:2 aspect ratio, daylight, exposure, texture and grain from the input. All faces including tiny distant ones must face the lens with white eyes. No blood, gore, monsters, effects, text, new symbols or added people. One full-frame photograph, no collage. Scene identifier: assembly.",
+      "reference": "assembly-back-v3.png",
+      "output": "assembly-possessed-v3.png"
+    },
+    {
+      "id": "registration",
+      "state": "back",
+      "prompt": "Use case: precise-object-edit. Edit target: the attached photograph. Create the BEFORE image of a paired horror game photograph. A reception office: three women across the desk and a male visitor in the foreground. All FOUR people must turn their whole bodies away from camera; only backs of heads, shoulders and clothing visible. Keep the furniture and green lamp. Non-negotiable: ZERO visible faces, ZERO profiles, ZERO eyes anywhere, everyone shows the back of their head to the player. Rotate bodies naturally, never twist a neck backwards. Preserve original camera position, 3:2 landscape framing, people count, room, furniture, objects, clothing, muted colors, soft lighting and old documentary film grain. Ordinary realistic archival photograph, quiet uncanny staging. No added symbols, words, UI, vignette, blood or monsters. Make one full-frame photograph, not a collage.",
+      "reference": "registration-v2.png",
+      "output": "registration-back-v3.png"
+    },
+    {
+      "id": "registration",
+      "state": "possessed",
+      "prompt": "Use case: precise-object-edit. Edit target: the attached BEFORE photograph. Make its AFTER state for a supernatural horror game. Turn EVERY person in this exact photo around to face the camera directly, including all foreground people and all distant background people. Rotate entire bodies naturally, keeping each person at the same position; no backward twisted necks. Every person has both eyes wide open and visibly rolled fully upward: ONLY opaque off-white sclera visible, NO dark pupils, NO irises, NO glow. Unnaturally still possessed blank faces, subtly parted lips, lifeless rigid posture. Photorealistic, unsettling documentary realism. Preserve the exact room, architecture, furniture, objects, muted clothes, hairstyle, people count, original camera/framing, 3:2 aspect ratio, daylight, exposure, texture and grain from the input. All faces including tiny distant ones must face the lens with white eyes. No blood, gore, monsters, effects, text, new symbols or added people. One full-frame photograph, no collage. Scene identifier: registration.",
+      "reference": "registration-back-v3.png",
+      "output": "registration-possessed-v3.png"
+    },
+    {
+      "id": "archive",
+      "state": "back",
+      "prompt": "Use case: precise-object-edit. Edit target: the attached photograph. Create the BEFORE image of a paired horror game photograph. An archive room with two workers behind the desk, man at left and woman at right. BOTH turn their entire bodies away from camera. Arms must be anatomically plausible and naturally placed; no backward hands. Keep shelves, folders and the central doorway. Non-negotiable: ZERO visible faces, ZERO profiles, ZERO eyes anywhere, everyone shows the back of their head to the player. Rotate bodies naturally, never twist a neck backwards. Preserve original camera position, 3:2 landscape framing, people count, room, furniture, objects, clothing, muted colors, soft lighting and old documentary film grain. Ordinary realistic archival photograph, quiet uncanny staging. No added symbols, words, UI, vignette, blood or monsters. Make one full-frame photograph, not a collage.",
+      "reference": "archive-v2.png",
+      "output": "archive-back-v3.png"
+    },
+    {
+      "id": "archive",
+      "state": "possessed",
+      "prompt": "Use case: precise-object-edit. Edit target: the attached BEFORE photograph. Make its AFTER state for a supernatural horror game. Turn EVERY person in this exact photo around to face the camera directly, including all foreground people and all distant background people. Rotate entire bodies naturally, keeping each person at the same position; no backward twisted necks. Every person has both eyes wide open and visibly rolled fully upward: ONLY opaque off-white sclera visible, NO dark pupils, NO irises, NO glow. Unnaturally still possessed blank faces, subtly parted lips, lifeless rigid posture. Photorealistic, unsettling documentary realism. Preserve the exact room, architecture, furniture, objects, muted clothes, hairstyle, people count, original camera/framing, 3:2 aspect ratio, daylight, exposure, texture and grain from the input. All faces including tiny distant ones must face the lens with white eyes. No blood, gore, monsters, effects, text, new symbols or added people. One full-frame photograph, no collage. Scene identifier: archive.",
+      "reference": "archive-back-v3.png",
+      "output": "archive-possessed-v3.png"
+    },
+    {
+      "id": "handover",
+      "state": "back",
+      "prompt": "Use case: precise-object-edit. Edit target: the attached photograph. Create the BEFORE image of a paired horror game photograph. Three adults standing behind a table with a wooden box: two men and one woman. All THREE face directly away from camera with backs of heads and shoulders visible. Keep their original positions and the wooden box. Non-negotiable: ZERO visible faces, ZERO profiles, ZERO eyes anywhere, everyone shows the back of their head to the player. Rotate bodies naturally, never twist a neck backwards. Preserve original camera position, 3:2 landscape framing, people count, room, furniture, objects, clothing, muted colors, soft lighting and old documentary film grain. Ordinary realistic archival photograph, quiet uncanny staging. No added symbols, words, UI, vignette, blood or monsters. Make one full-frame photograph, not a collage.",
+      "reference": "handover-v2.png",
+      "output": "handover-back-v3.png"
+    },
+    {
+      "id": "handover",
+      "state": "possessed",
+      "prompt": "Use case: precise-object-edit. Edit target: the attached BEFORE photograph. Make its AFTER state for a supernatural horror game. Turn EVERY person in this exact photo around to face the camera directly, including all foreground people and all distant background people. Rotate entire bodies naturally, keeping each person at the same position; no backward twisted necks. Every person has both eyes wide open and visibly rolled fully upward: ONLY opaque off-white sclera visible, NO dark pupils, NO irises, NO glow. Unnaturally still possessed blank faces, subtly parted lips, lifeless rigid posture. Photorealistic, unsettling documentary realism. Preserve the exact room, architecture, furniture, objects, muted clothes, hairstyle, people count, original camera/framing, 3:2 aspect ratio, daylight, exposure, texture and grain from the input. All faces including tiny distant ones must face the lens with white eyes. No blood, gore, monsters, effects, text, new symbols or added people. One full-frame photograph, no collage. Scene identifier: handover.",
+      "reference": "handover-back-v3.png",
+      "output": "handover-possessed-v3.png"
+    }
+  ]
+}

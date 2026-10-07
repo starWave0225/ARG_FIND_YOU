@@ -6,6 +6,29 @@
   const normalize = text => String(text).normalize('NFKC').toLowerCase().trim();
   // This site's reading log is independent of the game's save and verification state.
   const readingKey = 'find-you-church-reading-v1';
+  // Visual memory is separate from both the reading log and main-game progress.
+  const photoKey = 'find-you-church-haunting-v1';
+  let witnessed = false;
+  try { witnessed = localStorage.getItem(photoKey) === '1'; } catch {}
+  function renderPhotos() {
+    document.querySelectorAll('a[data-photo-id]').forEach(link=>{
+      const state = witnessed ? 'possessed' : 'back';
+      link.href = `./assets/${link.dataset.photoId}-${state}-v3.jpg`;
+      const img = link.querySelector('img');
+      img.src = link.href;
+      img.alt = link.dataset.photo + (witnessed ? '，照片中所有人面朝镜头，双眼翻白。' : '，照片中所有人背对镜头，没有露出正脸。');
+      const large = $('#photoLarge');
+      if (large.dataset.photoId === link.dataset.photoId) {
+        large.src = link.href;
+        large.alt = img.alt;
+      }
+    });
+  }
+  function witnessPrayer() {
+    witnessed = true;
+    try { localStorage.setItem(photoKey,'1'); } catch {}
+    renderPhotos();
+  }
   let storageAvailable = true;
   function readLog() {
     try {
@@ -54,6 +77,7 @@
       return;
     }
     retain(record);
+    witnessPrayer();
     document.title=record.title+' · 全知教会祈愿簿';
     const returnParams = new URLSearchParams(params); returnParams.delete('record');
     const returnURL='./'+(returnParams.size?'?'+returnParams:'')+'#archive';
@@ -79,6 +103,7 @@
     if (link.dataset.photo) {
       event.preventDefault();
       $('#photoLarge').src = link.href;
+      $('#photoLarge').dataset.photoId = link.dataset.photoId;
       $('#photoLarge').alt = link.querySelector('img').alt;
       $('#photoCaption').textContent = link.dataset.photo;
       $('#photoViewer').showModal();
@@ -101,5 +126,19 @@
   });
   window.addEventListener('popstate',readRoute);
   window.addEventListener('storage',event=>{if(event.key===readingKey || event.key===null) renderHistory();});
+  window.addEventListener('storage',event=>{
+    if(event.key!==photoKey && event.key!==null) return;
+    try {
+      if(event.storageArea && event.storageArea!==localStorage) return;
+      witnessed = localStorage.getItem(photoKey) === '1';
+    } catch { return; }
+    renderPhotos();
+  });
+  // Reconcile pages restored from the browser's back/forward cache.
+  window.addEventListener('pageshow',()=>{
+    try { witnessed = witnessed || localStorage.getItem(photoKey) === '1'; } catch {}
+    renderPhotos();
+  });
+  renderPhotos();
   readRoute();
 })();

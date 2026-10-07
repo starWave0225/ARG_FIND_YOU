@@ -10,6 +10,8 @@ function boot(t,search='',setup=()=>{}) {
   const dom=new JSDOM(fs.readFileSync(path.join(root,'church/index.html'),'utf8'),{url:'https://find-you.test/church/'+search,runScripts:'outside-only',virtualConsole:vc});
   const w=dom.window,d=w.document;
   w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};
+  w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};
+  w.HTMLDialogElement.prototype.close=function(){this.open=false;};
   w.localStorage.setItem('find-you-state-v1',JSON.stringify({accepted:false,sent:false,storyProgress:{done:[]}}));
   setup(w);
   for(const file of ['records.js','site.js']) w.eval(fs.readFileSync(path.join(root,'church',file),'utf8'));
@@ -55,5 +57,45 @@ test('all authored source links resolve, preserve anonymous submitter identity a
   for(const r of archive.records) for(const id of r.related||[]) assert.ok(archive.records.some(other=>other.id===id));
   assert.doesNotMatch(JSON.stringify(archive.records),/许行远|TG-240824-019|制作备注|解谜元素|正确答案/);
   for(const source of archive.catalog){const doc=new JSDOM(source.body).window.document;for(const a of doc.querySelectorAll('a')) assert.ok(a.getAttribute('href').startsWith('./church/'));}
-  for(const node of g.d.querySelectorAll('script[src],link[href],img[src]')){const ref=node.getAttribute('src')||node.getAttribute('href');assert.ok(fs.existsSync(path.resolve(root,'church',ref.split('?')[0])),ref);}
+  for(const node of g.d.querySelectorAll('script[src],link[href],img[src]')){const ref=node.getAttribute('src')||node.getAttribute('href');assert.ok(fs.existsSync(path.join(root,new URL(ref,g.w.location.href).pathname)),ref);}
+});
+const photoKey='find-you-church-haunting-v1';
+function assertPhotos(g,state) {
+  const links=[...g.d.querySelectorAll('a[data-photo-id]')];assert.equal(links.length,4);
+  for(const link of links){
+    assert.ok(link.href.endsWith(`${link.dataset.photoId}-${state}-v3.jpg`));
+    assert.equal(link.querySelector('img').src,link.href);
+    assert.match(link.querySelector('img').alt,state==='back'?/背对/:/双眼翻白/);
+    assert.ok(fs.existsSync(path.join(root,new URL(link.href).pathname)));
+  }
+}
+test('photos start with backs even with old reading history; search, gallery and missing entries do not trigger',t=>{
+  const g=boot(t,'#archive',w=>w.localStorage.setItem(key,JSON.stringify([{id:'QZ-260811-019'}])));
+  assertPhotos(g,'back');g.search('林知微');assertPhotos(g,'back');
+  g.click('[data-photo-id="registration"]');assert.equal(g.d.querySelector('#photoViewer').open,true);
+  assert.match(g.d.querySelector('#photoLarge').src,/registration-back-v3/);
+  g.click('#photoClose');assert.equal(g.w.localStorage.getItem(photoKey),null);
+  const missing=boot(t,'?record=missing');assertPhotos(missing,'back');assert.equal(missing.w.localStorage.getItem(photoKey),null);
+});
+test('opening an existing prayer changes every photo, survives return and reload, and keeps the main save untouched',t=>{
+  const g=boot(t);const before=g.w.localStorage.getItem('find-you-state-v1');
+  g.search('林知微');g.click('.record-row');assertPhotos(g,'possessed');
+  assert.equal(g.w.localStorage.getItem(photoKey),'1');g.click('.back-link');assertPhotos(g,'possessed');
+  for(const id of ['assembly','registration','archive','handover']){
+    g.click(`[data-photo-id="${id}"]`);assert.match(g.d.querySelector('#photoLarge').src,new RegExp(`${id}-possessed-v3`));g.click('#photoClose');
+  }
+  assert.equal(g.w.localStorage.getItem('find-you-state-v1'),before);
+  const reload=boot(t,'',w=>w.localStorage.setItem(photoKey,g.w.localStorage.getItem(photoKey)));assertPhotos(reload,'possessed');
+  const direct=boot(t,'?record=QZ-260811-019');assertPhotos(direct,'possessed');
+});
+test('other-tab changes update an open enlargement, and blocked storage still allows the visual change in this page',t=>{
+  const g=boot(t);g.click('[data-photo-id="archive"]');
+  g.w.localStorage.setItem(photoKey,'1');
+  g.w.dispatchEvent(new g.w.StorageEvent('storage',{key:photoKey,newValue:'1',storageArea:g.w.localStorage}));
+  assertPhotos(g,'possessed');assert.match(g.d.querySelector('#photoLarge').src,/archive-possessed-v3/);
+  assert.equal(g.d.querySelector('#photoViewer').open,true);
+  g.w.localStorage.removeItem(photoKey);g.w.dispatchEvent(new g.w.StorageEvent('storage',{key:photoKey,storageArea:g.w.localStorage}));assertPhotos(g,'back');
+  g.w.localStorage.setItem(photoKey,'1');g.w.dispatchEvent(new g.w.PageTransitionEvent('pageshow',{persisted:true}));assertPhotos(g,'possessed');
+  const blocked=boot(t,'',w=>Object.defineProperty(w,'localStorage',{get(){throw new Error('denied');}}));
+  assertPhotos(blocked,'back');blocked.click('.record-row');assertPhotos(blocked,'possessed');blocked.click('.back-link');assertPhotos(blocked,'possessed');
 });
