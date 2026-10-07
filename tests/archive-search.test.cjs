@@ -8,6 +8,15 @@ const key = 'find-you-state-v1';
 const prologue = { playerGender: 'male', accepted: true };
 const chapterOne = { ...prologue, sent: true, chapterOneStarted: true, clues: ['envelopeFactory', 'envelopePostcode', 'postalArea', 'renamedFactory', 'workerNumber', 'movedRongchuan'], envelopeOpened: true, legacyOpened: true, rosterUnlocked: true, personFound: true, conclusionBuilt: true, confirmed: true };
 
+test('hospital entry is searchable from a fresh game without revealing sealed attachments or solving tasks',t=>{
+  const g=boot(t,{playerName:'叶书言',playerGender:'female'});
+  g.search('医院');assert.ok(g.ids().includes('hospital-home'));
+  g.click('[data-search-document="hospital-home"]');
+  assert.equal(g.d.querySelector('.search-document-body a').getAttribute('href'),'./hospital/');
+  assert.ok(g.state().searchBookmarks.includes('hospital-home'));
+  assert.equal(g.state().sent,false);assert.deepEqual(Array.from(g.state().storyProgress?.done||[]),[]);
+});
+
 test('church public records are discoverable and retained with sources without completing a task', t => {
   const g=boot(t,{playerName:'叶书言',playerGender:'female'});
   g.search('全知教会');assert.ok(g.ids().includes('church-home'));
@@ -43,7 +52,7 @@ function boot(t, saved = prologue) {
   w.HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', ''); };
   w.HTMLDialogElement.prototype.close = function () { this.removeAttribute('open'); this.dispatchEvent(new w.Event('close')); };
   w.localStorage.setItem(key, JSON.stringify(saved));
-  for (const file of ['app.js', 'village-npcs.js', 'village-scenes.js', 'village-effects.js', 'ghost-hands.js', 'search-keywords.js', 'story-documents.js', 'story-config.js', 'story-flow.js', 'church/records.js', 'archive-search.js', 'game.js']) w.eval(fs.readFileSync(path.join(root, file), 'utf8'));
+  for (const file of ['app.js', 'village-npcs.js', 'village-scenes.js', 'village-effects.js', 'ghost-hands.js', 'search-keywords.js', 'story-documents.js', 'story-config.js', 'story-flow.js', 'church/records.js', 'hospital/records.js', 'archive-search.js', 'game.js']) w.eval(fs.readFileSync(path.join(root, file), 'utf8'));
   const click = selector => { const node = d.querySelector(selector); assert.ok(node, selector); assert.equal(node.disabled, false, selector); node.click(); };
   const search = query => { if (d.querySelector('#archiveSearchView').hidden) click('[data-search-results]'); d.querySelector('#archiveQuery').value = query; d.querySelector('#archiveSearch').dispatchEvent(new w.Event('submit', { bubbles: true, cancelable: true })); };
   const ids = () => [...d.querySelectorAll('#archiveResult [data-result-id]')].map(n => n.dataset.resultId);

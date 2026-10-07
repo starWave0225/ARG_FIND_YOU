@@ -608,6 +608,10 @@
     sources.church = {name:'全知教会见证处', description:'全知教会公开愿簿。原文、附页与经手来源分别保留，登记状态以各页记载为准。'};
     catalog.push(...window.ChurchArchive.catalog);
   }
+  if (window.HospitalArchive) {
+    sources.hospital = {name:'岭川县医院病案室',description:'历史医疗资料的数字整理入口。各原件来源随记录保存，封存附件保留原有查验。'};
+    catalog.push(...window.HospitalArchive.catalog);
+  }
   if (window.StoryDocuments) {
     sources.story = {name:'岭川档案资料库', description:'按题名、人物、地点及档案编号检索原件与数字化副本。具体提供者在每份材料中保留。外部原文链接尚未填写的条目仅显示待补入口。'};
     for (const doc of Object.values(window.StoryDocuments)) {
