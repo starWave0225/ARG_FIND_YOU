@@ -76,6 +76,14 @@
   document.addEventListener('click',event=>{
     const link=event.target.closest('a');
     if(!link || event.button!==0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    if (link.dataset.photo) {
+      event.preventDefault();
+      $('#photoLarge').src = link.href;
+      $('#photoLarge').alt = link.querySelector('img').alt;
+      $('#photoCaption').textContent = link.dataset.photo;
+      $('#photoViewer').showModal();
+      return;
+    }
     const url=new URL(link.href);
     if(url.origin!==location.origin || !url.searchParams.has('record') && !link.classList.contains('back-link')) return;
     event.preventDefault();
@@ -84,6 +92,12 @@
       for(const key of ['q','type','status']) if(current.has(key)) url.searchParams.set(key,current.get(key));
     }
     navigate(url,url.searchParams.has('record'));
+  });
+  $('#photoClose').addEventListener('click',()=>$('#photoViewer').close());
+  $('#photoViewer').addEventListener('click',event=>{
+    if(event.target!==$('#photoViewer')) return;
+    const box=event.target.getBoundingClientRect();
+    if(event.clientX<box.left || event.clientX>box.right || event.clientY<box.top || event.clientY>box.bottom) event.target.close();
   });
   window.addEventListener('popstate',readRoute);
   window.addEventListener('storage',event=>{if(event.key===readingKey || event.key===null) renderHistory();});
