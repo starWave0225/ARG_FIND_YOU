@@ -604,6 +604,10 @@
     "body": "<p>公示日期：2021年9月6日。试点范围包括旧邮亭、中央巷道、祠堂外院、旧学校闲置教室及河桥沿线。</p>\n<p>运营筹备：盛家村乡土旅游合作社。设施与档案管理顾问：恒目管理顾问有限公司。双方分工以附件工作清单为准。</p>\n<p>资料征集以借阅、扫描为主，应记录原保管人、年代及返还方式。本公示只说明项目关系，不能单独证明其他委托或组织关系。</p>"
   }
   ];
+  if (window.ChurchArchive) {
+    sources.church = {name:'全知教会见证处', description:'全知教会公开愿簿。原文、附页与经手来源分别保留，登记状态以各页记载为准。'};
+    catalog.push(...window.ChurchArchive.catalog);
+  }
   if (window.StoryDocuments) {
     sources.story = {name:'岭川档案资料库', description:'按题名、人物、地点及档案编号检索原件与数字化副本。具体提供者在每份材料中保留。外部原文链接尚未填写的条目仅显示待补入口。'};
     for (const doc of Object.values(window.StoryDocuments)) {

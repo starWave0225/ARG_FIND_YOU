@@ -8,6 +8,21 @@ const key = 'find-you-state-v1';
 const prologue = { playerGender: 'male', accepted: true };
 const chapterOne = { ...prologue, sent: true, chapterOneStarted: true, clues: ['envelopeFactory', 'envelopePostcode', 'postalArea', 'renamedFactory', 'workerNumber', 'movedRongchuan'], envelopeOpened: true, legacyOpened: true, rosterUnlocked: true, personFound: true, conclusionBuilt: true, confirmed: true };
 
+test('church public records are discoverable and retained with sources without completing a task', t => {
+  const g=boot(t,{playerName:'叶书言',playerGender:'female'});
+  g.search('全知教会');assert.ok(g.ids().includes('church-home'));
+  g.click('[data-search-document="church-home"]');
+  assert.equal(g.d.querySelector('.search-document-body a').getAttribute('href'),'./church/');
+  g.click('[data-search-document="church-QZ-260811-019"]');
+  assert.match(g.d.querySelector('.search-document-body').textContent,/我求盛雄偿命/);
+  assert.ok(g.state().searchBookmarks.includes('church-QZ-260811-019'));
+  assert.match(g.w.LingchuanSearch.documentBody('church-QZ-260811-019'),/全知教会见证处/);
+  g.search('盛雄');assert.ok(g.ids().includes('church-QZ-260811-019'));
+  g.search('HM');assert.ok(g.ids().includes('church-home'));
+  assert.equal(g.state().accepted,false);assert.equal(g.state().sent,false);
+  assert.equal(g.state().chapterThreeStarted,false);assert.deepEqual(Array.from(g.state().storyProgress?.done || []),[]);
+});
+
 test('village faith sources use explicit search mappings without chapter or HM progress', t => {
   const g = boot(t);
   for (const [query, id] of [['求子','V01'],['旧佛堂','V01'],['香火钱','V02'],['XQ-93','V02'],['FT-93-02','V03'],['雨日停摊','V04'],['SJC-WL-2021-壁内','V05']]) {
@@ -28,7 +43,7 @@ function boot(t, saved = prologue) {
   w.HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', ''); };
   w.HTMLDialogElement.prototype.close = function () { this.removeAttribute('open'); this.dispatchEvent(new w.Event('close')); };
   w.localStorage.setItem(key, JSON.stringify(saved));
-  for (const file of ['app.js', 'village-npcs.js', 'village-scenes.js', 'village-effects.js', 'ghost-hands.js', 'search-keywords.js', 'story-documents.js', 'story-config.js', 'story-flow.js', 'archive-search.js', 'game.js']) w.eval(fs.readFileSync(path.join(root, file), 'utf8'));
+  for (const file of ['app.js', 'village-npcs.js', 'village-scenes.js', 'village-effects.js', 'ghost-hands.js', 'search-keywords.js', 'story-documents.js', 'story-config.js', 'story-flow.js', 'church/records.js', 'archive-search.js', 'game.js']) w.eval(fs.readFileSync(path.join(root, file), 'utf8'));
   const click = selector => { const node = d.querySelector(selector); assert.ok(node, selector); assert.equal(node.disabled, false, selector); node.click(); };
   const search = query => { if (d.querySelector('#archiveSearchView').hidden) click('[data-search-results]'); d.querySelector('#archiveQuery').value = query; d.querySelector('#archiveSearch').dispatchEvent(new w.Event('submit', { bubbles: true, cancelable: true })); };
   const ids = () => [...d.querySelectorAll('#archiveResult [data-result-id]')].map(n => n.dataset.resultId);
