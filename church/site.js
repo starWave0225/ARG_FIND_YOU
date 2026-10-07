@@ -43,7 +43,7 @@
     const record = byId.get(id);
     $('#homeView').hidden = id !== null;
     $('#recordView').hidden = id === null;
-    document.querySelectorAll('.masthead nav a, .site-footer a[href$="#archive"]').forEach(link=>{
+    document.querySelectorAll('[data-home-anchor]').forEach(link=>{
       const hash = new URL(link.href).hash;
       link.href = id === null ? hash : './'+hash;
     });
