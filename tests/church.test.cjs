@@ -60,8 +60,35 @@ test('all authored source links resolve, preserve anonymous submitter identity a
   for(const node of g.d.querySelectorAll('script[src],link[href],img[src]')){const ref=node.getAttribute('src')||node.getAttribute('href');assert.ok(fs.existsSync(path.join(root,new URL(ref,g.w.location.href).pathname)),ref);}
 });
 const photoKey='find-you-church-haunting-v1';
+test('column links show one page at a time and keep real URLs, active navigation and legacy bookmarks',t=>{
+  const g=boot(t);
+  const active=()=>[...g.d.querySelectorAll('[data-page]')].filter(el=>!el.hidden).map(el=>el.dataset.page);
+  assert.deepEqual(active(),['home']);assert.equal(g.d.querySelector('#archive').hidden,true);
+  for(const page of ['about','gatherings','notices','photos','archive','home']){
+    g.click(`.site-nav [data-page-link="${page}"]`);
+    assert.deepEqual(active(),[page]);assert.equal(g.d.querySelector('.site-nav [aria-current="page"]').dataset.pageLink,page);
+    assert.equal(new URL(g.w.location.href).searchParams.get('page'),page==='home'?null:page);
+  }
+  const fresh=boot(t,'?page=photos');assert.equal(fresh.d.querySelector('#photos').hidden,false);assert.equal(fresh.d.querySelector('#homeView').hidden,true);
+  fresh.w.history.pushState(null,'','?page=about');fresh.w.dispatchEvent(new fresh.w.PopStateEvent('popstate'));
+  assert.equal(fresh.d.querySelector('#about').hidden,false);assert.equal(fresh.d.querySelector('#photos').hidden,true);
+  const legacy=boot(t,'#notices');assert.equal(legacy.w.location.search,'?page=notices');assert.equal(legacy.d.querySelector('#notices').hidden,false);
+  const bad=boot(t,'?page=missing');assert.equal(bad.d.querySelector('#pageError').hidden,false);
+  assert.equal(g.w.localStorage.getItem(photoKey),null);
+});
+test('home news links open the corresponding notice and record return stays in the prayer column',t=>{
+  const g=boot(t);g.click('.home-news a[href*="notice-august"]');
+  assert.equal(g.d.querySelector('#homeView').hidden,true);assert.equal(g.d.querySelector('#notices').hidden,false);
+  assert.equal(g.d.querySelector('#notice-august').open,true);
+  g.click('#notice-august .notice-body a');assert.equal(g.d.querySelector('#archive').hidden,false);
+  g.click('.record-row');assert.equal(g.d.querySelector('#archive').hidden,true);
+  assert.equal(g.d.querySelector('.site-nav [aria-current="page"]').dataset.pageLink,'archive');
+  g.click('.back-link');assert.equal(g.d.querySelector('#archive').hidden,false);assert.equal(g.w.location.search,'?page=archive');
+  g.click('.site-nav [data-page-link="photos"]');
+  assertPhotos(g,'possessed');g.click('#photos [data-photo-id="assembly"]');assert.match(g.d.querySelector('#photoLarge').src,/assembly-possessed/);
+});
 function assertPhotos(g,state) {
-  const links=[...g.d.querySelectorAll('a[data-photo-id]')];assert.equal(links.length,4);
+  const links=[...g.d.querySelectorAll('a[data-photo-id]')];assert.equal(links.length,5);assert.equal(new Set(links.map(link=>link.dataset.photoId)).size,4);
   for(const link of links){
     assert.ok(link.href.endsWith(`${link.dataset.photoId}-${state}-v3.jpg`));
     assert.equal(link.querySelector('img').src,link.href);
