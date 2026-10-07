@@ -21,10 +21,10 @@ test('retirement news is an open source linked from the alumni article, without 
   g.search('罗桂枝');assert.ok(g.ids().includes('story-C1-10'));
   g.click('[data-search-document="story-C1-10"]');
   assert.match(g.d.querySelector('.search-document-body').textContent,/荣誉退休/);
-  assert.equal(g.d.querySelector('.search-document-body a').getAttribute('href'),'./hospital/?record=C1-10');
+  assert.equal(g.d.querySelector('.search-document-body a[href="./hospital/?record=C1-10"]').getAttribute('href'),'./hospital/?record=C1-10');
   assert.ok(g.state().storyProgress.collected.includes('C1-10'));
   g.search('C1-04');g.click('[data-search-document="story-C1-04"]');
-  assert.equal(g.d.querySelector('.search-document-body a').getAttribute('href'),'./hospital/?record=C1-10');
+  assert.equal(g.d.querySelector('.search-document-body a[href="./hospital/?record=C1-10"]').getAttribute('href'),'./hospital/?record=C1-10');
   assert.equal(g.w.StoryFlow.canRead('C1-05'),false);
   assert.equal(g.state().sent,false);assert.deepEqual(Array.from(g.state().storyProgress.done),[]);
 });

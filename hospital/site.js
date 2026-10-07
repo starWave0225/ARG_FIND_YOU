@@ -24,7 +24,8 @@
     // Read the selected character's gender for the existing variable field; never alter game state.
     try {gender=JSON.parse(localStorage.getItem('find-you-state-v1')||'null')?.playerGender;}catch{}
     const value=gender==='female'?'女':gender==='male'?'男':'未转录';
-    return window.StoryDocuments[id].body.replaceAll('男／女，按主角选择显示',value).replaceAll('男／女按主角选择显示',value);
+    return window.StoryDocuments[id].body.replaceAll('男／女，按主角选择显示',value).replaceAll('男／女按主角选择显示',value)
+      .replaceAll('="./hospital/assets/','="./assets/');
   }
   function queryParams() {
     const params=new URLSearchParams(location.search);

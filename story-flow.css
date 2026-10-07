@@ -101,3 +101,5 @@
 .shrine-hand-proof .ghost-hand { width:100%!important; min-width:0; filter:sepia(.4) brightness(.85); }
 .story-letter:focus-visible,.story-ending-actions button:focus-visible { outline:2px solid #667b45; outline-offset:2px; }
 @media(max-width:650px) { .story-ending { padding:20px; } .story-ending h2 { font-size:27px; } }
+
+.document-photo{margin:22px 0 10px}.document-photo a{display:block}.document-photo img{display:block;width:100%;height:auto;border:1px solid #718475}

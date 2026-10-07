@@ -14,6 +14,15 @@ def render(md):
     while i < len(lines):
         line = lines[i].strip()
         if not line: i += 1; continue
+        image = re.fullmatch(r'!\[([^\]]*)\]\((\./[^\s)]+)\)', line)
+        if image:
+            alt, asset = image.groups()
+            target = (ROOT / asset).resolve()
+            if not target.is_relative_to(ROOT) or not target.is_file(): raise ValueError(asset)
+            src = html.escape(asset, quote=True)
+            out.append('<figure class="document-photo"><a href="'+src+'" target="_blank" rel="noopener" aria-label="查看原尺寸照片"><img src="'+src+'" alt="'+html.escape(alt, quote=True)+'" width="1536" height="1024" loading="lazy"></a></figure>')
+            i += 1
+            continue
         if line.startswith('|'):
             rows = []
             while i < len(lines) and lines[i].strip().startswith('|'):

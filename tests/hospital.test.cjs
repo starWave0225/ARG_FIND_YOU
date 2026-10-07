@@ -35,7 +35,10 @@ test('public retirement notice connects Luo to the hospital, retains its source,
   assert.match(g.d.querySelector('.record-body').textContent,/2023 年 10 月 27 日/);
   assert.doesNotMatch(g.d.querySelector('#readerView').textContent,/9624|林知微|LC-960708|假记录|制作备注/);
   const retained=JSON.parse(g.w.localStorage.getItem(key)).read[0];
-  assert.match(retained.source,/护理部供稿/);assert.equal(retained.body,g.w.StoryDocuments['C1-10'].body);
+  assert.match(retained.source,/护理部供稿/);assert.equal(retained.body,g.w.StoryDocuments['C1-10'].body.replaceAll('="./hospital/assets/','="./assets/'));
+  const photo=g.d.querySelector('.document-photo img');
+  assert.ok(photo);assert.equal(photo.src,'https://find-you.test/hospital/assets/luo-guizhi-retirement-v1.jpg');
+  assert.equal(photo.closest('a').href,photo.src);assert.ok(fs.existsSync(path.join(root,new URL(photo.src).pathname)));
   g.click('.back-link');g.click('[data-kind="office"]');g.search('罗桂枝','2023-10-27');
   assert.equal(g.d.querySelectorAll('#results tbody tr').length,1);assert.match(g.d.querySelector('#results').textContent,/院务记录/);
   g.click('[data-kind="visit"]');g.search('罗桂枝');assert.equal(g.d.querySelectorAll('#results tbody tr').length,0);
