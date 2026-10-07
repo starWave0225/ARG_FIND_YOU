@@ -15,7 +15,7 @@ function boot(t,search='',setup=()=>{}) {
   t.after(()=>{w.close();assert.deepEqual(errors,[]);});
   return{w,d,click,submit,search:(q,date='')=>{d.querySelector('#query').value=q;d.querySelector('#date').value=date;submit('#queryForm');}};
 }
-test('hospital starts without identities and exact query/date/category filters intersect',t=>{
+test('hospital starts without patient identities and exact query/date/category filters intersect',t=>{
   const g=boot(t);
   assert.equal(g.d.querySelectorAll('#results tbody tr').length,0);
   assert.doesNotMatch(g.d.body.textContent,/林知微|0708|LC-960708|许行远/);
@@ -25,6 +25,21 @@ test('hospital starts without identities and exact query/date/category filters i
   g.search('林知微','1996-07-08');assert.equal(g.d.querySelectorAll('#results tbody tr').length,0);
   g.click('button[type="reset"]');assert.equal(g.d.querySelector('#query').value,'');
   g.search('','1996-07-08');assert.equal(g.d.querySelectorAll('#results tbody tr').length,2);
+});
+test('public retirement notice connects Luo to the hospital, retains its source, and keeps medical records separate',t=>{
+  const g=boot(t);const saved=g.w.localStorage.getItem('find-you-state-v1');
+  g.click('.hospital-news a');
+  assert.equal(g.d.querySelector('#recordTitle').textContent,'罗桂枝同志荣誉退休仪式简讯');
+  assert.match(g.d.querySelector('.record-top').textContent,/院办公室/);
+  assert.match(g.d.querySelector('.record-body').textContent,/2006 年由南岭卫生院调入我院/);
+  assert.match(g.d.querySelector('.record-body').textContent,/2023 年 10 月 27 日/);
+  assert.doesNotMatch(g.d.querySelector('#readerView').textContent,/9624|林知微|LC-960708|假记录|制作备注/);
+  const retained=JSON.parse(g.w.localStorage.getItem(key)).read[0];
+  assert.match(retained.source,/护理部供稿/);assert.equal(retained.body,g.w.StoryDocuments['C1-10'].body);
+  g.click('.back-link');g.click('[data-kind="office"]');g.search('罗桂枝','2023-10-27');
+  assert.equal(g.d.querySelectorAll('#results tbody tr').length,1);assert.match(g.d.querySelector('#results').textContent,/院务记录/);
+  g.click('[data-kind="visit"]');g.search('罗桂枝');assert.equal(g.d.querySelectorAll('#results tbody tr').length,0);
+  assert.equal(g.w.localStorage.getItem('find-you-state-v1'),saved);
 });
 test('direct attachment links keep bodies sealed; neutral failure, original password, gender and reload remain consistent',t=>{
   const g=boot(t,'?record=C5-03');

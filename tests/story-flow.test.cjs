@@ -7,7 +7,7 @@ const root = path.resolve(__dirname,'..');
 const key = 'find-you-state-v1';
 const ready = {playerName:'林予安',playerGender:'female',accepted:true,envelopeOpened:true,clues:['envelopeFactory','envelopePostcode','postalArea','renamedFactory','workerNumber','movedRongchuan'],legacyOpened:true,rosterUnlocked:true,personFound:true,conclusionBuilt:true,confirmed:true,sent:true,chapterOneStarted:true,clinicSolved:true,remoteFinds:['clinicCard','clinicPhoto'],storyFlowVersion:2};
 const answers = {
- M04:['9624','罗桂枝','照片拍摄年'],M05:['9624','南岭卫生院','1968'],M06:['023','盛广财','盛家村籍、村会计','2001'],S04:[],
+ M04:['9624','罗桂枝','照片拍摄年'],M05:['9624','岭川县医院','1968'],M06:['023','盛广财','盛家村籍、村会计','2001'],S04:[],
  M07:['盛德昌','罗桂枝','盛广财'],M08:['31','22','27','TG-240824-019'],M09:['盛承安','住址及联系电话','已送达'],DEPART:[],
  M10:['3','4','有第四人，亲属关系仍待查'],M11:['1974','许行远','长林家老二'],M12:['盛长林','042','寄养户籍'],
  M13:['林知微','在读大学生','21'],M14:['盛守平','盛守安','1'],M15:['017','盛临川','1995-11-02'],
@@ -61,7 +61,7 @@ function boot(t,saved=ready) {
 }
 
 test('full main route reaches in-game publication without HM; gates, locks and reload preserve the investigation',t=>{
- const g=boot(t);assert.equal(Object.keys(g.w.StoryDocuments).length,90);assert.equal(Object.keys(g.w.StoryConfig.scenes).length,24);
+ const g=boot(t);assert.equal(Object.keys(g.w.StoryDocuments).length,91);assert.equal(Object.keys(g.w.StoryConfig.scenes).length,24);
  assert.equal(g.w.StoryFlow.available('C3-03'),true);assert.equal(g.w.StoryFlow.available('H01'),true);
  g.w.StoryFlow.open('M04');
  assert.equal(g.d.querySelector('.story-hint'),null);

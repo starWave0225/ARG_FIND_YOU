@@ -78,6 +78,7 @@
     if (id === 'C1-01') return (state().remoteFinds||[]).includes('clinicCard') ? '盛禾提供 · 既存扫描件 · 原保管位置：卫生室药柜12号' : '现场原件检视 · 留存索引卡';
     if (id === 'C1-02') return (state().villageFinds||[]).includes('clinicPhoto') && !(state().remoteFinds||[]).includes('clinicPhoto') ? '现场原件检视 · 照片背面' : '匿名投稿人提供 · 私人照片副本';
     if (id === 'C1-09') return '匿名投稿人提供 · 私人投稿留言';
+    if (id === 'C1-10') return '岭川县医院院办公室 · 护理部供稿 · 2023-10-27';
     if (config.external[id]) return '文章 / 原页摘录 · 外部链接待补';
     if (id.startsWith('C3')) return '现场调阅 · 祠堂与学校原件';
     if (id.startsWith('C4')) return '旧案调阅 · 原始登记与留存副本';
@@ -107,6 +108,7 @@
     if (!available(id)) return '<p>这份材料尚未取得查阅条件。</p>';
     if (!unlocked(id)) return `<p>${esc(config.locks[id].cover)}</p><button data-story-doc="${id}">打开附件查验</button>`;
     let html = documents[id].body;
+    if (id === 'C1-04' || id === 'C1-10') html += '<p><a href="./hospital/?record=C1-10" target="_blank" rel="noopener">岭川县医院院务留档：罗桂枝同志荣誉退休仪式简讯</a></p>';
     if (id === 'C5-01' && !done('M18')) html = html.replace(/<p>栏目计算附页：.*?<\/p>/s,'');
     if (id === 'H14' && !done('X12')) html = html.split('<p><strong>处理后：')[0];
     if (id === 'H05') html = '<h3>原讲解稿 v1 · 原稿扫描</h3><p>盛长林一家旧照，背面题字保留。林知微的失踪与在村记录存在矛盾，另附两份原件。祠堂侧门于2008年封闭。</p><h3>游客讲解稿 v3 · 发布副本</h3><p>学校展柜：普通村户合影，人物信息陆续补充。照片仅保留画面主体。祠堂侧院：旧时即不通行，请随工作人员行走。</p><h3>流转审批附件</h3><p>编辑提交：裁去白边；个人经历移入专项复核，不进入游客稿；侧门表述统一。校对退回：不得改变照片原义，侧门说法与工单不符。运营验收页：按v3用于公开导览，异议另存，原扫描不覆盖。</p>';

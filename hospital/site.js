@@ -32,7 +32,7 @@
   }
   function href(id) {const params=queryParams();params.set('record',id);return '?'+params;}
   function setKind(value) {
-    kind=['birth','visit'].includes(value)?value:'';
+    kind=['birth','visit','office'].includes(value)?value:'';
     document.querySelectorAll('[data-kind]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.kind===kind)));
   }
   function renderResults() {
@@ -43,7 +43,7 @@
     }
     const hits=records.filter(r=>(!kind||r.kind===kind)&&(!date||r.date===date)&&(!query||[r.id,r.number,r.title,r.subject,...r.keywords].some(key=>norm(key)===query)));
     $('#resultStatus').textContent=`共 ${hits.length} 项`;
-    $('#results').innerHTML=hits.length?`<table class="results-table"><thead><tr><th scope="col">档案题名 / 编号</th><th scope="col">登记对象</th><th scope="col">登记日期</th><th scope="col">资料类别</th></tr></thead><tbody>${hits.map(r=>`<tr><td><a href="${escape(href(r.id))}">${escape(r.title)}</a><small>${escape(r.number)}</small></td><td>${escape(r.subject)}</td><td>${r.date}</td><td>${r.kind==='birth'?'出生记录':'就诊记录'}${lock(r.id)?'<br><span class="lock-label">封存附件</span>':''}</td></tr>`).join('')}</tbody></table>`:'<div class="empty-state">未查询到匹配记录。</div>';
+    $('#results').innerHTML=hits.length?`<table class="results-table"><thead><tr><th scope="col">档案题名 / 编号</th><th scope="col">登记对象</th><th scope="col">登记日期</th><th scope="col">资料类别</th></tr></thead><tbody>${hits.map(r=>`<tr><td><a href="${escape(href(r.id))}">${escape(r.title)}</a><small>${escape(r.number)}</small></td><td>${escape(r.subject)}</td><td>${r.date}</td><td>${r.kind==='office'?'院务记录':r.kind==='birth'?'出生记录':'就诊记录'}${lock(r.id)?'<br><span class="lock-label">封存附件</span>':''}</td></tr>`).join('')}</tbody></table>`:'<div class="empty-state">未查询到匹配记录。</div>';
   }
   function showRecord(id) {
     const record=byId.get(id);
@@ -54,7 +54,7 @@
     const snapshot={id,title:record.title,number:record.number,date:record.date,source:record.source,body,locked};
     log.read=[snapshot,...log.read.filter(r=>r.id!==id)];persist();
     const attachments=[...(record.attachments||[]),...(record.parent?[record.parent]:[])].map(id=>byId.get(id));
-    $('#readerView').innerHTML=`<a class="back-link" href="${escape(back)}">« 返回查询</a><article class="record-paper"><div class="record-top">岭川县医院 / 病案室 / 历史资料</div><h1 id="recordTitle" tabindex="-1">${escape(record.title)}</h1><dl class="record-meta"><div><dt>登记对象</dt><dd>${escape(record.subject)}</dd></div><div><dt>登记日期</dt><dd>${record.date}</dd></div><div><dt>原记录编号</dt><dd>${escape(record.number)}</dd></div><div><dt>资料来源</dt><dd>${escape(record.source)}</dd></div></dl>${locked?`<div class="locked-box"><p>${escape(lock(id).cover)}</p><form id="unlockForm"><label for="attachmentCode">附件密码</label><div class="unlock-controls"><input id="attachmentCode" type="password" maxlength="40" autocomplete="off" required><button type="submit">核验</button></div><div id="unlockFeedback" class="feedback" role="status" aria-live="polite"></div></form></div>`:`<div class="record-body">${body}</div>`}${attachments.length?`<aside class="attachment-list"><h2>${record.parent?'所属档案':'随附资料'}</h2>${attachments.map(r=>`<a href="${escape(href(r.id))}">${escape(r.title)}${lock(r.id)?'（封存附件）':''} »</a>`).join('')}</aside>`:''}</article><p class="record-status">${storageOK?(locked?'封面与来源已留存。':'原文与来源已自动留存。'):'本机留存不可用。'}</p>`;
+    $('#readerView').innerHTML=`<a class="back-link" href="${escape(back)}">« 返回查询</a><article class="record-paper"><div class="record-top">岭川县医院 / ${record.kind==='office'?'院办公室 / 院务留档':'病案室 / 历史资料'}</div><h1 id="recordTitle" tabindex="-1">${escape(record.title)}</h1><dl class="record-meta"><div><dt>${record.kind==='office'?'相关人员':'登记对象'}</dt><dd>${escape(record.subject)}</dd></div><div><dt>${record.kind==='office'?'发布日期':'登记日期'}</dt><dd>${record.date}</dd></div><div><dt>原记录编号</dt><dd>${escape(record.number)}</dd></div><div><dt>资料来源</dt><dd>${escape(record.source)}</dd></div></dl>${locked?`<div class="locked-box"><p>${escape(lock(id).cover)}</p><form id="unlockForm"><label for="attachmentCode">附件密码</label><div class="unlock-controls"><input id="attachmentCode" type="password" maxlength="40" autocomplete="off" required><button type="submit">核验</button></div><div id="unlockFeedback" class="feedback" role="status" aria-live="polite"></div></form></div>`:`<div class="record-body">${body}</div>`}${attachments.length?`<aside class="attachment-list"><h2>${record.parent?'所属档案':'随附资料'}</h2>${attachments.map(r=>`<a href="${escape(href(r.id))}">${escape(r.title)}${lock(r.id)?'（封存附件）':''} »</a>`).join('')}</aside>`:''}</article><p class="record-status">${storageOK?(locked?'封面与来源已留存。':'原文与来源已自动留存。'):'本机留存不可用。'}</p>`;
     $('#unlockForm')?.addEventListener('submit',event=>{
       event.preventDefault();
       if(norm($('#attachmentCode').value)!==norm(lock(id).code)){$('#unlockFeedback').textContent='核验未通过';return;}
