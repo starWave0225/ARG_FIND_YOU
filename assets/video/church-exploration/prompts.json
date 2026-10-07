@@ -1,0 +1,30 @@
+{
+  "mode": "builtin imagegen",
+  "shots": [
+    {
+      "key": "hall",
+      "ref": "church/assets/assembly-back-v3.png",
+      "prompt": "Create a single landscape 16:9 cinematic found-footage still for a fictional Chinese rural cult exploration horror game. Preserve architecture of reference: old wooden meeting hall, giant square wood pillar left, brass circular eye emblem far altar wall, barred windows right. Same place at midnight, completely empty, chairs in rows, open door foreground, one narrow handheld flashlight beam spilling across aisle and altar. Cheap 2004 miniDV camcorder documentary realism, desaturated green brown, low exposure with visible detail, mild sensor noise, imperfect handheld framing, unsettling documentary not glossy movie. NO people, NO text, NO timestamp, NO overlays, NO collage. A real camera view with substantial usable shadow detail. No gore.",
+      "path": "/Users/qujunjie/.codex/generated_images/01a0a983-06e1-7260-8742-5d746483929b/exec-78ca29f2-ea01-4d20-a963-9cf283927054.png"
+    },
+    {
+      "key": "ritual",
+      "ref": "church/assets/assembly-back-v3.png",
+      "prompt": "Single landscape 16:9 found footage frame for fictional horror: same Chinese rural wooden church in reference, same massive wood column and brass eye emblem at far wall. Midnight covert filming from behind a half-open door on left, flashlight off, weak ceiling fluorescent. Twelve ordinary middle-aged adults in grey drab work clothes seated in a strange wide broken circle with ALL their backs towards center; backs of foreground people visible, distant heads lowered so NO faces discernible. Center of circle one empty wooden chair facing camera, old cassette recorder on it, long black cloth strips hanging straight down from chair seat, piles of folded blank paper on floor. No candles, no pentagrams, no western costume. Ritual feels bureaucratic and domestically wrong. Documentary lowlight miniDV, realistic people proportions small within environment. Unpolished, mildly blurred, oppressive. NO captions, no text, no UI. No gore.",
+      "path": "/Users/qujunjie/.codex/generated_images/01a0a983-06e1-7260-8742-5d746483929b/exec-4299dc5b-5f90-4e31-aa51-a2012991ec7b.png"
+    },
+    {
+      "key": "tape",
+      "ref": "church/assets/archive-back-v3.png",
+      "prompt": "Single landscape 16:9 extreme documentary closeup in exact old Chinese church archive environment from reference. Nighttime explorer flashlight lights a battered black 1980s portable cassette recorder on scarred wooden desk, clear cassette visibly inserted, tiny red RECORD light on. Beside it, an old yellow evidence folder, paper tag with only clear Chinese handwriting '第六席', and an empty chipped porcelain cup. Deep background open dark doorway and wood file shelves. No people. Oblique handheld camera at desk height, dirty lens edge, lowlight miniDV realism, muted brown and dirty green, textured dust. Eerie impossibility: recorder running in abandoned archive. NO overlays/timestamp/title/collage. No gore.",
+      "path": "/Users/qujunjie/.codex/generated_images/01a0a983-06e1-7260-8742-5d746483929b/exec-3ad72491-8cba-4532-b71e-d6fe717ea4ef.png"
+    },
+    {
+      "key": "ledger",
+      "ref": "church/assets/archive-back-v3.png",
+      "prompt": "Single landscape 16:9 documentary closeup of a yellowed open handwritten ledger in same old wood church archive reference, at night flashlight beam. Paper lying diagonally on worn desk, old green desk lamp off far corner, background black. One page has sparse highly legible actual Chinese handwritten text only: heading '受愿登记', line '林知微', line '所求：咒杀盛雄', line '不得代人应名', lower line '终结回执：' followed by empty rectangle. Facing page heading '留置', lower line '声音', below '放行签收：' followed by empty blank rectangle. Very sparse authentic Chinese ink strokes; not typeset graphic design. Close enough to see page, margins worn, carbon paper corner, clip rust. No blood, no human remains, no ritual instructions. Photorealistic lowlight camcorder flashlight illuminated evidence, not poster, no overlay, no collage.",
+      "path": "/Users/qujunjie/.codex/generated_images/01a0a983-06e1-7260-8742-5d746483929b/exec-f235911d-daa7-417d-9bdf-56cf4514a2dd.png"
+    }
+  ],
+  "turn": "Edit this exact fictional church ritual frame to its final terrifying counterpart. Preserve exact camera viewpoint, room, eye emblem, wooden pillars, fluorescent light, empty chair with recorder at center, all people's clothing and seats. Every seated adult has now turned upper body and head toward the camera, looking directly into lens with entire eyes milky white rolled back and slack emotionally absent expressions, mouths just slightly open as though making the same sound. People remain seated, no one moves closer, keep realistic ordinary Chinese middle aged adults. Their faces must be readable but remain small within the wide scene. Modest flashlight frontal catch lights, overall identical dark documentary miniDV exposure. No blood, no wounds, no magic glow, no new figures, no text/overlay. Ominous plausible photographic still, not monsters."
+}

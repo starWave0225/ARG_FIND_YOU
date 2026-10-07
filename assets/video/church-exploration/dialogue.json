@@ -1,0 +1,65 @@
+[
+  {
+    "start": 1.2,
+    "end": 5.8,
+    "text": "门没锁。有人吗？",
+    "role": "explorer",
+    "voice": "zh-CN-YunxiNeural"
+  },
+  {
+    "start": 9.5,
+    "end": 14.5,
+    "text": "受愿之名，不可由旁人应答。",
+    "role": "tape",
+    "voice": "zh-CN-YunjianNeural"
+  },
+  {
+    "start": 20.2,
+    "end": 26.2,
+    "text": "林知微……所求，咒杀盛雄。",
+    "role": "explorer",
+    "voice": "zh-CN-YunxiNeural"
+  },
+  {
+    "start": 32,
+    "end": 35.8,
+    "text": "是否更改所求？",
+    "role": "tape",
+    "voice": "zh-CN-YunjianNeural"
+  },
+  {
+    "start": 36.4,
+    "end": 42.8,
+    "text": "不改。愿了之后，留下的声音也可以走吗？",
+    "role": "tape",
+    "voice": "zh-CN-XiaoxiaoNeural"
+  },
+  {
+    "start": 43.2,
+    "end": 48.8,
+    "text": "所愿的终结与留置的终结分开登记。",
+    "role": "tape",
+    "voice": "zh-CN-YunjianNeural"
+  },
+  {
+    "start": 50,
+    "end": 54,
+    "text": "这句话……外面也在说。",
+    "role": "explorer",
+    "voice": "zh-CN-YunxiNeural"
+  },
+  {
+    "start": 57.1,
+    "end": 60.8,
+    "text": "我没有叫你们。",
+    "role": "explorer",
+    "voice": "zh-CN-YunxiNeural"
+  },
+  {
+    "start": 66.1,
+    "end": 70.5,
+    "text": "那你为什么答应了？",
+    "role": "tape",
+    "voice": "zh-CN-XiaoxiaoNeural"
+  }
+]
