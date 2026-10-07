@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="./cloud-save.css?v=20261005-font-plus2" />
     <link rel="stylesheet" href="./xp-desktop.css?v=20261005-font-plus2-final" />
   <link rel="stylesheet" href="phone-app.css?v=20261005">
+    <link rel="stylesheet" href="./opening-film.css?v=20261007" />
   </head>
   <body>
     <div class="boot-screen" id="bootScreen" aria-hidden="true">
@@ -487,6 +488,7 @@
       <section class="start-menu" id="startMenu">
         <div class="start-search">⌕ <input placeholder="在此输入以搜索" /></div>
         <div class="start-pinned"><h3>已固定</h3><div><button data-open="workbench"><span class="icon-tile icon-tile--brand">寻</span>节目工作台</button><button data-open="files"><span class="icon-folder icon-folder--small"><i></i></span>选题资料</button><button data-open="mail"><span class="task-mail task-mail--large">M</span>内部邮件</button><button data-open="archive"><span class="task-browser task-browser--large">◎</span>岭川搜寻</button><button data-open="phone"><span>☎</span>电话</button><button data-open="news"><span class="task-news">▤</span>本市新闻</button></div></div>
+        <button class="opening-film-replay" id="openingFilmReplay">▷ 节目宣传片</button>
         <footer><div class="user-avatar" data-player-initial>你</div><strong data-player-name>未登记</strong><button aria-label="关机">◯</button></footer>
       </section>
     </main>
@@ -509,6 +511,14 @@
       <section id="cloudSaveConflict" class="cloud-save-conflict" hidden><p id="cloudSaveRemoteTime"></p><p>切换前会保留备份，最多保留最近 5 份。使用本机进度将替换当前云端版本。</p><button id="cloudUseRemote" data-cloud-action>使用云端进度</button><button id="cloudKeepLocal" data-cloud-action>使用本机进度</button></section>
       <section id="cloudBackups" hidden><label for="cloudBackupSelect">切换前的备份</label><select id="cloudBackupSelect"></select><small>恢复备份后只在本机继续，云端版本保留。</small><button id="cloudBackupRestore" data-cloud-action>恢复所选本机备份</button><button id="cloudBackupDownload">导出备份</button></section>
     </dialog>
+    <dialog id="openingFilm" class="opening-film" aria-label="《我要找到你》节目宣传片">
+      <div class="opening-film-frame">
+        <video id="openingFilmVideo" playsinline preload="none" poster="./promo/output/find-you-program-promo-cover-v2.jpg" aria-label="节目宣传片视频"></video>
+        <button id="openingFilmPlay" class="opening-film-play" autofocus><span aria-hidden="true">▷</span>播放节目宣传片</button>
+      </div>
+      <footer class="opening-film-footer"><span>《我要找到你》 · 大型公益寻人栏目</span><button id="openingFilmSkip">跳过，进入游戏 →</button></footer>
+      <p id="openingFilmStatus" class="opening-film-status" role="status" aria-live="polite"></p>
+    </dialog>
     <script src="./cloud-config.js?v=20261005"></script>
     <script src="./cloud-save.js?v=20261005-reset-fix"></script>
     <script src="./app.js?v=20261005-reset-fix"></script>
@@ -525,5 +535,6 @@
     <script src="./phone-app.js?v=20261005"></script>
     <script src="./game.js?v=20261005-phone"></script>
     <script src="./city-news.js?v=20261005"></script>
+    <script src="./opening-film.js?v=20261007"></script>
   </body>
 </html>

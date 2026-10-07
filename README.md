@@ -12,6 +12,8 @@ python3 -m http.server 4173
 
 人物形象册：`http://127.0.0.1:4173/docs/character-album.html`
 
+新游戏先展示约 55 秒的《我要找到你》节目宣传片（已有配音的 v2），点击播放后有声观看；播完或跳过后建立主角档案。已有主角档案的存档直接继续，开始菜单的“节目宣传片”可重看。`?intro=1` 可预览开场而不重置存档；盛家村独立页不重复展示。
+
 ## 云存档（Cloudflare）
 
 前端与后端源码均保留在本仓库。`cloud/worker.mjs` 部署到 Cloudflare Workers，D1 数据库 `find-you-saves` 通过 `DB` 绑定；前端入口配置在 `cloud-config.js`。接口健康检查：<https://find-you-api.junjiequ98.workers.dev/health>。这次配置后端服务，不自动开启 GitHub Pages；游戏仍可按上面的地址本地运行。

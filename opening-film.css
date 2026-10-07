@@ -1,0 +1,29 @@
+.opening-film {
+  position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh;
+  max-width: none; max-height: none; margin: 0; padding: 24px;
+  border: 0; color: #edf2e6; background: #081411; overflow: auto;
+  font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+}
+.opening-film[open] { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.opening-film::backdrop { background: #081411; }
+.opening-film-frame { position: relative; width: min(1100px, 100%, calc((100dvh - 150px) * 16 / 9)); background: #000; }
+.opening-film video { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: contain; }
+.opening-film-play {
+  position: absolute; left: 50%; bottom: 10%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 12px; white-space: nowrap;
+  padding: 12px 24px; border: 1px solid #b7d253; border-radius: 3px;
+  background: #10251eee; color: #e6f2c8; cursor: pointer; font-size: 16px;
+}
+.opening-film-play span { font-size: 24px; }
+.opening-film-play[hidden] { display: none; }
+.opening-film-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: min(1100px, 100%); margin-top: 20px; font-size: 13px; color: #96aaa0; }
+.opening-film-footer button, .opening-film-replay { padding: 9px 14px; border: 1px solid #687f72; border-radius: 3px; background: transparent; color: inherit; cursor: pointer; }
+.opening-film button:focus-visible { outline: 2px solid #d9f56a; outline-offset: 4px; }
+.opening-film-footer button { color: #e7efdf; }
+.opening-film-status { min-height: 22px; margin: 10px 0 0; font-size: 13px; color: #c6d2bc; }
+.opening-film-replay { margin: 0 24px 16px; font-size: 14px; }
+@media (max-width: 600px) {
+  .opening-film { padding: 16px; }
+  .opening-film-footer { align-items: flex-start; flex-direction: column; }
+  .opening-film-play { font-size: 14px; padding: 8px 14px; bottom: 7%; }
+}
