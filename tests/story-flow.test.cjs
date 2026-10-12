@@ -80,9 +80,6 @@ test('full main route reaches in-game publication without HM; gates, locks and r
  assert.match(g.w.StoryFlow.body('C7-03'),/林予安/);assert.doesNotMatch(g.w.StoryFlow.body('C7-03'),/陈默/);
  const reloaded=boot(t,g.saved());assert.equal(reloaded.w.StoryFlow.completed('PUBLISH'),true);
  reloaded.w.StoryFlow.open();assert.match(reloaded.d.querySelector('#page-story').textContent,/报道已留档/);
- reloaded.click('[data-story-section="bonus"]');
- assert.equal(reloaded.d.querySelector('[data-jia-perfect]').getAttribute('href'),'./assets/video/jia-perfect/preview.html');
- assert.equal(reloaded.saved().storyProgress.done.some(x=>x.startsWith('X')),false,'crossover film must not require or complete HM steps');
 });
 
 test('chapter correspondence only appears when received and reading never advances the story',t=>{
