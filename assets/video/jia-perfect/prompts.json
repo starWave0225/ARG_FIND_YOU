@@ -1,0 +1,187 @@
+{
+  "mode": "builtin imagegen",
+  "batches": [
+    {
+      "key": "call",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/ending/xi/04-police-dawn.png"
+      ],
+      "prompt": "Single 16:9 landscape illustration-story frame for Chinese mystery game ending film. Match reference pixel-art ending style: meticulously hand-pixelated cinematic semi-realistic Chinese figures, discrete square pixels and stepped outlines, muted colors, detailed environments, not a photograph, not anime chibi, no panels or collage, NO captions or overlays. Character references define face identity, pixelize them without changing face. Late-night first-person desk shot in a contemporary Chinese newsroom, computer monitor shows plain map outlines and small network records (no readable text), foreground a hand reaches for mobile phone glowing with simple blank dark call interface. NO face or body of player shown. Rainy dark window, warm small desk lamp, quiet decisive mood. Device screens have blank space for added text. Composition focus phone right, computer left."
+    },
+    {
+      "key": "corridor",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/ending/xi/04-police-dawn.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/liu-han.png"
+      ],
+      "prompt": "Single 16:9 landscape illustration-story frame for Chinese mystery game ending film. Match reference pixel-art ending style: meticulously hand-pixelated cinematic semi-realistic Chinese figures, discrete square pixels and stepped outlines, muted colors, detailed environments, not a photograph, not anime chibi, no panels or collage, NO captions or overlays. Character references define face identity, pixelize them without changing face. Night cramped apartment corridor, door 402 at end (number only). Liu Han is same Chinese MAN in olive green jacket from reference, short tousled black hair, leads two uniformed Chinese police officers, quietly pointing to an external lock on the door. Everybody approaching door seen at three-quarter backs, Liu's face partly visible. Cool desaturated blue grey palette, cinematic controlled urgency, old plaster and tiled corridor, real apartment not temple. No guns aimed at victim."
+    },
+    {
+      "key": "door",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/ending/xi/04-police-dawn.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/gu-pan.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/liu-han.png"
+      ],
+      "prompt": "Single 16:9 landscape illustration-story frame for Chinese mystery game ending film. Match reference pixel-art ending style: meticulously hand-pixelated cinematic semi-realistic Chinese figures, discrete square pixels and stepped outlines, muted colors, detailed environments, not a photograph, not anime chibi, no panels or collage, NO captions or overlays. Character references define face identity, pixelize them without changing face. Camera INSIDE dim apartment looking OUT through freshly forced open apartment door. Powerful warm-white corridor light spills diagonally across dust and floor, silhouettes of two Chinese uniformed police officers and Liu Han MAN (olive jacket reference) entering, foremost officer pushes opened door aside. Exhausted but alive Gu Pan woman in cream ribbed sweater same face reference sits collapsed on floor at RIGHT near sofa, leaning into frame, small in environmental wide shot. Gu Pan looks towards light, no blood or wounds or self harm objects. Door on left center, retain enough shadow detail. Door-opening dramatic rescue as still frame, compassionate realistic staging."
+    },
+    {
+      "key": "rescue",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/ending/xi/04-police-dawn.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/gu-pan.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/liu-han.png"
+      ],
+      "prompt": "Single 16:9 landscape illustration-story frame for Chinese mystery game ending film. Match reference pixel-art ending style: meticulously hand-pixelated cinematic semi-realistic Chinese figures, discrete square pixels and stepped outlines, muted colors, detailed environments, not a photograph, not anime chibi, no panels or collage, NO captions or overlays. Character references define face identity, pixelize them without changing face. Close medium rescue scene in same small Chinese apartment at night. Gu Pan SAME woman's reference face, shoulder-length straight black hair, cream ribbed V-neck sweater, pale exhausted but alive, eyelids partly open, reclines supported near sofa. Liu Han SAME MAN olive jacket crouches beside her, caring concerned expression, one open hand reassuring at respectful distance. Medical rescuer kneels on opposite side with kit, police and bright opened door blurred background. Focus Gu Pan face and hand, dim room crossed with doorway light. No blood, no visible injuries, no romance with Liu, no tears spectacle."
+    },
+    {
+      "key": "arrest",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/ending/xi/04-police-dawn.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/gu-jianguo.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/zhou-xiulan.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/gu-pan.png"
+      ],
+      "prompt": "Single 16:9 landscape illustration-story frame for Chinese mystery game ending film. Match reference pixel-art ending style: meticulously hand-pixelated cinematic semi-realistic Chinese figures, discrete square pixels and stepped outlines, muted colors, detailed environments, not a photograph, not anime chibi, no panels or collage, NO captions or overlays. Character references define face identity, pixelize them without changing face. Inside same small contemporary Chinese apartment at night. Medium-wide composition: LEFT two Chinese police officers firmly escort Gu Pan's father Gu Jianguo in brown jacket and mother Zhou Xiulan in dark cardigan, exact reference faces, towards open doorway. Their hands controlled respectfully, no violence or guns. RIGHT foreground rescuers wheel exhausted ALIVE Gu Pan under pale blanket on stretcher through doorway. Strong corridor light falls across stretcher, contrasting cold room. Rescue priority, parents alive arrested, no blood or self harm objects."
+    },
+    {
+      "key": "plane",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/ending/xi/04-police-dawn.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/shen-wang.png"
+      ],
+      "prompt": "Single 16:9 landscape illustration-story frame for Chinese mystery game ending film. Match reference pixel-art ending style: meticulously hand-pixelated cinematic semi-realistic Chinese figures, discrete square pixels and stepped outlines, muted colors, detailed environments, not a photograph, not anime chibi, no panels or collage, NO captions or overlays. Character references define face identity, pixelize them without changing face. Shen Wang SAME short haired Chinese man face reference, charcoal shirt jacket, seated in night airplane cabin beside oval window, aircraft has just landed and is taxiing slowly outside airport runway lights. He holds glowing phone in both hands close to chest, eyes closed with relief and concern. Plane seat, distant seated passengers, soft blue overhead light, warm phone glow. Phone screen blank to overlay message later. Intimate medium close framing, realistic restrained emotional performance."
+    },
+    {
+      "key": "hospital",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/ending/xi/04-police-dawn.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/gu-pan.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/shen-wang.png"
+      ],
+      "prompt": "Single 16:9 landscape illustration-story frame for Chinese mystery game ending film. Match reference pixel-art ending style: meticulously hand-pixelated cinematic semi-realistic Chinese figures, discrete square pixels and stepped outlines, muted colors, detailed environments, not a photograph, not anime chibi, no panels or collage, NO captions or overlays. Character references define face identity, pixelize them without changing face. Quiet Chinese hospital room at early dawn, Gu Pan exact female reference face with shoulder-length black hair, exhausted but alive recovering reclined in hospital bed, pale blue hospital gown, eyes open gently towards Shen Wang. Her right hand suspended weakly above blanket; Shen Wang exact male reference face in charcoal jacket sits close and cups/supports her suspended hand carefully with both of his hands. Natural anatomy, one Gu Pan and one Shen Wang only. Open doorway background, soft window light, a few modest medical fixtures, no dramatic tears, no blood, no on-screen text. Emotional close medium, hands clearly visible."
+    },
+    {
+      "key": "wedding",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/ending/xi/04-police-dawn.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/gu-pan.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/shen-wang.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/liu-han.png"
+      ],
+      "prompt": "Single 16:9 landscape illustration-story frame for Chinese mystery game ending film. Match reference pixel-art ending style: meticulously hand-pixelated cinematic semi-realistic Chinese figures, discrete square pixels and stepped outlines, muted colors, detailed environments, not a photograph, not anime chibi, no panels or collage, NO captions or overlays. Character references define face identity, pixelize them without changing face. Small joyful outdoor wedding in China autumn 2026, bright natural golden daylight, Gu Pan exact female reference face shoulder-length black hair wearing simple white bridal dress, Shen Wang exact male reference face dark formal suit. They face each other smiling gently while exchanging rings, Gu Pan extends her hand voluntarily. Hands correctly anatomically formed. Liu Han exact male reference olive jacket visible among few seated guests in background, watching warmly. Simple white cloth table and flowers, modest intimate ceremony, not lavish. Wide landscape with couple central, enough foreground hands visible for video crop detail, hopeful pixel art matching ending reference."
+    },
+    {
+      "key": "painting",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/paintings/xiangyangchu.png"
+      ],
+      "prompt": "Edit this exact oil painting '向阳处' to its hopeful perfect-ending version. Preserve its entire composition and motif: shabby plaster room, tall narrow window upper right, wooden chair and burgundy scarf left, book on floor center, jar/vase and little plant below window, table with blue glass bottle right. Paint in identical thick oil impasto style, same perspective and brush strokes, same framing 4:3. Make daylight much brighter and warmer, bright ivory sun beam spreading across room, lighten walls to ochre cream while retain weathered texture, lift shadow colors. Existing plant now healthy flowering with ivory-yellow blossoms and green stems climbing up and outward over the window sill, leaves and flowers reach sunshine beyond window. Preserve original emotional recognizable design, hopeful yet subtle. NO text, no people, no collage, no pixelart transformation, do not replace composition with landscape."
+    },
+    {
+      "key": "ambulance",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/ending/xi/04-police-dawn.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/liu-han.png"
+      ],
+      "prompt": "Single 16:9 landscape illustration-story frame for Chinese mystery game ending film. Match reference pixel-art ending style: meticulously hand-pixelated cinematic semi-realistic Chinese figures, discrete square pixels and stepped outlines, muted colors, detailed environments, not a photograph, not anime chibi, no panels or collage, NO captions or overlays. Character references define face identity, pixelize them without changing face. Night outside Chinese apartment building, white ambulance with open back doors and emergency responders preparing departure in background. Liu Han exact MAN in olive green jacket from reference stands foreground half-body writing urgent message on smartphone, phone angled partly toward camera with blank lit screen for text overlay. Concerned purposeful face and restrained expression, not smiling. Blue-white rescue lighting and warm building windows, mild rain wet pavement, no gore. Landscape environmental composition."
+    },
+    {
+      "key": "recovery",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/ending/xi/04-police-dawn.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/gu-pan.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/shen-wang.png"
+      ],
+      "prompt": "Single 16:9 landscape illustration-story frame for Chinese mystery game ending film. Match reference pixel-art ending style: meticulously hand-pixelated cinematic semi-realistic Chinese figures, discrete square pixels and stepped outlines, muted colors, detailed environments, not a photograph, not anime chibi, no panels or collage, NO captions or overlays. Character references define face identity, pixelize them without changing face. Late spring sunny Chinese hospital courtyard garden. Gu Pan exact reference woman's face shoulder length black hair, light cream cardigan and loose trousers, sits on wooden bench with sketchbook open on knees, pencil tip about to touch paper, a gentle recovering focused expression. Shen Wang exact male reference face charcoal casual jacket seated beside her at respectful distance, quietly accompanying, not drawing for her. Green trees, modest hospital building soft background. Warm natural restrained hopeful daylight, medium wide framing shows whole sketchbook and hands, no text, no miraculous-health symbolism."
+    },
+    {
+      "key": "door-pov",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_FIND_YOU/assets/video/jia-perfect/source/door-v1.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/liu-han.png"
+      ],
+      "prompt": "Single landscape 16:9 cinematic pixel-art ending frame, same detailed pixelized semi-realistic Chinese style as reference, stepped edges, visible pixels, NO caption, text, watermark or collage. Match given characters exactly. Reframe scene to FIRST PERSON through Gu Pan's eyes. Camera very low seated height near floor and couch on RIGHT, looking across SAME dim apartment toward same entrance on left-center. Do NOT show Gu Pan's face or body, only subtle out-of-focus edge of her cream-sweater sleeve at bottom. Door just forced open, blinding yet warm white hallway light pours across dust and floor towards camera. Two Chinese police officers and Liu Han (exact male face olive jacket reference) appear silhouetted just beyond door, one officer entering and pushing door aside. First-person rescue vision, low eye level, oppressively dark edges and strong readable light, normal architecture not temple. No weapons aimed at viewer, no gore."
+    },
+    {
+      "key": "rescue-pov",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_FIND_YOU/assets/video/jia-perfect/source/rescue-v1.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/liu-han.png"
+      ],
+      "prompt": "Single landscape 16:9 cinematic pixel-art ending frame, same detailed pixelized semi-realistic Chinese style as reference, stepped edges, visible pixels, NO caption, text, watermark or collage. Match given characters exactly. Same rescue room but FIRST PERSON through Gu Pan's eyes from her reclining low position on couch. Do not show her face. Liu Han same Chinese MAN short tousled black hair olive jacket leans/crouches in front of camera, looks directly into lens at her with urgent caring expression, one open hand held in view gently reassuring, not touching lens. Ambulance paramedic with white gloves and dark rescue uniform at left edge reaching to help, opened door with police and white-gold hallway light blurred behind. At bottom edge only faint cream sleeve of viewer. Close-up composition appropriate when hearing '顾盼，我是刘涵。我们来了，你不要怕。'. Mild defocused edges, NOT a jump scare, no blood or wounds."
+    },
+    {
+      "key": "hospital-pov",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/ending/xi/04-police-dawn.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/shen-wang.png"
+      ],
+      "prompt": "Single landscape 16:9 cinematic pixel-art ending frame, same detailed pixelized semi-realistic Chinese style as reference, stepped edges, visible pixels, NO caption, text, watermark or collage. Match given characters exactly. FIRST PERSON from Gu Pan reclining in Chinese hospital bed. Camera at pillow eye level looking at Shen Wang's face, same Chinese male charcoal jacket reference, he leans/sits beside bed looking directly to camera with quiet relieved warm expression. Foreground at lower edge Gu Pan's weakly raised feminine hand extending from pale blue hospital sleeve held gently in Shen Wang's two hands. Correct anatomy, do not show Gu Pan's face, no third person viewpoint. Hospital window dawn light, bedside water cup, subtle medical fixtures. Intimate hopeful pixel-art composition, background softly defocused, Shen Wang's face clear."
+    },
+    {
+      "key": "gallery",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_FIND_YOU/assets/video/jia-perfect/source/recovery-v1.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/gu-pan.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/shen-wang.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/liu-han.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_FIND_YOU/assets/video/jia-perfect/source/painting-v1.png"
+      ],
+      "prompt": "Single 16:9 landscape ending film illustration, same detailed cinematic pixel-art environment and semi-realistic pixelated Chinese faces as first reference. Preserve identities: Gu Pan cream blouse black shoulder-length hair, Shen Wang charcoal shirt, Liu Han male olive jacket. Small bright modern independent art gallery, opening of Gu Pan solo exhibition. Gu Pan stands central addressing a few anonymous art visitors seen from backs, smiling quietly, Shen Wang beside her holding a wrapped frame. Liu Han at LEFT foreground holding camera ready to take opening group photo. On central wall hung LARGE framed painting of EXACT last reference image '向阳处', preserve its composition of old room, left chair/burgundy scarf, right narrow window, bright sunshine and flowers over sill. Other canvases around it modest abstract studies. Sunlit ivory walls. No recognizable parents or antagonists among visitors, just generic people. NO readable text or overlay (we add exhibition name afterward). Artistic hopeful composition, not collage, no western celebrity faces."
+    },
+    {
+      "key": "wedding-clean",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_FIND_YOU/assets/video/jia-perfect/source/wedding-v1.png"
+      ],
+      "prompt": "Edit ONLY wedding guests in background of this image. Preserve bride Gu Pan and groom Shen Wang perfectly, ring exchange, faces, clothing, table, flowers and light identical. Preserve Liu Han man olive jacket seated at far left foreground. Replace EVERY OTHER visible guest with empty decorated chairs or anonymous friends seen only as backs of heads, NO older parental-looking couple in right foreground, no recognizable parents. Keep modest intimate joyful wedding and exact pixel-art style. No text."
+    },
+    {
+      "key": "rescue-profile",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_FIND_YOU/assets/video/jia-perfect/source/rescue-pov-v1.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/liu-han.png"
+      ],
+      "prompt": "Targeted edit. Keep exact first-person Gu Pan rescue viewpoint, apartment, paramedic, open door light, Liu Han olive jacket and reaching hand and pixel style. Change ONLY Liu Han head angle and facial styling. Liu Han is reference 2, NOT Shen Wang: more tousled shaggy heavy fringe and softer cheek contour from Liu reference, slightly rough exhausted complexion. Turn his head 65 degrees toward paramedic at LEFT, clearly profile/three-quarter side face with only one eye fully visible; he is urgently coordinating rescue while speaking reassurance. Do not face camera straight on. Preserve original Liu identity and olive jacket, do not add glasses or beard. No new people, no text."
+    },
+    {
+      "key": "hospital-profile",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_FIND_YOU/assets/video/jia-perfect/source/hospital-pov-v1.png",
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_invitation/public/characters/shen-wang.png"
+      ],
+      "prompt": "Targeted edit. Preserve exact Gu Pan first-person hospital viewpoint, held hands, dawn light, room and Shen Wang dark charcoal shirt. Change ONLY Shen Wang's head angle and neat hair appearance. Shen Wang is reference 2, distinct from shaggy olive-jacket Liu Han: neatly side-parted short hair with brow more exposed, straighter eyebrows and more angular lower jaw following reference, no shaggy rounded Liu bangs. Turn head 50 degrees to camera RIGHT and tilt gaze down gently towards held hand, clearly three-quarter SIDE view rather than face passport front. One side of face brighter. Quiet relieved expression, maintain original person, no new characters no text."
+    },
+    {
+      "key": "corridor-back",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_FIND_YOU/assets/video/jia-perfect/source/corridor-v1.png"
+      ],
+      "prompt": "Change ONLY Liu Han in green olive jacket so his head is fully turned away from camera TOWARDS locked apartment door, visible back of shaggy head and small profile ear only, preserve body pointing at lock, all police and corridor and 402 number and exact pixel artwork identical. No front face for Liu in this establishing shot, no added text."
+    },
+    {
+      "key": "ambulance-profile",
+      "refs": [
+        "/Users/qujunjie/Desktop/junjie_workshop/ARG_FIND_YOU/assets/video/jia-perfect/source/ambulance-v1.png"
+      ],
+      "prompt": "Keep exact ambulance, environment, phone and olive jacket. Reframe Liu Han to strong SIDE profile 75 degrees facing RIGHT while leaning slightly over phone: shaggy tousled fringe, nose silhouette, one eye just visible looking down at screen, camera sees side of head and upper body. He is SAME male Liu Han, do not substitute Shen Wang, avoid front portrait. Same pixel art palette and frame, no new text or characters."
+    },
+    {
+      "key": "closed-pov",
+      "ref": "/Users/qujunjie/Desktop/junjie_workshop/ARG_FIND_YOU/assets/video/jia-perfect/source/door-pov-v1.png",
+      "prompt": "Edit only door/light and people in doorway. Keep exact first-person low eye-level Gu Pan view, floor, couch foreground, all room objects and pixel-art style. Door fully CLOSED before rescue; remove police and Liu Han from doorway. No daylight beam inside; very dim cool shadows and only a thin warm strip of hallway light UNDER door. Do not add Gu Pan face or any body, only foreground blanket/couch edge already there. Same composition for matched hard cut from closed to forced open. No text."
+    },
+    {
+      "key": "call-clean",
+      "ref": "/Users/qujunjie/Desktop/junjie_workshop/ARG_FIND_YOU/assets/video/jia-perfect/source/call-v1.png",
+      "prompt": "Targeted edit of desk pixel-art scene. Preserve phone, first person hand, computer, lamp, rain and existing Gu Pan evidence photo. Remove ONLY the framed double portrait of two men at right desk. Replace that frame area with a small stack of plain archive folders. No newly added faces or names. Exact same composition and illustration."
+    },
+    {
+      "key": "wedding-back",
+      "ref": "/Users/qujunjie/Desktop/junjie_workshop/ARG_FIND_YOU/assets/video/jia-perfect/source/wedding-clean-v1.png",
+      "prompt": "Change only Liu Han seated in olive jacket at far left: turn his head and torso towards bride and groom so camera sees back/side of his shaggy hair, just a partial profile not a frontal portrait. Preserve bride, groom, ring exchange, guests, colors and all scene elements identical. Make Liu's olive jacket and messy fringe visibly distinct from groom's neat formal dark suit and hair. Exact same pixel-art style, no text."
+    }
+  ],
+  "closedDoorEdit": "Edit ONLY the entrance region and its light in this frame to the moment just BEFORE rescue. Keep exact camera INSIDE room looking at same door, Gu Pan at right same pose, room geometry and all objects identical, same pixel art style. Door is now fully CLOSED, removing all police officers and Liu Han who were in the open doorway. The room is very dim with cool blue-grey shadow, no bright sunlight beam across floor, only a tiny narrow line of hallway light UNDER the closed door. Gu Pan still visible exhausted on right near sofa, do not remove her, no self-harm objects, no blood. No text or overlays."
+}
