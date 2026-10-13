@@ -16,7 +16,7 @@ test('interaction requires proximity and facing an object, and a wall blocks it'
 
 test('paper survives the screen refresh; readings keep their source without changing the main save',t=>{
   const folder=path.resolve(__dirname,'../workshop/zhou-mingchuan');
-  const dom=new JSDOM(fs.readFileSync(path.join(folder,'index.html'),'utf8'),{url:'http://127.0.0.1:4173/workshop/zhou-mingchuan/',runScripts:'outside-only'});
+  const dom=new JSDOM(fs.readFileSync(path.join(folder,'paper.html'),'utf8'),{url:'http://127.0.0.1:4173/workshop/zhou-mingchuan/paper.html',runScripts:'outside-only'});
   t.after(()=>dom.window.close());const w=dom.window,d=w.document;
   const gl=new Proxy({getShaderParameter:()=>true,getAttribLocation:()=>0},{get:(o,k)=>o[k]||(()=>({}))});
   w.HTMLCanvasElement.prototype.getContext=()=>gl;

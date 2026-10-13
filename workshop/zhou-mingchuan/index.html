@@ -2,22 +2,23 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>周明川 · 纸先留下</title>
+<title>周明川 · 最后一次呼叫</title>
 <link rel="stylesheet" href="scene.css">
 </head>
 <body>
 <main id="scene">
   <canvas id="world" tabindex="0" aria-label="周明川第一人称场景"></canvas>
   <div class="grain" aria-hidden="true"></div>
-  <header><span>澄江 · 工程值班室</span><button id="pause" hidden>暂停</button></header>
+  <header><span id="location">1104 · 21:48</span><div><button id="mute">环境音：开</button> <button id="pause" hidden>暂停</button></div></header>
   <div id="reticle" hidden aria-hidden="true"></div>
   <button id="interact" hidden></button>
-  <p id="subtitle" role="status"></p>
+  <p id="subtitle" role="status"></p><p id="speaker"></p><div id="blackout" hidden></div>
   <footer id="controls" hidden><span>WASD 移动 · 拖动转向 · E 操作</span><button id="notes">留存记录</button></footer>
   <div class="touch" id="touch" hidden><button data-move="forward" aria-label="向前移动">↑</button><button data-move="left" aria-label="向左移动">←</button><button data-move="back" aria-label="向后移动">↓</button><button data-move="right" aria-label="向右移动">→</button></div>
-  <section class="veil" id="gate"><div><p class="date">2026 年 5 月 30 日</p><h1>周明川</h1><p class="title">纸先留下</p><button id="begin">进入值班室</button><p class="keys">WASD 移动，拖动画面转向，双击锁定鼠标<br>方向键转向，PageUp／PageDown 抬头低头<br>E 操作，Esc 暂停。手机使用方向键。</p><p id="failure" role="status"></p></div></section>
+  <section class="veil" id="gate"><div><p class="date">2026 年 6 月 2 日 · 1104</p><h1>周明川</h1><p class="title">最后一次呼叫</p><button id="begin">进入房间</button><p class="keys">WASD 移动，拖动画面转向，双击锁定鼠标<br>方向键转向，PageUp／PageDown 抬头低头<br>E 操作，Esc 暂停。手机使用方向键。</p><p id="failure" role="status"></p></div></section>
   <section class="veil" id="paused" hidden><div><p class="date">周明川</p><h2>暂歇</h2><button id="resume">继续</button><button id="restart">重新开始这段经历</button><button id="leave">退出场景</button></div></section>
+  <section class="veil" id="ended" hidden><div><p class="date">1104 · 最后一次呼叫</p><h2>周明川</h2><p class="last-line">如果你能看到这里，<br>尽快离开这座大楼吧，<br>找到自己的记忆吧。</p><button id="replay">重看这段经历</button><button id="end-leave">退出场景</button></div></section>
   <dialog id="reader"><form method="dialog"><button class="close" aria-label="关闭">×</button></form><p id="source" class="date"></p><h2 id="document-title"></h2><div id="document-body"></div><div id="document-actions"></div></dialog>
 </main>
-<script src="../../story-documents.js"></script><script src="engine.js"></script><script src="scene.js"></script>
+<script src="last-night-engine.js"></script><script src="renderer.js"></script><script src="last-night.js"></script>
 </body></html>
