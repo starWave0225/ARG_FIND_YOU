@@ -17,13 +17,15 @@
   const boxes=[
     [-2.5,-3.6,2.5,-3.4],[-2.5,-3.5,-2.3,3.5],[2.3,-3.5,2.5,3.5],
     [-2.4,3.4,-.65,3.6],[.65,3.4,2.4,3.6],[-.9,-2.9,.9,-2.05],
-    [1.62,-1.2,2.28,.2],[-2.25,-2.8,-1.55,-1.2],
+    [1.62,-1.2,2.28,.2],[-2.25,-2.8,-1.55,-1.2],[1.52,1.65,2.28,2.55],
   ];
   const objects=[
     {id:'computer',name:'查看本地终端',min:[-.55,.85,-2.8],max:[.55,1.72,-2.05]},
     {id:'phone',name:'拿起手机',min:[1.60,.7,-1.15],max:[2.28,1.7,.2]},
     {id:'door',name:'拉动门把手',min:[-.65,.1,3.30],max:[.65,2.6,3.55]},
     {id:'panel',name:'打开遮板',min:[-2.29,.05,-2.8],max:[-1.52,1.72,-1.2]},
+    {id:'cabinet',name:'拉开工具柜',min:[1.45,.1,1.55],max:[2.27,1.8,2.55]},
+    {id:'switch',name:'按动照明开关',min:[2.22,1.15,.8],max:[2.4,1.8,1.4]},
   ];
   function canStand(x,z){return x> -2.08&&x<2.08&&z> -3.18&&z<3.18&&!boxes.some(([a,b,c,d])=>x>a-.22&&x<c+.22&&z>b-.22&&z<d+.22);}
   function move(p,dx,dz){let x=p.x,z=p.z;const n=Math.max(1,Math.ceil(Math.hypot(dx,dz)/.06));for(let i=0;i<n;i++){if(canStand(x+dx/n,z))x+=dx/n;if(canStand(x,z+dz/n))z+=dz/n;}return {...p,x,z};}
@@ -34,11 +36,13 @@
     if(out&&boxes.some(([a,b,c,e],i)=>hit(o,d,[a,-.1,b],[c,i<5?3.3:.82,e])<near-.08))return null;
     return out&&out.id==='phone'&&stage==='calling'?{...out,name:'查看通话'}:out;
   }
-  function create(){return {stage:'room',calledAt:null,sent:false,localSaved:true};}
+  function create(){return {stage:'room',calledAt:null,sent:false,localSaved:true,unlocked:false,power:true,network:true,lamp:true,flashlight:false,replayed:false,filterRuns:0};}
+  function authenticate(state,value){if(String(value).trim().toLowerCase()!=='hengmurecyclezm0602')return false;state.unlocked=true;return true;}
+  function toggleConnection(state,key){if(!['power','network'].includes(key))return false;state[key]=!state[key];if(!state[key])state.filterRuns++;return state[key];}
   function dial(state,time){if(state.stage!=='room')return false;state.stage='calling';state.calledAt=time;return true;}
   function elapsed(state,time){return state.calledAt===null?0:Math.max(0,(time-state.calledAt)/1000);}
   function advance(state,time){if(state.stage==='calling'&&elapsed(state,time)>=60)state.stage='sealed';return state.stage;}
   function line(state,time){const t=elapsed(state,time);return call.filter(e=>e.at<=t).at(-1)||null;}
   function send(state){if(state.stage!=='sealed')return false;state.sent=true;state.stage='ended';return true;}
-  return {DATE,diary,call,message,boxes,objects,canStand,move,target,create,dial,elapsed,advance,line,send};
+  return {DATE,diary,call,message,boxes,objects,canStand,move,target,create,dial,elapsed,advance,line,send,authenticate,toggleConnection};
 });

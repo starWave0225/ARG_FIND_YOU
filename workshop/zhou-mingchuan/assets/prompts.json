@@ -1,0 +1,9 @@
+{
+  "mode": "built-in image_gen",
+  "items": [
+    {
+      "file": "intruder-v1.png",
+      "prompt": "Use case: stylized-concept. Asset type: transparent full-body character sprite for a first-person low-resolution psychological horror game. Primary request: an unknown suspicious terrifying intruder, an adult East Asian man in a faded charcoal maintenance coat, straight trousers and scuffed dark shoes. Almost ordinary at first glance but face unsettling: waxy pale skin, slightly overlong narrow face, asymmetrical slack half smile, eyes rolled upward with mostly pale sclera and tiny obscured irises, thin dark eye sockets, head slightly tilted, stiff shoulders and unusually still hanging long hands. No blood, no injury, no weapon, no symbols identifying his affiliation. Style: grim realistic painted game character, subtly grainy desaturated muted olive-gray lighting suitable for low-poly dark room, readable facial features. Composition: single full-body figure facing viewer nearly straight on, feet fully visible, no background, no floor shadow, character occupies 90 percent height, arms close to sides, isolated alpha cutout. Lighting: weak cold light on face and chest, dark clothing still readable. Constraints: genuinely transparent background, no text, no watermark, no scene, no other people, not cartoon, not grotesque monster, frightening uncertain humanity."
+    }
+  ]
+}
