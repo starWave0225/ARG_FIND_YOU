@@ -1,5 +1,11 @@
 # 《我要找到你》
 
+## 主线章节报刊背景
+
+序章、第一至第七章和终审报道共 9 张空白报纸／期刊背景，独立试排页：`http://127.0.0.1:4173/assets/chapter-papers/preview.html`。可输入标题与正文，切换单栏／双栏、字号与排版区域，并下载纯背景；预览文稿不会写入游戏。当前只提供素材，未替换主线页面。
+
+素材位于 `assets/chapter-papers/`：网页使用 WebP，`source/` 保存 1086×1448 的原始 PNG，`overview-v1.jpg` 为九张总览。正文区留白，不包含人物、案情、文字或解谜提示；纸张纹理、报头横线与边缘磨损随章节变化。`manifest.json`／`manifest.js` 记录图片路径与标题、正文的比例坐标；完整生成提示词保存在 `prompts.json`，使用内置 image_gen 生成。`scripts/prepare-chapter-papers.py` 可用 Pillow 从原图重新导出 WebP 和总览，不修改原图。
+
 ## 《嫁》联动完美结局
 
 新增 179 秒视频《爱可以／找到完美的时间线》，正式游戏入口待作者确定，当前仅保留独立预览：`http://127.0.0.1:4173/assets/video/jia-perfect/preview.html`。获救镜头采用顾盼第一视角，医院重逢由沈望侧脸握手缓慢叠化到望向顾盼。人物参考原《嫁》形象，明亮版《向阳处》单独保存。成片、源图、对白和生成提示词见 `assets/video/jia-perfect/`，制作时间轴及重建方式见该目录的 `README.md`。

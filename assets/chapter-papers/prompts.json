@@ -1,0 +1,186 @@
+{
+  "mode": "built-in image_gen",
+  "version": 1,
+  "items": [
+    {
+      "id": "p00",
+      "chapter": "序章",
+      "name": "寻人栏目报纸",
+      "file": "p00-program-newspaper-v1",
+      "style": "A modest contemporary Chinese local newspaper blank front page. Pale warm ivory newsprint, very fine grey fiber, restrained two black hairline masthead rules, a short empty boxed edition field only at the extreme top right outer margin, single tiny printer crop nick at outer bottom edge. Almost new, one extremely faint horizontal storage fold confined visually to the margin; central reading field smooth and blank. Quiet institutional newsroom character.",
+      "prompt": "Use case: product-mockup. Asset type: a reusable BLANK newspaper or periodical paper background for Chinese web ARG manuscript overlays. Create ONE portrait flat scanned page, 3:4 aspect ratio, ideally 1536 x 2048 pixels. The entire canvas is the paper surface, edge-to-edge, no desk, no surroundings, no hands. Orthographic perfectly straight top-down scan, flat consistent soft lighting, no perspective or folded page standing upright. Subtle realistic printed-paper fibers and minimal age variation, highly legible for later black Songti text overlay. Layout invariants: title area at x=8%-92%, y=6%-13% is blank; body area at x=8%-92%, y=17%-91% is continuous empty pale paper, with NO marks, NO lines, NO illustrations, no grids or columns inside it. Thin masthead rules are only above and below the blank header, within top 15%; framing/edge details remain in the outer 6% and bottom 6%. Do not render any typography whatsoever: NO words, NO characters, NO numerals, NO dates, NO logos, NO seals, NO pseudo-text or tiny printed paragraph strokes. No fabricated clippings, photographs, fingerprints, blood, coded markings or symbols. Real scanned paper asset, restrained archival editorial design, not a webpage screenshot, not a collage, not multiple sheets. Opaque background.\nSpecific paper variant: A modest contemporary Chinese local newspaper blank front page. Pale warm ivory newsprint, very fine grey fiber, restrained two black hairline masthead rules, a short empty boxed edition field only at the extreme top right outer margin, single tiny printer crop nick at outer bottom edge. Almost new, one extremely faint horizontal storage fold confined visually to the margin; central reading field smooth and blank. Quiet institutional newsroom character.",
+      "titleRect": {
+        "x": 0.08,
+        "y": 0.06,
+        "width": 0.84,
+        "height": 0.07
+      },
+      "bodyRect": {
+        "x": 0.08,
+        "y": 0.17,
+        "width": 0.84,
+        "height": 0.74
+      }
+    },
+    {
+      "id": "c01",
+      "chapter": "第一章",
+      "name": "文教期刊",
+      "file": "c01-education-periodical-v1",
+      "style": "A Chinese county education and alumni periodical inner article page from the turn of the millennium. Pale cream offset paper, barely perceptible dull olive editorial rule at the header and outer gutter, a tiny worn staple impression along the far left edge. Subdued scholarly publication, fairly well preserved, empty article field. No photograph placeholders.",
+      "prompt": "Use case: product-mockup. Asset type: a reusable BLANK newspaper or periodical paper background for Chinese web ARG manuscript overlays. Create ONE portrait flat scanned page, 3:4 aspect ratio, ideally 1536 x 2048 pixels. The entire canvas is the paper surface, edge-to-edge, no desk, no surroundings, no hands. Orthographic perfectly straight top-down scan, flat consistent soft lighting, no perspective or folded page standing upright. Subtle realistic printed-paper fibers and minimal age variation, highly legible for later black Songti text overlay. Layout invariants: title area at x=8%-92%, y=6%-13% is blank; body area at x=8%-92%, y=17%-91% is continuous empty pale paper, with NO marks, NO lines, NO illustrations, no grids or columns inside it. Thin masthead rules are only above and below the blank header, within top 15%; framing/edge details remain in the outer 6% and bottom 6%. Do not render any typography whatsoever: NO words, NO characters, NO numerals, NO dates, NO logos, NO seals, NO pseudo-text or tiny printed paragraph strokes. No fabricated clippings, photographs, fingerprints, blood, coded markings or symbols. Real scanned paper asset, restrained archival editorial design, not a webpage screenshot, not a collage, not multiple sheets. Opaque background.\nSpecific paper variant: A Chinese county education and alumni periodical inner article page from the turn of the millennium. Pale cream offset paper, barely perceptible dull olive editorial rule at the header and outer gutter, a tiny worn staple impression along the far left edge. Subdued scholarly publication, fairly well preserved, empty article field. No photograph placeholders.",
+      "titleRect": {
+        "x": 0.08,
+        "y": 0.06,
+        "width": 0.84,
+        "height": 0.07
+      },
+      "bodyRect": {
+        "x": 0.08,
+        "y": 0.17,
+        "width": 0.84,
+        "height": 0.74
+      }
+    },
+    {
+      "id": "c02",
+      "chapter": "第二章",
+      "name": "地方简讯日报",
+      "file": "c02-local-news-v1",
+      "style": "A Chinese local daily news brief page. Light neutral grey newsprint, strong but elegant charcoal double-rule masthead frame within top 15%, a thin single border outside the text safe region, slight edge wear and a tiny dog-ear at the extreme bottom right. Serious traditional local newsroom atmosphere, monochrome ink, no horror motifs, central paper notably smooth and pale.",
+      "prompt": "Use case: product-mockup. Asset type: a reusable BLANK newspaper or periodical paper background for Chinese web ARG manuscript overlays. Create ONE portrait flat scanned page, 3:4 aspect ratio, ideally 1536 x 2048 pixels. The entire canvas is the paper surface, edge-to-edge, no desk, no surroundings, no hands. Orthographic perfectly straight top-down scan, flat consistent soft lighting, no perspective or folded page standing upright. Subtle realistic printed-paper fibers and minimal age variation, highly legible for later black Songti text overlay. Layout invariants: title area at x=8%-92%, y=6%-13% is blank; body area at x=8%-92%, y=17%-91% is continuous empty pale paper, with NO marks, NO lines, NO illustrations, no grids or columns inside it. Thin masthead rules are only above and below the blank header, within top 15%; framing/edge details remain in the outer 6% and bottom 6%. Do not render any typography whatsoever: NO words, NO characters, NO numerals, NO dates, NO logos, NO seals, NO pseudo-text or tiny printed paragraph strokes. No fabricated clippings, photographs, fingerprints, blood, coded markings or symbols. Real scanned paper asset, restrained archival editorial design, not a webpage screenshot, not a collage, not multiple sheets. Opaque background.\nSpecific paper variant: A Chinese local daily news brief page. Light neutral grey newsprint, strong but elegant charcoal double-rule masthead frame within top 15%, a thin single border outside the text safe region, slight edge wear and a tiny dog-ear at the extreme bottom right. Serious traditional local newsroom atmosphere, monochrome ink, no horror motifs, central paper notably smooth and pale.",
+      "titleRect": {
+        "x": 0.08,
+        "y": 0.06,
+        "width": 0.84,
+        "height": 0.07
+      },
+      "bodyRect": {
+        "x": 0.08,
+        "y": 0.17,
+        "width": 0.84,
+        "height": 0.74
+      }
+    },
+    {
+      "id": "c03",
+      "chapter": "第三章",
+      "name": "村史文献刊物",
+      "file": "c03-local-history-v1",
+      "style": "An old county local-history and village literature periodical article page, 1980s-1990s archival stock. Muted straw cream paper, softly oxidized outer margins, slightly irregular trimmed paper edges, one thin brown-black header rule and a very narrow bookbinding shadow at the far left only. Conserved archival scan, inviting research texture, no stains in the blank reading field and no images or cultural symbols.",
+      "prompt": "Use case: product-mockup. Asset type: a reusable BLANK newspaper or periodical paper background for Chinese web ARG manuscript overlays. Create ONE portrait flat scanned page, 3:4 aspect ratio, ideally 1536 x 2048 pixels. The entire canvas is the paper surface, edge-to-edge, no desk, no surroundings, no hands. Orthographic perfectly straight top-down scan, flat consistent soft lighting, no perspective or folded page standing upright. Subtle realistic printed-paper fibers and minimal age variation, highly legible for later black Songti text overlay. Layout invariants: title area at x=8%-92%, y=6%-13% is blank; body area at x=8%-92%, y=17%-91% is continuous empty pale paper, with NO marks, NO lines, NO illustrations, no grids or columns inside it. Thin masthead rules are only above and below the blank header, within top 15%; framing/edge details remain in the outer 6% and bottom 6%. Do not render any typography whatsoever: NO words, NO characters, NO numerals, NO dates, NO logos, NO seals, NO pseudo-text or tiny printed paragraph strokes. No fabricated clippings, photographs, fingerprints, blood, coded markings or symbols. Real scanned paper asset, restrained archival editorial design, not a webpage screenshot, not a collage, not multiple sheets. Opaque background.\nSpecific paper variant: An old county local-history and village literature periodical article page, 1980s-1990s archival stock. Muted straw cream paper, softly oxidized outer margins, slightly irregular trimmed paper edges, one thin brown-black header rule and a very narrow bookbinding shadow at the far left only. Conserved archival scan, inviting research texture, no stains in the blank reading field and no images or cultural symbols.",
+      "titleRect": {
+        "x": 0.08,
+        "y": 0.06,
+        "width": 0.84,
+        "height": 0.07
+      },
+      "bodyRect": {
+        "x": 0.08,
+        "y": 0.17,
+        "width": 0.84,
+        "height": 0.74
+      }
+    },
+    {
+      "id": "c04",
+      "chapter": "第四章",
+      "name": "旧案地方报纸",
+      "file": "c04-archive-newspaper-v1",
+      "style": "A carefully conserved 1990s Chinese regional investigative newspaper leaf. Pale aged beige-grey newsprint, fine dark ink masthead double rule with a small blank rectangular supplement box in the extreme top outer margin, subtle crease traces and tiny frayed fibers at the perimeter. The center remains clean and evenly lit. Documentary and sober, no scorch, smoke, blood, photographs, names or case details.",
+      "prompt": "Use case: product-mockup. Asset type: a reusable BLANK newspaper or periodical paper background for Chinese web ARG manuscript overlays. Create ONE portrait flat scanned page, 3:4 aspect ratio, ideally 1536 x 2048 pixels. The entire canvas is the paper surface, edge-to-edge, no desk, no surroundings, no hands. Orthographic perfectly straight top-down scan, flat consistent soft lighting, no perspective or folded page standing upright. Subtle realistic printed-paper fibers and minimal age variation, highly legible for later black Songti text overlay. Layout invariants: title area at x=8%-92%, y=6%-13% is blank; body area at x=8%-92%, y=17%-91% is continuous empty pale paper, with NO marks, NO lines, NO illustrations, no grids or columns inside it. Thin masthead rules are only above and below the blank header, within top 15%; framing/edge details remain in the outer 6% and bottom 6%. Do not render any typography whatsoever: NO words, NO characters, NO numerals, NO dates, NO logos, NO seals, NO pseudo-text or tiny printed paragraph strokes. No fabricated clippings, photographs, fingerprints, blood, coded markings or symbols. Real scanned paper asset, restrained archival editorial design, not a webpage screenshot, not a collage, not multiple sheets. Opaque background.\nSpecific paper variant: A carefully conserved 1990s Chinese regional investigative newspaper leaf. Pale aged beige-grey newsprint, fine dark ink masthead double rule with a small blank rectangular supplement box in the extreme top outer margin, subtle crease traces and tiny frayed fibers at the perimeter. The center remains clean and evenly lit. Documentary and sober, no scorch, smoke, blood, photographs, names or case details.",
+      "titleRect": {
+        "x": 0.08,
+        "y": 0.06,
+        "width": 0.84,
+        "height": 0.07
+      },
+      "bodyRect": {
+        "x": 0.08,
+        "y": 0.17,
+        "width": 0.84,
+        "height": 0.74
+      }
+    },
+    {
+      "id": "c05",
+      "chapter": "第五章",
+      "name": "卫生报刊",
+      "file": "c05-health-weekly-v1",
+      "style": "A Chinese county public-health newspaper article page from the 1990s. Pale cool ivory with an understated sage-grey masthead rule, delicate offset-print registration feel at the extreme margins, lightly aged recycled-paper fiber and minimal very faint oxidation at the bottom edge. Editorial periodical paper, not a patient chart, no hospital symbols, no medical records or form rows. Blank spacious body.",
+      "prompt": "Use case: product-mockup. Asset type: a reusable BLANK newspaper or periodical paper background for Chinese web ARG manuscript overlays. Create ONE portrait flat scanned page, 3:4 aspect ratio, ideally 1536 x 2048 pixels. The entire canvas is the paper surface, edge-to-edge, no desk, no surroundings, no hands. Orthographic perfectly straight top-down scan, flat consistent soft lighting, no perspective or folded page standing upright. Subtle realistic printed-paper fibers and minimal age variation, highly legible for later black Songti text overlay. Layout invariants: title area at x=8%-92%, y=6%-13% is blank; body area at x=8%-92%, y=17%-91% is continuous empty pale paper, with NO marks, NO lines, NO illustrations, no grids or columns inside it. Thin masthead rules are only above and below the blank header, within top 15%; framing/edge details remain in the outer 6% and bottom 6%. Do not render any typography whatsoever: NO words, NO characters, NO numerals, NO dates, NO logos, NO seals, NO pseudo-text or tiny printed paragraph strokes. No fabricated clippings, photographs, fingerprints, blood, coded markings or symbols. Real scanned paper asset, restrained archival editorial design, not a webpage screenshot, not a collage, not multiple sheets. Opaque background.\nSpecific paper variant: A Chinese county public-health newspaper article page from the 1990s. Pale cool ivory with an understated sage-grey masthead rule, delicate offset-print registration feel at the extreme margins, lightly aged recycled-paper fiber and minimal very faint oxidation at the bottom edge. Editorial periodical paper, not a patient chart, no hospital symbols, no medical records or form rows. Blank spacious body.",
+      "titleRect": {
+        "x": 0.08,
+        "y": 0.06,
+        "width": 0.84,
+        "height": 0.07
+      },
+      "bodyRect": {
+        "x": 0.08,
+        "y": 0.17,
+        "width": 0.84,
+        "height": 0.74
+      }
+    },
+    {
+      "id": "c06",
+      "chapter": "第六章",
+      "name": "社会生活月刊",
+      "file": "c06-social-periodical-v1",
+      "style": "A Chinese social-life documentary monthly periodical article page. Soft warm off-white uncoated paper, a quiet faded terracotta-brown single line only in the masthead and outer bottom margin, slight bound-magazine gutter on far left, exceptionally gentle aging. Human and restrained editorial feel, no family photos, baby objects, figures or handwritten words. Spacious blank reading field.",
+      "prompt": "Use case: product-mockup. Asset type: a reusable BLANK newspaper or periodical paper background for Chinese web ARG manuscript overlays. Create ONE portrait flat scanned page, 3:4 aspect ratio, ideally 1536 x 2048 pixels. The entire canvas is the paper surface, edge-to-edge, no desk, no surroundings, no hands. Orthographic perfectly straight top-down scan, flat consistent soft lighting, no perspective or folded page standing upright. Subtle realistic printed-paper fibers and minimal age variation, highly legible for later black Songti text overlay. Layout invariants: title area at x=8%-92%, y=6%-13% is blank; body area at x=8%-92%, y=17%-91% is continuous empty pale paper, with NO marks, NO lines, NO illustrations, no grids or columns inside it. Thin masthead rules are only above and below the blank header, within top 15%; framing/edge details remain in the outer 6% and bottom 6%. Do not render any typography whatsoever: NO words, NO characters, NO numerals, NO dates, NO logos, NO seals, NO pseudo-text or tiny printed paragraph strokes. No fabricated clippings, photographs, fingerprints, blood, coded markings or symbols. Real scanned paper asset, restrained archival editorial design, not a webpage screenshot, not a collage, not multiple sheets. Opaque background.\nSpecific paper variant: A Chinese social-life documentary monthly periodical article page. Soft warm off-white uncoated paper, a quiet faded terracotta-brown single line only in the masthead and outer bottom margin, slight bound-magazine gutter on far left, exceptionally gentle aging. Human and restrained editorial feel, no family photos, baby objects, figures or handwritten words. Spacious blank reading field.",
+      "titleRect": {
+        "x": 0.08,
+        "y": 0.06,
+        "width": 0.84,
+        "height": 0.07
+      },
+      "bodyRect": {
+        "x": 0.08,
+        "y": 0.17,
+        "width": 0.84,
+        "height": 0.74
+      }
+    },
+    {
+      "id": "c07",
+      "chapter": "第七章",
+      "name": "人物纪实周刊",
+      "file": "c07-documentary-weekly-v1",
+      "style": "A Chinese long-form oral-history and personal documentary weekly article page. Light warm cream matte paper, understated charcoal and dusty umber top header rules, softly handled but intact edges, faint paper grain, almost no visible aging in the central field. Intimate and serious literary periodical texture. No handwriting, portraits, letter inserts or symbols.",
+      "prompt": "Use case: product-mockup. Asset type: a reusable BLANK newspaper or periodical paper background for Chinese web ARG manuscript overlays. Create ONE portrait flat scanned page, 3:4 aspect ratio, ideally 1536 x 2048 pixels. The entire canvas is the paper surface, edge-to-edge, no desk, no surroundings, no hands. Orthographic perfectly straight top-down scan, flat consistent soft lighting, no perspective or folded page standing upright. Subtle realistic printed-paper fibers and minimal age variation, highly legible for later black Songti text overlay. Layout invariants: title area at x=8%-92%, y=6%-13% is blank; body area at x=8%-92%, y=17%-91% is continuous empty pale paper, with NO marks, NO lines, NO illustrations, no grids or columns inside it. Thin masthead rules are only above and below the blank header, within top 15%; framing/edge details remain in the outer 6% and bottom 6%. Do not render any typography whatsoever: NO words, NO characters, NO numerals, NO dates, NO logos, NO seals, NO pseudo-text or tiny printed paragraph strokes. No fabricated clippings, photographs, fingerprints, blood, coded markings or symbols. Real scanned paper asset, restrained archival editorial design, not a webpage screenshot, not a collage, not multiple sheets. Opaque background.\nSpecific paper variant: A Chinese long-form oral-history and personal documentary weekly article page. Light warm cream matte paper, understated charcoal and dusty umber top header rules, softly handled but intact edges, faint paper grain, almost no visible aging in the central field. Intimate and serious literary periodical texture. No handwriting, portraits, letter inserts or symbols.",
+      "titleRect": {
+        "x": 0.08,
+        "y": 0.06,
+        "width": 0.84,
+        "height": 0.07
+      },
+      "bodyRect": {
+        "x": 0.08,
+        "y": 0.17,
+        "width": 0.84,
+        "height": 0.74
+      }
+    },
+    {
+      "id": "e08",
+      "chapter": "终审报道",
+      "name": "正式报道报纸",
+      "file": "e08-final-report-v1",
+      "style": "A freshly printed 2020s Chinese regional newspaper feature page. Clean light grey-white newsprint, crisp symmetrical black hairline masthead double rules, one tiny empty rectangular issue box at the extreme upper outer margin, a clean straight lower footer rule outside the main body safe region. Very light natural fibers, nearly no yellowing, archival quality. Calm and dignified published editorial sheet, no slogans, logos, headlines or text.",
+      "prompt": "Use case: product-mockup. Asset type: a reusable BLANK newspaper or periodical paper background for Chinese web ARG manuscript overlays. Create ONE portrait flat scanned page, 3:4 aspect ratio, ideally 1536 x 2048 pixels. The entire canvas is the paper surface, edge-to-edge, no desk, no surroundings, no hands. Orthographic perfectly straight top-down scan, flat consistent soft lighting, no perspective or folded page standing upright. Subtle realistic printed-paper fibers and minimal age variation, highly legible for later black Songti text overlay. Layout invariants: title area at x=8%-92%, y=6%-13% is blank; body area at x=8%-92%, y=17%-91% is continuous empty pale paper, with NO marks, NO lines, NO illustrations, no grids or columns inside it. Thin masthead rules are only above and below the blank header, within top 15%; framing/edge details remain in the outer 6% and bottom 6%. Do not render any typography whatsoever: NO words, NO characters, NO numerals, NO dates, NO logos, NO seals, NO pseudo-text or tiny printed paragraph strokes. No fabricated clippings, photographs, fingerprints, blood, coded markings or symbols. Real scanned paper asset, restrained archival editorial design, not a webpage screenshot, not a collage, not multiple sheets. Opaque background.\nSpecific paper variant: A freshly printed 2020s Chinese regional newspaper feature page. Clean light grey-white newsprint, crisp symmetrical black hairline masthead double rules, one tiny empty rectangular issue box at the extreme upper outer margin, a clean straight lower footer rule outside the main body safe region. Very light natural fibers, nearly no yellowing, archival quality. Calm and dignified published editorial sheet, no slogans, logos, headlines or text.",
+      "titleRect": {
+        "x": 0.08,
+        "y": 0.06,
+        "width": 0.84,
+        "height": 0.07
+      },
+      "bodyRect": {
+        "x": 0.08,
+        "y": 0.17,
+        "width": 0.84,
+        "height": 0.74
+      }
+    }
+  ]
+}

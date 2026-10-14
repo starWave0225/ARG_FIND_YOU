@@ -1,0 +1,194 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "p00",
+      "chapter": "序章",
+      "name": "寻人栏目报纸",
+      "src": "p00-program-newspaper-v1.webp",
+      "png": "source/p00-program-newspaper-v1.png",
+      "titleRect": {
+        "x": 0.08,
+        "y": 0.06,
+        "width": 0.84,
+        "height": 0.07
+      },
+      "bodyRect": {
+        "x": 0.08,
+        "y": 0.17,
+        "width": 0.84,
+        "height": 0.74
+      },
+      "width": 1086,
+      "height": 1448
+    },
+    {
+      "id": "c01",
+      "chapter": "第一章",
+      "name": "文教期刊",
+      "src": "c01-education-periodical-v1.webp",
+      "png": "source/c01-education-periodical-v1.png",
+      "titleRect": {
+        "x": 0.08,
+        "y": 0.035,
+        "width": 0.84,
+        "height": 0.065
+      },
+      "bodyRect": {
+        "x": 0.08,
+        "y": 0.17,
+        "width": 0.84,
+        "height": 0.74
+      },
+      "width": 1086,
+      "height": 1448
+    },
+    {
+      "id": "c02",
+      "chapter": "第二章",
+      "name": "地方简讯日报",
+      "src": "c02-local-news-v1.webp",
+      "png": "source/c02-local-news-v1.png",
+      "titleRect": {
+        "x": 0.08,
+        "y": 0.06,
+        "width": 0.84,
+        "height": 0.07
+      },
+      "bodyRect": {
+        "x": 0.08,
+        "y": 0.17,
+        "width": 0.84,
+        "height": 0.74
+      },
+      "width": 1086,
+      "height": 1448
+    },
+    {
+      "id": "c03",
+      "chapter": "第三章",
+      "name": "村史文献刊物",
+      "src": "c03-local-history-v1.webp",
+      "png": "source/c03-local-history-v1.png",
+      "titleRect": {
+        "x": 0.08,
+        "y": 0.02,
+        "width": 0.84,
+        "height": 0.055
+      },
+      "bodyRect": {
+        "x": 0.08,
+        "y": 0.17,
+        "width": 0.84,
+        "height": 0.74
+      },
+      "width": 1086,
+      "height": 1448
+    },
+    {
+      "id": "c04",
+      "chapter": "第四章",
+      "name": "旧案地方报纸",
+      "src": "c04-archive-newspaper-v1.webp",
+      "png": "source/c04-archive-newspaper-v1.png",
+      "titleRect": {
+        "x": 0.08,
+        "y": 0.06,
+        "width": 0.84,
+        "height": 0.07
+      },
+      "bodyRect": {
+        "x": 0.08,
+        "y": 0.17,
+        "width": 0.84,
+        "height": 0.74
+      },
+      "width": 1086,
+      "height": 1448
+    },
+    {
+      "id": "c05",
+      "chapter": "第五章",
+      "name": "卫生报刊",
+      "src": "c05-health-weekly-v1.webp",
+      "png": "source/c05-health-weekly-v1.png",
+      "titleRect": {
+        "x": 0.08,
+        "y": 0.035,
+        "width": 0.84,
+        "height": 0.065
+      },
+      "bodyRect": {
+        "x": 0.08,
+        "y": 0.17,
+        "width": 0.84,
+        "height": 0.74
+      },
+      "width": 1086,
+      "height": 1448
+    },
+    {
+      "id": "c06",
+      "chapter": "第六章",
+      "name": "社会生活月刊",
+      "src": "c06-social-periodical-v1.webp",
+      "png": "source/c06-social-periodical-v1.png",
+      "titleRect": {
+        "x": 0.08,
+        "y": 0.06,
+        "width": 0.84,
+        "height": 0.07
+      },
+      "bodyRect": {
+        "x": 0.08,
+        "y": 0.17,
+        "width": 0.84,
+        "height": 0.74
+      },
+      "width": 1086,
+      "height": 1448
+    },
+    {
+      "id": "c07",
+      "chapter": "第七章",
+      "name": "人物纪实周刊",
+      "src": "c07-documentary-weekly-v1.webp",
+      "png": "source/c07-documentary-weekly-v1.png",
+      "titleRect": {
+        "x": 0.08,
+        "y": 0.06,
+        "width": 0.84,
+        "height": 0.07
+      },
+      "bodyRect": {
+        "x": 0.08,
+        "y": 0.17,
+        "width": 0.84,
+        "height": 0.74
+      },
+      "width": 1086,
+      "height": 1448
+    },
+    {
+      "id": "e08",
+      "chapter": "终审报道",
+      "name": "正式报道报纸",
+      "src": "e08-final-report-v1.webp",
+      "png": "source/e08-final-report-v1.png",
+      "titleRect": {
+        "x": 0.08,
+        "y": 0.06,
+        "width": 0.84,
+        "height": 0.07
+      },
+      "bodyRect": {
+        "x": 0.08,
+        "y": 0.17,
+        "width": 0.84,
+        "height": 0.74
+      },
+      "width": 1086,
+      "height": 1448
+    }
+  ]
+}
