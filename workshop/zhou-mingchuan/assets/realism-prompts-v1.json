@@ -1,0 +1,26 @@
+{
+  "mode": "built-in image_gen",
+  "items": [
+    {
+      "id": "plaster-v1",
+      "prompt": "Use case: photorealistic-natural. Asset type: seamless wall albedo texture for a real-time first-person psychological horror room. Primary request: a close flat orthographic photograph of an old mainland Chinese apartment maintenance room wall, cold desaturated gray aged painted plaster, uneven very fine sand, subtle accumulated damp stains, hairline cracks, a few small patches of worn paint. Frame contains only the flat continuous surface from edge to edge. Lighting absolutely flat and diffuse for a material texture, no cast shadows, no vignette, no directional spotlight, no perspective. Mid gray readable surface, restrained realistic distress, no dramatic black mildew, no red colors. Seamless repeating texture, square. No objects, no floor, no room, no figures, no text or symbols, no watermark."
+    },
+    {
+      "id": "terrazzo-v1",
+      "prompt": "Use case: photorealistic-natural. Asset type: seamless floor albedo texture for first-person psychological horror. Primary request: square top-down orthographic material photograph of four old gray cement terrazzo floor tiles in a 2 by 2 pattern, perfectly square tile joints forming a regular grid, subtly different dull gray tiles, fine dark aggregate specks, scuffing, grime trapped in thin grout seams, real worn unpolished surface from an aging Chinese apartment utility room. Seamlessly repeatable tile borders with thin grout at outside edges, no perspective. Flat diffuse neutral lighting without shadows or baked light, no objects or room features. Desaturated gray with very slight cool brown dirt, moderate value not black. No blood, no footprints, no text, no markings, no illustration, no watermark."
+    },
+    {
+      "id": "wood-v1",
+      "prompt": "Use case: photorealistic-natural. Asset type: seamlessly tiling albedo texture for old door and utility room furniture in first-person psychological horror. Square orthographic close flat photograph of desaturated dark gray-brown aged wood veneer, fine vertical grain, worn thin matte varnish, tiny scratches and uneven rubbed patches, restrained realistic wear, no long boards or panel borders, no knots that look like eyes or faces. Flat diffuse texture capture with no baked light or shadow. Seamless repeat, physically plausible ordinary cheap old apartment door surface, cold somber neutral brown-gray, visible fine material detail without high contrast. No room, no objects, no hardware, no words, no figures, no blood, no watermark."
+    },
+    {
+      "id": "steel-v1",
+      "prompt": "Use case: photorealistic-natural. Asset type: seamless material albedo for gray metal filing cabinet and old room hardware in a realistic first-person psychological horror game. Square orthographic flat close photograph of old matte charcoal-gray painted sheet steel, fine scratches and thin dust, uneven aged powder coating, occasional tiny chipped paint exposing dull steel, restrained brown oxidation, no strong rust, no panel edges or embossed forms. Low saturation cool gray, mid dark values. Flat even diffuse light with no highlights, no spotlight or baked shadows. Seamless repeatable texture. No bolts, no handles, no objects, no text or markings, no figure, no room, no blood or watermark."
+    },
+    {
+      "id": "intruder-v2",
+      "prompt": "Use case: style-transfer / identity-preserve. Image 1 is the edit target, the existing full-body unknown intruder cutout for the Zhou Mingchuan game. Preserve this man's identity, clothes, full-body framing, feet visibility, head tilt and hanging hands. Transform the painted/concept-art appearance into a genuinely photorealistic candid forensic-style photograph of a real adult man: natural uneven skin pores, tiny facial wrinkles, irregular stubble, damp thin hair, realistically worn charcoal maintenance jacket, actual cloth folds and dirt. Expression frightening but restrained: keep a faint asymmetrical smile and upward pale eyes from the reference, reduce theatrical grin and exaggerated facial shaping. He should look disturbingly ordinary, tired and vacant rather than a caricature or zombie. Cold gray very low saturation, dark matte clothing, weak soft overhead fluorescent illumination with readable face, subtle shadows. Preserve a genuinely transparent alpha background, isolated single person with no floor and no atmospheric glow or halo. No scene, no other people, no blood, no wounds, no weapon, no symbol, no text. Do not crop feet or head.",
+      "reference": "intruder-v1.png"
+    }
+  ]
+}

@@ -1,9 +1,11 @@
 (() => {
-  const $=s=>document.querySelector(s),canvas=$('#world'),engine=window.ZhouLastNight,renderer=window.ZhouRenderer.create(canvas);
+  const $=s=>document.querySelector(s),canvas=$('#world'),engine=window.ZhouLastNight,renderer=window.ZhouRenderer.create(canvas,{materials:{
+    plaster:'assets/materials/plaster-v1.webp',terrazzo:'assets/materials/terrazzo-v1.webp',wood:'assets/materials/wood-v1.webp',steel:'assets/materials/steel-v1.webp',
+  }});
   const reader=$('#reader'),storageKey='find-you-zhou-last-night-readings-v1';
   let player={x:0,z:.7,yaw:0,pitch:0,height:1.58},state=engine.create(),active=false,clock=0,last=0,keys=new Set(),drag=false,pointer=[0,0],panel=false;
   let currentLine=-1,captionUntil=0,caption='',speaker='',doorUntil=0,footDistance=0,endedAt=null,intruderStep=-1;
-  const investigation=window.ZhouInvestigation, intruderSrc='assets/intruder-v1.png';
+  const investigation=window.ZhouInvestigation, intruderSrc='assets/intruder-v2.png';
   if(renderer&&renderer.preload)renderer.preload(intruderSrc);
   let replayStep=0;
   let records={};try{const saved=JSON.parse(localStorage.getItem(storageKey)||'{}');if(saved&&typeof saved==='object'&&!Array.isArray(saved))records=saved;}catch{}
@@ -56,11 +58,15 @@
   function turn(dx,dy){player.yaw+=dx;player.pitch=Math.max(-.62,Math.min(.62,player.pitch-dy));if(['hiding','intrusion'].includes(state.stage))player.pitch=Math.max(-.35,Math.min(.35,player.pitch));}
   function step(f,s,d){if(!['room','calling'].includes(state.stage))return;const before=player;player=engine.move(player,(Math.sin(player.yaw)*f+Math.cos(player.yaw)*s)*d,(-Math.cos(player.yaw)*f+Math.sin(player.yaw)*s)*d);footDistance+=Math.hypot(player.x-before.x,player.z-before.z);if(footDistance>.5){sound('step');footDistance=0;}}
   function interact(){const target=engine.target(player,state.stage);if(active&&!reader.open&&target)inspect(target.id);}
-  const C={wall:[.38,.40,.37],floor:[.22,.25,.24],metal:[.22,.28,.28],wood:[.32,.23,.17],dark:[.035,.046,.055],paper:[.75,.75,.62],screen:[.15,.42,.4]};
-  function geometry(t){const out=[],b=(x,y,z,w,h,d,c,a=0)=>out.push([x,y,z,w,h,d,C[c]||c,a]);
+  const C={wall:[.62,.62,.59],floor:[.47,.47,.45],metal:[.45,.46,.45],wood:[.55,.51,.46],dark:[.026,.028,.029],paper:[.59,.59,.53],screen:[.13,.2,.18]};
+  const surfaces={wall:1,floor:2,wood:3,metal:4};
+  function geometry(t){const out=[],b=(x,y,z,w,h,d,c,a=0,emission=0)=>out.push([x,y,z,w,h,d,C[c]||c,a,surfaces[c]||0,c==='screen'?.85:emission]);
     b(0,-.08,0,4.8,.16,7,'floor');b(0,3.05,0,4.8,.12,7,'wall');b(0,1.5,-3.5,4.8,3,.18,'wall');b(-2.4,1.5,0,.18,3,7,'wall');b(2.4,1.5,0,.18,3,7,'wall');
     for(const x of [-1.52,1.52])b(x,1.5,3.5,1.75,3,.18,'wall');b(0,2.8,3.5,1.3,.4,.18,'wall');
-    for(let z=-3;z<3.5;z+=.7)b(0,.007,z,4.6,.01,.015,'metal');for(let x=-2.1;x<2.2;x+=.7)b(x,.009,0,.015,.01,7,'metal');
+    // Skirting and conduit add scale; worn tile joints come from the floor material.
+    for(const x of [-2.27,2.27]){b(x,.09,0,.07,.18,6.85,'wood');b(x,2.72,0,.035,.035,6.8,'metal');}
+    b(0,.09,-3.37,4.6,.18,.07,'wood');for(const x of [-1.5,1.5])b(x,.09,3.37,1.65,.18,.07,'wood');
+    b(-1.17,2.45,-3.35,.026,.62,.025,'metal');b(-1.17,2.13,-3.33,.11,.10,.05,'dark');
     // Narrow hall, viewed through the door's observation slot.
     b(0,-.08,5.5,1.8,.16,4,'floor');for(const x of [-.9,.9])b(x,1.5,5.5,.15,3,4,'wall');b(0,1.5,7.5,1.8,3,.16,'dark');b(0,1.5,7.39,1.6,2.7,.015,[.5,.49,.4]);b(0,2.9,5.5,.55,.06,.12,[.6,.59,.42]);
     const doorAngle=state.sent?Math.min(1,t/2)*Math.PI*.46:0,hinge=-.61;
@@ -68,20 +74,31 @@
     b(doorX,.73,doorZ,1.22,1.46,.08,'wood',doorAngle);b(doorX,1.99,doorZ,1.22,.64,.08,'wood',doorAngle);
     for(const side of [-.46,.46])b(doorX+side*Math.cos(doorAngle),1.57,doorZ-side*Math.sin(doorAngle),.3,.22,.08,'wood',doorAngle);
     b(doorX+.42*Math.cos(doorAngle),1,doorZ-.06-.42*Math.sin(doorAngle),.16,.025,.04,'paper',doorAngle);
+    for(const x of [-.67,.67])b(x,1.34,3.47,.055,2.68,.16,'wood');b(0,2.67,3.47,1.4,.055,.16,'wood');
+    for(const y of [.22,1.17,2.24])b(-.62,y,3.42,.055,.13,.05,'metal');
+    b(doorX+.42*Math.cos(doorAngle),1,doorZ-.045-.42*Math.sin(doorAngle),.075,.22,.02,'metal',doorAngle);
+    b(doorX+.42*Math.cos(doorAngle),.93,doorZ-.065-.42*Math.sin(doorAngle),.015,.035,.01,'dark',doorAngle);
     // Original local records and phone occupy opposite sides of the room.
     b(0,.81,-2.48,1.8,.1,.85,'wood');for(const x of [-.75,.75])for(const z of [-2.8,-2.16])b(x,.39,z,.07,.78,.07,'metal');
-    b(0,1.24,-2.55,.9,.64,.38,'dark');b(0,1.25,-2.347,.76,.47,.015,state.power?'screen':'dark');if(state.power)for(let i=0;i<5;i++)b(-.08,1.40-i*.06,-2.335,.49-(i%2)*.15,.012,.01,[.52,.68,.56]);
+    b(0,1.24,-2.55,.9,.64,.38,'dark');b(0,1.25,-2.347,.76,.47,.015,state.power?'screen':'dark');if(state.power)for(let i=0;i<5;i++)b(-.08,1.40-i*.06,-2.335,.49-(i%2)*.15,.006,.01,[.26,.34,.29],0,.6);
+    for(const x of [-.405,.405])b(x,1.26,-2.33,.035,.51,.05,'metal');for(const y of [1.005,1.515])b(0,y,-2.33,.83,.032,.05,'metal');
+    for(let i=0;i<7;i++)b(.11+i*.038,.988,-2.33,.021,.006,.015,'dark');b(.36,.99,-2.317,.015,.01,.012,state.power?'screen':'dark');
     b(0,.94,-2.5,.2,.17,.15,'dark');b(0,.89,-2.18,.8,.03,.18,'dark');b(-.68,.89,-2.5,.27,.015,.3,'paper');
-    b(0,2.89,-1.5,1.15,.06,.15,'paper');b(1.95,.77,-.5,.65,.08,1.4,'wood');for(const z of [-1.05,.05])b(1.95,.35,z,.08,.7,.08,'metal');
+    b(0,2.92,-1.5,1.25,.09,.22,'metal');b(0,2.86,-1.5,1.1,.035,.13,state.lamp?[.47,.49,.46]:'dark',0,state.lamp?.9:0);
+    b(1.95,.77,-.5,.65,.08,1.4,'wood');for(const z of [-1.05,.05])b(1.95,.35,z,.08,.7,.08,'metal');
+    // Keyboard, power lead and cabinet ventilation stay decorative; interaction targets are unchanged.
+    for(let row=0;row<4;row++)for(let col=0;col<12;col++)b(-.33+col*.058,.912,-2.24+row*.032,.046,.012,.021,'metal');
+    for(let i=0;i<8;i++)b(.48+i*.06,.87,-2.32+Math.sin(i*.8)*.055,.07,.009,.016,'dark');
     if(state.stage==='room'){b(1.95,.83,-.3,.15,.027,.28,'dark');b(1.95,.848,-.3,.12,.005,.19,[.3,.47,.38]);}
     b(-1.91,.85,-2,.7,1.65,1.6,'metal');b(-1.91,.31,-1.19-(panel?.2:0),.6,.48,.07,'dark');b(-1.91,.45,-1.12,.34,.03,.025,'paper');
+    for(let i=0;i<8;i++)b(-1.91,1.04+i*.045,-1.19,.42,.009,.012,'dark');
     if(panel){b(-1.91,.18,-1.06,.42,.13,.27,'dark');for(const x of [-2,-1.93,-1.86])b(x,.23,-.91,.025,.025,.02,[.34,.75,.43]);}
     b(1.91,.72,2.1,.72,1.44,.85,'metal');for(const y of [.26,.68,1.1]){b(1.91,y,1.65,.63,.36,.055,'wood');b(1.91,y,1.61,.18,.026,.02,'paper');}b(1.91,1.46,2.1,.35,.016,.3,'paper');
     b(2.29,1.48,1.1,.065,.18,.14,'paper');b(2.25,1.48,1.1,.012,.10,.055,state.lamp?'screen':'dark');
     if(state.stage!=='room'){
       const sy=Math.sin(player.yaw),cy=Math.cos(player.yaw),side=['hiding','intrusion','ended'].includes(state.stage)?0:.15;
       const x=player.x+sy*.38+cy*side,z=player.z-cy*.38+sy*side,y=player.height-.25+Math.sin(player.pitch)*.2;
-      b(x,y-.11,z,.15,.17,.07,[.45,.34,.27],-player.yaw);b(x,y+.04,z,.145,.25,.022,'dark',-player.yaw);b(x-sy*.016,y+.06,z+cy*.016,.12,.19,.006,[1.5,2.3,1.8],-player.yaw);
+      b(x,y-.11,z,.15,.17,.07,[.25,.23,.21],-player.yaw);b(x,y+.04,z,.145,.25,.022,'dark',-player.yaw);b(x-sy*.016,y+.06,z+cy*.016,.12,.19,.006,[.21,.27,.24],-player.yaw,.9);
     }
     return out;
   }
