@@ -15,7 +15,7 @@ const answers = {
  M18:['1996-07-08','尚未出生'],M19:['2','B','7'],M20:['LC-960708-12-B','1996-07-29','1996-07-15'],
  M21:['盛雄处','县医院→福利院','林知微','可能为了仍留村的孩子'],M22:['96-0729-17','LC-960708-12-B','不能'],M23:['陈建平','沈芸','96-0729-17'],M24:['林予安','1996-07-08','B'],M25:['不能','盛临川'],M26:['生父子','寄养','收养','亲叔叔'],
  REVIEW:['C4-01 / C4-02','C4-03','C4-04 / C4-09','C4-08 / C4-10','C5-03 / C5-04 / C5-05','C6-04 / C6-05 / C6-06','P08 / C2-02 / C2-03'],PUBLISH:[],
- X01:['石桥与邮亭','邮亭→河桥→巷道'],X02:['同一馆藏号','衣角延续与半枚馆藏章'],X03:['210'],X04:['3','E-2东侧附房','不能'],X05:['照片白边姓名','2008','失踪与村内登记矛盾','运营验收页'],X06:['2/3','BG-017','R-17','未签收'],X07:['3','21'],X08:['34800','JG-2607-17','恒目关联文化基金'],X09:['岭川归灯文旅服务有限公司','附房特殊保管与终端','不能'],X10:['我不是来接客的','房内原始回应'],X11:['A/B','B/C','未证明'],X12:['R-17']
+ X01:['石桥与邮亭','邮亭→河桥→巷道'],X02:['同一馆藏号','衣角延续与半枚馆藏章'],X03:['210'],X04:['3','E-2东侧附房','不能'],X05:['照片白边姓名','2008','失踪与村内登记矛盾','运营验收页'],X06:['2/3','BG-017','R-17','未签收'],X07:['3','21'],X08:['34800','JG-2607-17','恒目关联文化基金'],X09:['岭川归灯文旅服务有限公司','附房特殊保管与终端','不能'],X10:['我不是来接客的','房内原始回应'],X11:['A/B','B/C','未证明'],X12:['R-17'],X13:['林知微','盛雄','入簿转录日期','不能'],X14:['LZW-019','恒目管理顾问有限公司','不等于','不能']
 };
 const codes={'C1-05':'9624','C3-05':'0826','C4-03':'1028','C5-03':'0708','C7-02':'临川'};
 function boot(t,saved=ready) {
@@ -158,6 +158,23 @@ test('source documents open independently of chapters, passwords remain puzzles 
  assert.equal(g.saved().storyProgress.collected.includes('C1-04'),true);
  g.w.StoryFlow.openDoc('C1-05');assert.match(g.d.querySelector('#storyReader').textContent,/校友附件/);assert.doesNotMatch(g.d.querySelector('#storyReader').textContent,/出生年：1968/);
  const lock=g.d.querySelector('#storyUnlock');lock.querySelector('input').value='0000';g.submit(lock);assert.ok(g.d.querySelector('#storyUnlock'));
+});
+
+test('the curse inquiry connects old archives to the church while its verification remains optional and independent of reading logs',t=>{
+ const g=boot(t);g.w.StoryFlow.openDoc('C4-01');
+ assert.ok(g.d.querySelector('#storyReader a[href="./church/?record=QZ-260811-019"]'));
+ assert.equal(g.w.StoryFlow.completed('X13'),false);g.click('#storyReader [data-story-close]');
+ for(const id of ['M04','M05','M06','S04','M07','M08','M09','DEPART','M10','M11','M12','M13'])g.solve(id);
+ g.w.StoryFlow.open('X13');assert.ok(g.d.querySelector('a[href="./church/?record=QZ-260811-019-C"]'));
+ let form=g.d.querySelector('#storyPuzzle');answers.X13.forEach((v,i)=>form.elements['a'+i].value=v);form.elements.a3.value='能';g.submit(form);
+ assert.equal(g.w.StoryFlow.completed('X13'),false);assert.equal(g.d.querySelector('.story-feedback').textContent,'核验未通过。');
+ g.solve('X13');assert.equal(g.w.localStorage.getItem('find-you-church-reading-v1'),null,'off-site reading is never a verification prerequisite');
+ for(const id of ['M14','M15','M16','M17','M18','M19','M20','M21','M22','M23','M24','M25'])g.solve(id);
+ const mainBefore=g.saved().storyProgress.done.filter(id=>!id.startsWith('X'));
+ g.solve('X14');assert.deepEqual(g.saved().storyProgress.done.filter(id=>!id.startsWith('X')),mainBefore);
+ assert.equal(g.w.StoryFlow.completed('X12'),false,'the R-17 investigation stays separate');
+ assert.match(g.w.StoryFlow.body('C7-02'),/不是别人替我/);
+ assert.equal(g.saved().storyProgress.published,false);
 });
 
 test('sender stays anonymous through chapter two, including old send records and search sources', t => {

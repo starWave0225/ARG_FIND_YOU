@@ -619,6 +619,14 @@
       catalog.push({id:'story-'+doc.id, storyId:doc.id, title:doc.title, source:'story', year:window.StoryConfig?.years[doc.id] || 2026, kind:'案卷材料', number:doc.id, origin:'story-'+doc.id, summary:'原始摘录与数字化附件，保留资料来源及原件编号。', body:''});
     }
   }
+  for(const [id,related] of Object.entries({
+    'story-C4-01':['church-QZ-260811-019'],
+    'story-C7-02':['church-QZ-260811-019-C'],
+    'church-QZ-260811-019-E':['story-H09','story-H10','story-H13'],
+    'story-H13':['church-QZ-260811-019-E','church-QZ-260812-020'],
+  })){
+    const doc=catalog.find(item=>item.id===id);if(doc)doc.related=[...new Set([...(doc.related||[]),...related])];
+  }
   const byId = new Map(catalog.map(doc => [doc.id, doc]));
   const kinds = ['原档扫描', '网页快照', '转载摘录', '档案目录', '案卷材料', '公开公示', '背景资料'];
   const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));

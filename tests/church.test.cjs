@@ -32,7 +32,7 @@ test('prayer reading retains source and original without changing game progress;
 });
 test('search, status filter, related pages and return navigation preserve the query',t=>{
   const g=boot(t);g.search('盛雄');
-  assert.equal(g.d.querySelectorAll('.record-row').length,3);
+  assert.equal(g.d.querySelectorAll('.record-row').length,6);
   g.d.querySelector('#statusFilter').value='附页留存';g.d.querySelector('#statusFilter').dispatchEvent(new g.w.Event('change'));
   assert.equal(g.d.querySelectorAll('.record-row').length,1);
   g.click('.record-row');assert.match(g.d.querySelector('#recordTitle').textContent,/受愿范围附记/);
@@ -44,7 +44,7 @@ test('search, status filter, related pages and return navigation preserve the qu
 });
 test('direct links, unknown records and denied or corrupt storage stay readable',t=>{
   const unknown=boot(t,'?record=does-not-exist');assert.match(unknown.d.querySelector('#recordTitle').textContent,/未收录/);assert.equal(unknown.w.localStorage.getItem(key),null);
-  unknown.click('.back-link');assert.equal(unknown.d.querySelectorAll('.record-row').length,8);
+  unknown.click('.back-link');assert.equal(unknown.d.querySelectorAll('.record-row').length,11);
   const bad=boot(t,'?record=QZ-260811-019',w=>w.localStorage.setItem(key,'[null, {}, {"id":"missing"}]'));
   assert.match(bad.d.querySelector('.record-body').textContent,/我叫林知微/);
   const blocked=boot(t,'?record=QZ-260811-019',w=>Object.defineProperty(w,'localStorage',{get(){throw new Error('denied');}}));
@@ -60,6 +60,15 @@ test('all authored source links resolve, preserve anonymous submitter identity a
   for(const node of g.d.querySelectorAll('script[src],link[href],img[src]')){const ref=node.getAttribute('src')||node.getAttribute('href');assert.ok(fs.existsSync(path.join(root,new URL(ref,g.w.location.href).pathname)),ref);}
 });
 const photoKey='find-you-church-haunting-v1';
+test('the ritual and handover folios distinguish personal action, hearsay and ongoing detention without asserting a death cause',t=>{
+  const g=boot(t,'?record=QZ-260811-019-C');
+  assert.match(g.d.querySelector('.record-body').textContent,/亲手/);assert.match(g.d.querySelector('.record-body').textContent,/不是行愿日期|不作为行愿日期/);
+  assert.ok(g.d.querySelector('a[href="?record=QZ-260811-019-D"]'));
+  g.click('a[href="?record=QZ-260811-019-D"]');assert.match(g.d.querySelector('.record-body').textContent,/转述者未署名/);assert.match(g.d.querySelector('.record-body').textContent,/不能确认/);
+  g.click('a[href="?record=QZ-260811-019-E"]');assert.match(g.d.querySelector('.record-body').textContent,/恒目管理顾问有限公司/);assert.match(g.d.querySelector('.record-body').textContent,/放行：未见签收/);
+  const log=JSON.parse(g.w.localStorage.getItem(key));assert.equal(log.length,3);assert.ok(log.every(item=>/HM-SJC-019/.test(item.source)));
+  assert.deepEqual(JSON.parse(g.w.localStorage.getItem('find-you-state-v1')),{accepted:false,sent:false,storyProgress:{done:[]}});
+});
 test('column links show one page at a time and keep real URLs, active navigation and legacy bookmarks',t=>{
   const g=boot(t);
   const active=()=>[...g.d.querySelectorAll('[data-page]')].filter(el=>!el.hidden).map(el=>el.dataset.page);

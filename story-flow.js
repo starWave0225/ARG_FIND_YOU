@@ -104,6 +104,11 @@
     if (id === 'H11') return '<h3>频道210 · 同段文字声轨</h3>'+table(['时段','轨道','原始转写','公开版'],[['21:31:08—21:31:12','导览配音','请随灯向前。','保留'],['21:31:08—21:31:12','环境声','脚步、门框轻响。','保留'],['21:31:08—21:31:12','房内原始回应','我不是来接客的。','该段剪去']]);
     return '';
   }
+  function churchLinks(ids) {
+    const records=window.ChurchArchive?.records||[];
+    const entries=ids.map(id=>records.find(record=>record.id===id)).filter(Boolean);
+    return entries.length?'<section class="story-source-list"><h3>旧卷目录</h3>'+entries.map(record=>`<p><a href="./church/?record=${encodeURIComponent(record.id)}" target="_blank" rel="noopener">${esc(record.id)} · ${esc(record.title)} ↗</a></p>`).join('')+'</section>':'';
+  }
   function body(id) {
     if (!available(id)) return '<p>这份材料尚未取得查阅条件。</p>';
     if (!unlocked(id)) return `<p>${esc(config.locks[id].cover)}</p><button data-story-doc="${id}">打开附件查验</button>`;
@@ -117,7 +122,8 @@
     html = html.replaceAll('男／女，按主角选择显示',state().playerGender === 'female'?'女':'男').replaceAll('男／女按主角选择显示',state().playerGender === 'female'?'女':'男').replaceAll('次子／次女',state().playerGender === 'female'?'次女':'次子');
     html = html.replaceAll('陈默',esc(state().playerName || '主角')).replaceAll('默默六岁',esc((state().playerName || '孩子')+'六岁'));
     if (id === 'P07') html += `<p>经办：${esc(state().playerName || '主角')}（${state().playerGender==='female'?'女性':'男性'}）</p>`;
-    return html+attachments(id)+externalLink(id);
+    const churchRecords=id==='C4-01'?['QZ-260811-019']:id==='C7-02'?['QZ-260811-019-C']:id==='H13'?['QZ-260811-019-E','QZ-260812-020']:[];
+    return html+attachments(id)+externalLink(id)+churchLinks(churchRecords);
   }
   function externalLink(id) {
     const link = config.external[id];
@@ -177,7 +183,7 @@
     else if (section==='files') content = `<section class="story-library"><h2>已取得的案卷材料</h2><p>材料按分卷保留，可随时回看出处。番外文章单独留存。</p><div class="story-doc-grid">${Object.keys(documents).filter(id=>collected(id)&&!id.startsWith('RW')).map(docButton).join('') || '<p>打开过的游戏内材料会自动留存在这里。</p>'}</div></section>`;
     else if (section==='side') content = `<section class="story-library"><h2>盛家村 · 可选走访与档案</h2><p>这些调查不影响主线终审。可返回主线，也可在报道完成后继续。</p><div class="story-step-grid">${side.filter(enabled).map(s=>`<button data-story-step="${s.id}"><small>${s.id} · ${config.scenes[s.scene][0]}</small><strong>${esc(s.title)}</strong><span>${done(s.id)?'✓ 已核验':'进入调查 →'}</span></button>`).join('')}</div></section>`;
     else if (section==='bonus') content = `<section class="story-library"><h2>番外阅读</h2><p>前作人物的后续片段，作为番外独立留存。</p>${['RW01','RW02'].map(id=>available(id)?docButton(id):`<div class="story-reward-lock"><h3>${esc(title(id))}</h3><p>${id==='RW01'?'完成版本来源、专项对账与授权接续调查后留存。':'完成原声比对、观察核验与任务停止回执后留存。'}</p></div>`).join('')}</section>`;
-    else content = `${sceneMarkup(item.id==='DEPART'&&!done('DEPART')?'SC10':item.scene,item)}<div class="story-investigation"><header><small>${item.chapter===8?'终审':'第'+item.chapter+'章'} · ${item.id}</small><h2>${esc(item.title)}</h2></header><div class="story-doc-grid">${item.docs.map(docButton).join('')}</div>${puzzle(item)}</div>`;
+    else content = `${sceneMarkup(item.id==='DEPART'&&!done('DEPART')?'SC10':item.scene,item)}<div class="story-investigation"><header><small>${item.chapter===8?'终审':'第'+item.chapter+'章'} · ${item.id}</small><h2>${esc(item.title)}</h2></header><div class="story-doc-grid">${item.docs.map(docButton).join('')}</div>${churchLinks(item.records||[])}${puzzle(item)}</div>`;
     panel.innerHTML = `<nav class="story-tools" aria-label="调查工具">${badges}<button data-story-section="letters">选题通信${unread?` · ${unread}`:''}</button></nav><div class="story-layout"><aside class="story-chapters"><small>调查记录</small>${visitedChapters.map(ch=>`<details ${item?.chapter===ch?'open':''}><summary>${ch===8?'终审报道':'第'+ch+'章'}</summary>${main.filter(s=>s.chapter===ch&&enabled(s)).map(s=>`<button data-story-step="${s.id}" class="${s.id===active?'is-current':''}">${done(s.id)?'✓':'◇'} ${esc(s.title)}</button>`).join('')}</details>`).join('')}<p>${flow().done.filter(id=>!id.startsWith('X')).length} / ${main.length} 调查步骤已完成</p>${flow().published?'<strong>报道已留档</strong>':''}</aside><div class="story-body">${content}</div></div>`;
   }
   function open(id) {
