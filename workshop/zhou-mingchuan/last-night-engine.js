@@ -30,19 +30,20 @@
   function canStand(x,z){return x> -2.08&&x<2.08&&z> -3.18&&z<3.18&&!boxes.some(([a,b,c,d])=>x>a-.22&&x<c+.22&&z>b-.22&&z<d+.22);}
   function move(p,dx,dz){let x=p.x,z=p.z;const n=Math.max(1,Math.ceil(Math.hypot(dx,dz)/.06));for(let i=0;i<n;i++){if(canStand(x+dx/n,z))x+=dx/n;if(canStand(x,z+dz/n))z+=dz/n;}return {...p,x,z};}
   function hit(o,d,min,max){let lo=0,hi=Infinity;for(let i=0;i<3;i++){if(Math.abs(d[i])<1e-8){if(o[i]<min[i]||o[i]>max[i])return Infinity;continue;}const a=(min[i]-o[i])/d[i],b=(max[i]-o[i])/d[i];lo=Math.max(lo,Math.min(a,b));hi=Math.min(hi,Math.max(a,b));if(lo>hi)return Infinity;}return lo;}
-  function target(p,stage){if(stage==='sealed')return {id:'trapped-phone',name:'查看手机'};if(stage==='ended')return null;
+  function target(p,stage){if(stage==='hiding')return {id:'trapped-phone',name:'查看手机'};if(stage==='intrusion'||stage==='ended')return null;
     const pitch=p.pitch||0,o=[p.x,1.58,p.z],d=[Math.sin(p.yaw)*Math.cos(pitch),Math.sin(pitch),-Math.cos(p.yaw)*Math.cos(pitch)];let out=null,near=1.9;
     for(const object of objects){const t=hit(o,d,object.min,object.max);if(t<near){near=t;out=object;}}
     if(out&&boxes.some(([a,b,c,e],i)=>hit(o,d,[a,-.1,b],[c,i<5?3.3:.82,e])<near-.08))return null;
     return out&&out.id==='phone'&&stage==='calling'?{...out,name:'查看通话'}:out;
   }
-  function create(){return {stage:'room',calledAt:null,sent:false,localSaved:true,unlocked:false,power:true,network:true,lamp:true,flashlight:false,replayed:false,filterRuns:0};}
+  function create(){return {stage:'room',calledAt:null,sent:false,sentAt:null,localSaved:true,unlocked:false,power:true,network:true,lamp:true,flashlight:false,replayed:false,filterRuns:0};}
   function authenticate(state,value){if(String(value).trim().toLowerCase()!=='hengmurecyclezm0602')return false;state.unlocked=true;return true;}
   function toggleConnection(state,key){if(!['power','network'].includes(key))return false;state[key]=!state[key];if(!state[key])state.filterRuns++;return state[key];}
   function dial(state,time){if(state.stage!=='room')return false;state.stage='calling';state.calledAt=time;return true;}
   function elapsed(state,time){return state.calledAt===null?0:Math.max(0,(time-state.calledAt)/1000);}
-  function advance(state,time){if(state.stage==='calling'&&elapsed(state,time)>=60)state.stage='sealed';return state.stage;}
+  function sinceSent(state,time){return state.sentAt===null?0:Math.max(0,(time-state.sentAt)/1000);}
+  function advance(state,time){if(state.stage==='calling'&&elapsed(state,time)>=60)state.stage='hiding';if(state.stage==='intrusion'&&sinceSent(state,time)>=9)state.stage='ended';return state.stage;}
   function line(state,time){const t=elapsed(state,time);return call.filter(e=>e.at<=t).at(-1)||null;}
-  function send(state){if(state.stage!=='sealed')return false;state.sent=true;state.stage='ended';return true;}
-  return {DATE,diary,call,message,boxes,objects,canStand,move,target,create,dial,elapsed,advance,line,send,authenticate,toggleConnection};
+  function send(state,time){if(state.stage!=='hiding'||!Number.isFinite(time))return false;state.sent=true;state.sentAt=time;state.stage='intrusion';return true;}
+  return {DATE,diary,call,message,boxes,objects,canStand,move,target,create,dial,elapsed,sinceSent,advance,line,send,authenticate,toggleConnection};
 });

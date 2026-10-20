@@ -51,10 +51,10 @@
       if(state.stage==='room')open('CS-046','<p>最后联系人：CS-046</p>',[['拨出电话',()=>{reader.close();engine.dial(state,clock);sound('ring');say('呼叫中……');$('#location').textContent='1104 · 22:18';}]],'contact','周明川手机');
       else open('CS-046','<p>通话仍在继续。</p>');
     }
-    if(id==='trapped-phone')open('物业留言','<p class="phone-message">'+engine.message+'</p>',[['发送',()=>{engine.send(state);retain('message','最后一条留言','<p>'+engine.message+'</p>','周明川公开留言 · 2026-06-02 / 22:18');endedAt=performance.now();reader.close();sound('tap');say('已发送。');}]],'message-draft','周明川手机 · 未发送');
+    if(id==='trapped-phone')open('物业留言','<p class="phone-message">'+engine.message+'</p>',[['发送',()=>{if(!engine.send(state,clock))return;retain('message','最后一条留言','<p>'+engine.message+'</p>','周明川公开留言 · 2026-06-02 / 22:18');reader.close();sound('tap');say('已发送。');}]],'message-draft','周明川手机 · 未发送');
   }
-  function turn(dx,dy){player.yaw+=dx;player.pitch=Math.max(-.62,Math.min(.62,player.pitch-dy));if(state.stage==='sealed'){player.yaw=Math.max(-.65,Math.min(.65,player.yaw));player.pitch=Math.max(-.35,Math.min(.35,player.pitch));}}
-  function step(f,s,d){if(!['room','calling'].includes(state.stage)||engine.elapsed(state,clock)>=52)return;const before=player;player=engine.move(player,(Math.sin(player.yaw)*f+Math.cos(player.yaw)*s)*d,(-Math.cos(player.yaw)*f+Math.sin(player.yaw)*s)*d);footDistance+=Math.hypot(player.x-before.x,player.z-before.z);if(footDistance>.5){sound('step');footDistance=0;}}
+  function turn(dx,dy){player.yaw+=dx;player.pitch=Math.max(-.62,Math.min(.62,player.pitch-dy));if(['hiding','intrusion'].includes(state.stage))player.pitch=Math.max(-.35,Math.min(.35,player.pitch));}
+  function step(f,s,d){if(!['room','calling'].includes(state.stage))return;const before=player;player=engine.move(player,(Math.sin(player.yaw)*f+Math.cos(player.yaw)*s)*d,(-Math.cos(player.yaw)*f+Math.sin(player.yaw)*s)*d);footDistance+=Math.hypot(player.x-before.x,player.z-before.z);if(footDistance>.5){sound('step');footDistance=0;}}
   function interact(){const target=engine.target(player,state.stage);if(active&&!reader.open&&target)inspect(target.id);}
   const C={wall:[.38,.40,.37],floor:[.22,.25,.24],metal:[.22,.28,.28],wood:[.32,.23,.17],dark:[.035,.046,.055],paper:[.75,.75,.62],screen:[.15,.42,.4]};
   function geometry(t){const out=[],b=(x,y,z,w,h,d,c,a=0)=>out.push([x,y,z,w,h,d,C[c]||c,a]);
@@ -63,7 +63,7 @@
     for(let z=-3;z<3.5;z+=.7)b(0,.007,z,4.6,.01,.015,'metal');for(let x=-2.1;x<2.2;x+=.7)b(x,.009,0,.015,.01,7,'metal');
     // Narrow hall, viewed through the door's observation slot.
     b(0,-.08,5.5,1.8,.16,4,'floor');for(const x of [-.9,.9])b(x,1.5,5.5,.15,3,4,'wall');b(0,1.5,7.5,1.8,3,.16,'dark');b(0,1.5,7.39,1.6,2.7,.015,[.5,.49,.4]);b(0,2.9,5.5,.55,.06,.12,[.6,.59,.42]);
-    const doorAngle=t>=43?Math.min(1,(t-43)/2)*Math.PI*.46:0,hinge=-.61;
+    const doorAngle=state.sent?Math.min(1,t/2)*Math.PI*.46:0,hinge=-.61;
     const doorX=hinge+.61*Math.cos(doorAngle),doorZ=3.5-.61*Math.sin(doorAngle)+(clock<doorUntil?Math.sin(clock*.06)*.015:0);
     b(doorX,.73,doorZ,1.22,1.46,.08,'wood',doorAngle);b(doorX,1.99,doorZ,1.22,.64,.08,'wood',doorAngle);
     for(const side of [-.46,.46])b(doorX+side*Math.cos(doorAngle),1.57,doorZ-side*Math.sin(doorAngle),.3,.22,.08,'wood',doorAngle);
@@ -78,33 +78,35 @@
     if(panel){b(-1.91,.18,-1.06,.42,.13,.27,'dark');for(const x of [-2,-1.93,-1.86])b(x,.23,-.91,.025,.025,.02,[.34,.75,.43]);}
     b(1.91,.72,2.1,.72,1.44,.85,'metal');for(const y of [.26,.68,1.1]){b(1.91,y,1.65,.63,.36,.055,'wood');b(1.91,y,1.61,.18,.026,.02,'paper');}b(1.91,1.46,2.1,.35,.016,.3,'paper');
     b(2.29,1.48,1.1,.065,.18,.14,'paper');b(2.25,1.48,1.1,.012,.10,.055,state.lamp?'screen':'dark');
-    // The wall view is a dramatic reconstruction; the original accounts do not show the sealing operation.
-    if(['sealed','ended'].includes(state.stage)){b(-1.98,1.5,0,.12,3,7,[.32,.31,.28]);for(let z=-3;z<3;z+=.35)b(-2.32,.01,z,.11,.03,.17,'wood');}
     if(state.stage!=='room'){
-      const sy=Math.sin(player.yaw),cy=Math.cos(player.yaw),side=['sealed','ended'].includes(state.stage)?0:.15;
+      const sy=Math.sin(player.yaw),cy=Math.cos(player.yaw),side=['hiding','intrusion','ended'].includes(state.stage)?0:.15;
       const x=player.x+sy*.38+cy*side,z=player.z-cy*.38+sy*side,y=player.height-.25+Math.sin(player.pitch)*.2;
       b(x,y-.11,z,.15,.17,.07,[.45,.34,.27],-player.yaw);b(x,y+.04,z,.145,.25,.022,'dark',-player.yaw);b(x-sy*.016,y+.06,z+cy*.016,.12,.19,.006,[1.5,2.3,1.8],-player.yaw);
     }
     return out;
   }
-  function intruder(t){if(['sealed','ended'].includes(state.stage))return [];const approach=t<43?0:Math.min(1,(t-43)/9);const x=Math.max(-1.02,Math.min(1.02,player.x*.8))*approach,z=5.7+(Math.max(-.7,Math.min(2.55,player.z+1.1))-5.7)*approach;
-    return [{src:intruderSrc,x,z,y:0,width:1.4,height:2.12,angle:Math.atan2(player.x-x,player.z-z)}];}
+  function intruder(t){if(state.stage==='ended')return [];const approach=state.sent?Math.min(1,t/6):0;const x=Math.max(-1.02,Math.min(1.02,player.x*.8))*approach,z=5.7+(Math.max(-.7,Math.min(2.55,player.z+1.1))-5.7)*approach;
+    return [{src:intruderSrc,x,z,y:0,width:1.4,height:2.12,torchReveal:true,angle:Math.atan2(player.x-x,player.z-z)}];}
   function update(now){const dt=Math.min((now-last)/1000,.05);last=now;
     if(active&&!reader.open&&endedAt===null)clock+=dt*1000;
-    const t=engine.elapsed(state,clock),previousStage=state.stage;engine.advance(state,clock);
-    if(previousStage!==state.stage&&state.stage==='sealed'){player={x:-2.19,z:-.4,yaw:0,pitch:0,height:.55};keys.clear();$('#location').textContent='1104';say('……还有人吗？','周明川',6);sound('scrape');}
+    const t=engine.elapsed(state,clock),previousStage=state.stage;engine.advance(state,clock);const intrusionTime=engine.sinceSent(state,clock);
+    if(previousStage!==state.stage&&state.stage==='hiding'){player={x:-1.94,z:2.92,yaw:1.9,pitch:.12,height:.72};state.lamp=false;keys.clear();$('#location').textContent='1104';say('通话已中断。','',4);}
+    if(previousStage!==state.stage&&state.stage==='ended'){endedAt=performance.now();keys.clear();}
     if(active&&!reader.open){const f=Number(keys.has('w')||keys.has('arrowup')||keys.has('forward'))-Number(keys.has('s')||keys.has('arrowdown')||keys.has('back')),s=Number(keys.has('d')||keys.has('right'))-Number(keys.has('a')||keys.has('left')),norm=Math.max(1,Math.hypot(f,s));step(f/norm,s/norm,dt*1.6);turn((Number(keys.has('arrowright'))-Number(keys.has('arrowleft')))*dt*1.4,0);}
     if(state.stage==='calling'){
       const index=engine.call.findLastIndex(e=>e.at<=t);if(index!==currentLine&&index>=0){currentLine=index;const line=engine.call[index];say(line.text,line.speaker,index===4?10:7);retain('call-'+index,line.speaker,'<p>'+line.text+'</p>','1104 失联员工异常回访 · 2026-06-02 / 22:18');if(index===4)sound('door');}
-      if(t>=45&&t<52&&Math.floor(t)!==intruderStep){intruderStep=Math.floor(t);sound('step');}
-      if(t>52&&t<56)player.height=1.58-Math.min(1,(t-52)/3)*1.08;
     }
-    const black=(state.stage==='calling'&&t>=56)||(endedAt!==null);
-    $('#blackout').hidden=!black;$('#blackout').style.opacity=endedAt!==null?Math.min(1,(performance.now()-endedAt)/1800):'1';
+    if(state.stage==='intrusion'){
+      if(intrusionTime<.15&&intruderStep<0){sound('door');intruderStep=0;}
+      if(intrusionTime>=2&&intrusionTime<7&&Math.floor(intrusionTime)!==intruderStep){intruderStep=Math.floor(intrusionTime);sound('step');}
+      if(intrusionTime>6)player.height=.72-Math.min(1,(intrusionTime-6)/1.2)*.3;
+    }
+    const black=(state.stage==='intrusion'&&intrusionTime>=7.5)||(endedAt!==null);
+    $('#blackout').hidden=!black;$('#blackout').style.opacity=state.stage==='intrusion'?Math.max(0,Math.min(1,(intrusionTime-7.5)/.8)):'1';
     // Ending fade uses the display clock while the narrative clock remains paused.
     if(endedAt!==null&&performance.now()-endedAt>2300){$('#ended').hidden=false;active=false;$('#reticle').hidden=true;$('#pause').hidden=true;}
-    const brightness=state.stage==='sealed'||state.stage==='ended'?.3:t>=43&&t<56?.48+Math.abs(Math.sin(t*2.2))*.32:state.lamp?1:.19;
-    renderer.render(player,geometry(t),brightness,intruder(t),state.flashlight);
+    const brightness=state.stage==='intrusion'?(state.lamp?.48:.16)+Math.abs(Math.sin(intrusionTime*2.2))*.16:state.lamp?1:.19;
+    renderer.render(player,geometry(intrusionTime),brightness,intruder(intrusionTime),state.flashlight);
     const target=active&&!reader.open?engine.target(player,state.stage):null;$('#interact').hidden=!target;$('#interact').textContent=target?'E · '+target.name:'';$('#scene').dataset.target=target?target.id:'';
     $('#subtitle').textContent=clock<captionUntil?caption:'';$('#speaker').textContent=clock<captionUntil?speaker:'';
     canvas.dataset.position=[player.x.toFixed(3),player.z.toFixed(3),player.yaw.toFixed(3),player.pitch.toFixed(3)].join(',');canvas.dataset.stage=state.stage;

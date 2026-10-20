@@ -5,8 +5,10 @@ test('the last encounter preserves the original diary, interrupted call and fina
   assert.match(engine.diary.join(''),/21时17分/);assert.match(engine.diary.join(''),/走廊里那道身影/);
   const state=engine.create();assert.equal(engine.send(state),false);assert.equal(engine.dial(state,1000),true);
   assert.equal(engine.line(state,55000).text,'您好，请问还在线吗？');
-  assert.equal(engine.advance(state,60000),'calling');assert.equal(engine.advance(state,61000),'sealed');
-  assert.equal(engine.send(state),true);assert.equal(state.stage,'ended');
+  assert.equal(engine.advance(state,60000),'calling');assert.equal(engine.advance(state,61000),'hiding');
+  assert.equal(engine.advance(state,500000),'hiding','waiting must not begin the attack before the plea is sent');
+  assert.equal(engine.send(state,500000),true);assert.equal(state.stage,'intrusion');
+  assert.equal(engine.advance(state,508999),'intrusion');assert.equal(engine.advance(state,509000),'ended');
   assert.equal(engine.message,'一切都放在1104，救救我，我被困住了！');
 });
 test('the room walls and furnishings block movement, and distant objects cannot be operated',()=>{
@@ -21,7 +23,7 @@ test('the player can call without reading gates; pause freezes the encounter and
   const dom=new JSDOM(fs.readFileSync(path.join(folder,'index.html'),'utf8'),{url:'http://127.0.0.1:4173/workshop/zhou-mingchuan/',runScripts:'outside-only'});
   t.after(()=>dom.window.close());const w=dom.window,d=w.document;let now=0,frame;
   w.performance.now=()=>now;w.requestAnimationFrame=fn=>{frame=fn;};
-  w.ZhouRenderer={create:()=>({render(){}})};
+  let rendered;w.ZhouRenderer={create:()=>({render(...args){rendered=args;}})};
   w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};
   w.HTMLDialogElement.prototype.close=function(){this.open=false;this.dispatchEvent(new w.Event('close'));};
   w.localStorage.setItem('find-you-state-v1','original-main-save');
@@ -32,10 +34,17 @@ test('the player can call without reading gates; pause freezes the encounter and
   action('进入房间');key('w',12);key('d',12);key('ArrowRight',15);key('e');action('拨出电话');
   tick(44000);assert.match(d.querySelector('#subtitle').textContent,/没时间了/);
   action('暂停');tick(60000);assert.equal(d.querySelector('#world').dataset.stage,'calling');
-  action('继续');tick(16000);assert.equal(d.querySelector('#world').dataset.stage,'sealed');
-  const before=d.querySelector('#world').dataset.position;key('w',15);tick(50);assert.equal(d.querySelector('#world').dataset.position,before,'sealed view permits looking but not walking through the wall');
+  action('继续');tick(16000);assert.equal(d.querySelector('#world').dataset.stage,'hiding');
+  assert.equal(rendered[0].height,.72);assert.equal(engine.canStand(rendered[0].x,rendered[0].z),true,'the crouched player remains inside the room');
+  const before=d.querySelector('#world').dataset.position;key('w',15);tick(50);assert.equal(d.querySelector('#world').dataset.position,before,'the player stays crouched in the corner');
+  tick(120000);assert.equal(d.querySelector('#world').dataset.stage,'hiding');
+  const door=()=>rendered[1].find(b=>b[3]===1.22&&b[4]===1.46);
+  assert.equal(door()[7],0,'the stranger must not open the door before sending');assert.equal(rendered[3][0].z,5.7);
+  assert.equal(rendered[3][0].torchReveal,true);assert.equal(rendered[4],false);key('f');tick(50);assert.equal(rendered[4],true);key('f');tick(50);assert.equal(rendered[4],false);
   key('e');action('发送');tick(50);assert.equal(d.querySelector('#ended').hidden,true,'ending fade must not skip ahead after a long pause');
-  tick(2500);assert.equal(d.querySelector('#ended').hidden,false);
+  assert.equal(d.querySelector('#world').dataset.stage,'intrusion');tick(2000);assert.ok(door()[7]>0,'the door opens after the message is sent');
+  action('暂停');tick(60000);assert.equal(d.querySelector('#world').dataset.stage,'intrusion');action('继续');
+  tick(7000);assert.equal(d.querySelector('#world').dataset.stage,'ended');assert.equal(d.querySelector('#blackout').style.opacity,'1','the final fade must not reveal the room again');assert.equal(d.querySelector('#ended').hidden,true);tick(2500);assert.equal(d.querySelector('#ended').hidden,false);
   const records=JSON.parse(w.localStorage.getItem('find-you-zhou-last-night-readings-v1'));assert.match(records.message.body,/我被困住了/);assert.match(records.message.source,/22:18/);
   assert.equal(w.localStorage.getItem('find-you-state-v1'),'original-main-save');
   action('重看这段经历');tick(50);assert.equal(d.querySelector('#world').dataset.stage,'room');
